@@ -9,7 +9,7 @@
     android:background="#F8F9FA"
     tools:context=".activities.dashboard.MainActivity">
 
-    <!-- SIDEBAR (Kuning) -->
+    <!-- SIDEBAR -->
     <LinearLayout
         android:layout_width="160dp"
         android:layout_height="match_parent"
@@ -37,8 +37,6 @@
 
         <!-- Menu Dashboard (Aktif - Merah) -->
 
-        <!-- Menu Lainnya -->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,6 +61,8 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <!-- Menu Stok -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,6 +83,8 @@
                 android:textStyle="bold"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
+
+        <!-- Menu Supplier -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -105,7 +107,10 @@
                 android:layout_marginTop="4dp" />
         </LinearLayout>
 
+        <!-- Menu Kasir -->
+
         <LinearLayout
+            android:id="@+id/menu_kasir_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -125,6 +130,8 @@
                 android:textStyle="bold"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
+
+        <!-- Menu Laporan -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -147,6 +154,8 @@
                 android:gravity="center"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
+
+        <!-- Menu Pengaturan -->
 
         <LinearLayout
             android:layout_width="match_parent"

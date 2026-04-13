@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">POSAmplang</string>
+    <string name="total_items">Total Items : %1$d</string>
 </resources>
