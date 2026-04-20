@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="primary_yellow">#F2C346</color>
+    <color name="sidebar_bg">#FDE6A6</color>
+    <color name="primary_red">#9E1B1B</color>
+    <color name="active_red">#E57373</color>
+    <color name="status_green">#5CB85C</color>
+    <color name="action_blue">#337AB7</color>
+    <color name="text_gray">#333333</color>
+    <color name="border_gray">#DDDDDD</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 </resources>

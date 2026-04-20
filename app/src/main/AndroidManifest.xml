@@ -20,6 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.produk.ProdukListActivity" />
+        <activity android:name=".activities.produk.TambahProdukActivity" />
+        <activity android:name=".activities.produk.EditProdukActivity" />
     </application>
 
 </manifest>

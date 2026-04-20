@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!-- Sidebar (Consistent with other layouts) -->
+    <LinearLayout
+        android:id="@+id/sidebar"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:background="@color/primary_yellow"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_top_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="24dp"
+            android:text="AMPLANG\nSALSABILA"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- Dashboard -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/group"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DASHBOARD"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Stok (Active) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_red"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/box"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="STOK"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Other Menu Items (Simplified for brevity) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/shopping_bag"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SUPPLIER"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/shopping_cart"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="KASIR"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/bar_chart_2"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LAPORAN HARIAN"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/material_symbols_settings"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PENGATURAN"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Main Content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/sidebar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MANAJEMEN STOK"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSimpan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:backgroundTint="#F2C346"
+                    android:text="Simpan"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:cornerRadius="4dp" />
+            </RelativeLayout>
+
+            <!-- Table View Content -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#DDDDDD"
+                app:strokeWidth="1dp">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@drawable/divider_horizontal"
+                    android:showDividers="middle">
+
+                    <!-- Row Nama -->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#F9F9F9"
+                        android:padding="12dp">
+                        <TextView
+                            android:layout_width="200dp"
+                            android:text="Nama:"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/tvDetailNama"
+                            android:layout_width="wrap_content"
+                            android:text="Gabin Susu" />
+                    </TableRow>
+
+                    <!-- Row Kode -->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:padding="12dp">
+                        <TextView
+                            android:text="Kode:"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/tvDetailKode"
+                            android:text="xxxxxx" />
+                    </TableRow>
+
+                    <!-- Row Merek -->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#F2F2F2"
+                        android:padding="12dp">
+                        <TextView
+                            android:text="Merek:"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/tvDetailMerek"
+                            android:text="Gabin" />
+                    </TableRow>
+
+                    <!-- Row Kategori -->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:padding="12dp">
+                        <TextView
+                            android:text="Kategori:"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/tvDetailKategori"
+                            android:text="Makanan" />
+                    </TableRow>
+
+                    <!-- Row Satuan -->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#F2F2F2"
+                        android:padding="12dp">
+                        <TextView
+                            android:text="Satuan:"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/tvDetailSatuan"
+                            android:text="Pcs" />
+                    </TableRow>
+
+                    <!-- Row Harga Beli -->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:padding="12dp">
+                        <TextView
+                            android:text="Harga Beli:"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/tvDetailHargaBeli"
+                            android:text="Rp15.000" />
+                    </TableRow>
+
+                    <!-- Row Harga Jual -->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#F2F2F2"
+                        android:padding="12dp">
+                        <TextView
+                            android:text="Harga Jual:"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/tvDetailHargaJual"
+                            android:text="Rp20.000" />
+                    </TableRow>
+
+                    <!-- Row Stok -->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:padding="12dp">
+                        <TextView
+                            android:text="Stok:"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/tvDetailStok"
+                            android:text="30" />
+                    </TableRow>
+
+                    <!-- Row Min Stok -->
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#F2F2F2"
+                        android:padding="12dp">
+                        <TextView
+                            android:text="Min.stok:"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/tvDetailMinStok"
+                            android:text="5" />
+                    </TableRow>
+
+                </TableLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Bottom Action Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEditAction"
+                    style="@style/Widget.MaterialComponents.Button.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="#4285F4"
+                    android:text="Edit"
+                    android:textAllCaps="false"
+                    app:cornerRadius="4dp"
+                    app:icon="@drawable/ic_edit"
+                    app:iconSize="16dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDeleteAction"
+                    style="@style/Widget.MaterialComponents.Button.Icon"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    app:cornerRadius="4dp"
+                    app:icon="@drawable/ic_delete"
+                    app:iconSize="20dp"
+                    app:iconTint="#FF5252"
+                    app:strokeColor="#FF5252"
+                    app:strokeWidth="1dp"
+                    android:contentDescription="Hapus Data" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

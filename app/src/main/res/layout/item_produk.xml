@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="1050dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="1096dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="16dp">
+
+        <TextView
+            android:id="@+id/tvNama"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Gabin Susu"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvKode"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="xxxxxx"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvMerek"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Gabin"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvKategori"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Makanan"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvSatuan"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Pcs"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvHargaBeli"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Rp15.000"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvHargaJual"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Rp20.000"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvStok"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="30"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvMinStok"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="65dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_status_aktif"
+            android:gravity="center"
+            android:paddingVertical="4dp"
+            android:text="Aktif"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEdit"
+                android:layout_width="65dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="1dp"
+                android:backgroundTint="@color/action_blue"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:paddingHorizontal="8dp"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:cornerRadius="6dp"
+                app:icon="@drawable/ic_edit"
+                app:iconPadding="4dp"
+                app:iconSize="14dp"
+                app:iconTint="@color/white" />
+
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/bg_delete"
+                android:contentDescription="Hapus Produk"
+                android:padding="6dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_delete"
+                app:tint="@color/primary_red" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Garis Pemisah (Divider) -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEEEEE" />
+
+</LinearLayout>

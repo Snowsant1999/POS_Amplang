@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Layer 0: Background (Form Tambah Produk tetap terlihat) -->
+    <include
+        layout="@layout/tambah_produk"
+        android:alpha="1.0" />
+
+    <!-- Layer 1: Dark Overlay untuk memfokuskan ke Kategori -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#90FFFFFF" />
+
+    <!-- Layer 2: Modal Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="450dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:strokeWidth="0dp"
+        app:cardBackgroundColor="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Modal Header -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/primary_yellow"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/tvTitleKategori"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/btnClose"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/tambah_kategori_title"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/btnClose"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_close"
+                    app:tint="@color/white" />
+            </RelativeLayout>
+
+            <!-- Modal Body -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- Nama Kategori -->
+                <TextView
+                    style="@style/LabelTabel"
+                    android:text="@string/nama_kategori" />
+
+                <EditText
+                    android:id="@+id/etNamaKategori"
+                    style="@style/InputTabel"
+                    android:hint="@string/hint_nama_kategori"
+                    android:inputType="text"
+                    android:importantForAutofill="no"
+                    android:layout_marginBottom="24dp"/>
+
+                <!-- Action Buttons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnBatalKategori"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#E50000"
+                        android:text="@string/batal_btn"
+                        android:textAllCaps="false"
+                        app:cornerRadius="4dp"
+                        android:layout_marginEnd="12dp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSimpanKategori"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/primary_yellow"
+                        android:text="@string/simpan"
+                        android:textAllCaps="false"
+                        app:cornerRadius="4dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>
