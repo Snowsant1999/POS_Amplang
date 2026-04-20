@@ -51,6 +51,16 @@
         <activity
             android:name=".activities.dashboard.MainActivity"
             android:exported="true" />
+        <activity
+            android:name=".activities.produk.ProdukListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.produk.TambahProdukActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.produk.EditProdukActivity"
+            android:exported="false"
+            />
     </application>
 
 </manifest>

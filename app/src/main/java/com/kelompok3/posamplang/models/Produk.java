@@ -1,26 +1,39 @@
 package com.kelompok3.posamplang.models;
 
 public class Produk {
-    private int id_produk;
-    private int id_kategori_produk;
-    private int id_merek;
-    private int id_supplier;
-    private String nama_produk;
-    private String unit;
-    private double harga_produk;
-    private int stok_tersedia;
+    private String nama;
+    private String kode;
+    private String merek;
+    private String kategori;
+    private String satuan;
+    private double hargaBeli;
+    private double hargaJual;
+    private int stok;
+    private int minStok;
+    private String status;
 
-    // Constructor untuk data dummy Kasir
-    public Produk(int id_produk, String nama_produk, double harga_produk, int stok_tersedia) {
-        this.id_produk = id_produk;
-        this.nama_produk = nama_produk;
-        this.harga_produk = harga_produk;
-        this.stok_tersedia = stok_tersedia;
+    public Produk(String nama, String kode, String merek, String kategori, String satuan, double hargaBeli, double hargaJual, int stok, int minStok, String status) {
+        this.nama = nama;
+        this.kode = kode;
+        this.merek = merek;
+        this.kategori = kategori;
+        this.satuan = satuan;
+        this.hargaBeli = hargaBeli;
+        this.hargaJual = hargaJual;
+        this.stok = stok;
+        this.minStok = minStok;
+        this.status = status;
     }
 
-    // Getters sesuai ERD
-    public int getId_produk() { return id_produk; }
-    public String getNama_produk() { return nama_produk; }
-    public double getHarga_produk() { return harga_produk; }
-    public int getStok_tersedia() { return stok_tersedia; }
+    // Getters
+    public String getNama() { return nama; }
+    public String getKode() { return kode; }
+    public String getMerek() { return merek; }
+    public String getKategori() { return kategori; }
+    public String getSatuan() { return satuan; }
+    public double getHargaBeli() { return hargaBeli; }
+    public double getHargaJual() { return hargaJual; }
+    public int getStok() { return stok; }
+    public int getMinStok() { return minStok; }
+    public String getStatus() { return status; }
 }

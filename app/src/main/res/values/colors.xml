@@ -13,4 +13,8 @@
     <color name="gray_light">#F8F9FA</color>
     <color name="gray_text">#888888</color>
     <color name="divider_color">#DDDDDD</color>
+    <color name="sidebar_bg">#FDE6A6</color>
+    <color name="status_green">#5CB85C</color>
+    <color name="action_blue">#337AB7</color>
+    <color name="border_gray">#DDDDDD</color>
 </resources>
