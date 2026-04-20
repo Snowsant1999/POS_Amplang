@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.POSAmplang">
         <activity
-            android:name=".activities.dashboard.MainActivity"
+            android:name=".activities.auth.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +27,30 @@
         <activity
             android:name=".activities.stok.StokActivity"
             android:exported="false" />
+        <activity
+            android:name=".activities.auth.LoginGagalActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.auth.LupaSandiActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.auth.VerifikasiTerkirimActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.auth.AturSandiActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.auth.SandiBerhasilActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.auth.RegisterActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.auth.DaftarBerhasilActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.dashboard.MainActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
