@@ -13,11 +13,15 @@ import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 import com.kelompok3.posamplang.R;
+import com.kelompok3.posamplang.activities.auth.LoginActivity;
 import com.kelompok3.posamplang.activities.dashboard.MainActivity;
 import com.kelompok3.posamplang.activities.transaksi.KasirActivity;
 import com.kelompok3.posamplang.adapters.ProdukAdapter;
@@ -78,6 +82,7 @@ public class ProdukListActivity extends AppCompatActivity {
         setContentView(R.layout.manajemen_stok);
 
         initViews();
+        setupWindowInsets();
         loadDummyData();
         setupNavigationListener();
         setupRecyclerView();
@@ -88,6 +93,18 @@ public class ProdukListActivity extends AppCompatActivity {
     // -------------------------------------------------------------------------
     // Inisialisasi
     // -------------------------------------------------------------------------
+
+    private void setupWindowInsets()
+    {
+        View mainView = findViewById(R.id.main);
+        if (mainView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
+                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+                return insets;
+            });
+        }
+    }
 
     /** Menghubungkan variabel ke elemen UI dari layout. */
     private void initViews() {

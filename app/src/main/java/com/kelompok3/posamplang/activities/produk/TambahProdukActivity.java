@@ -12,8 +12,8 @@ import com.kelompok3.posamplang.R;
 
 public class TambahProdukActivity extends AppCompatActivity {
 
-    private EditText etNamaProduk, etKodeProduk, etMerek, etHargaPokok, etHargaJual, etStok, etDeskripsi;
-    private Spinner spinnerKategori, spinnerSatuan;
+    private EditText etNamaProduk, etKodeProduk, etMerek, etHargaPokok, etHargaJual, etStok, etDeskripsi, etSatuan;
+    private Spinner spinnerKategori;
     private MaterialButton btnBatal, btnSimpan, btnTambahKategori;
     private ImageView btnClose;
 
@@ -29,6 +29,7 @@ public class TambahProdukActivity extends AppCompatActivity {
         etHargaPokok = findViewById(R.id.etHargaPokok);
         etHargaJual = findViewById(R.id.etHargaJual);
         etStok = findViewById(R.id.etStok);
+        etSatuan = findViewById(R.id.etSatuan);
         etDeskripsi = findViewById(R.id.etDeskripsi);
         spinnerKategori = findViewById(R.id.spinnerKategori);
         btnBatal = findViewById(R.id.btnBatal);
@@ -36,16 +37,11 @@ public class TambahProdukActivity extends AppCompatActivity {
         btnTambahKategori = findViewById(R.id.btnTambahKategori);
         btnClose = findViewById(R.id.btnClose);
 
-        // Setup Spinner Dummy Data
+        // Setup Spinner Dummy Data (Kategori)
         String[] kategori = {"Pilih kategori", "Makanan", "Minuman", "Snack"};
         ArrayAdapter<String> adapterKategori = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, kategori);
         adapterKategori.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerKategori.setAdapter(adapterKategori);
-
-        String[] satuan = {"Pilih satuan", "Pcs", "Box", "Kg", "Bungkus"};
-        ArrayAdapter<String> adapterSatuan = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, satuan);
-        adapterSatuan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerSatuan.setAdapter(adapterSatuan);
 
         // Event Listeners
         btnClose.setOnClickListener(v -> finish());

@@ -58,4 +58,5 @@
     <string name="lt_batal"><![CDATA[< Batal]]></string>
     <string name="tutup_dialog">Tutup Dialog</string>
     <string name="lt_hapus">Hapus</string>
+    <string name="logout">Keluar</string>
 </resources>
