@@ -15,19 +15,36 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_top_toTopOf="parent">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="24dp"
-            android:text="AMPLANG\nSALSABILA"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="32dp"
+            android:paddingBottom="24dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="AMPLANG"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SALSABILA"
+                android:textColor="@android:color/white"
+                android:textSize="11sp"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_nav_dashboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -37,7 +54,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:contentDescription="Dashboard Icon"
-                android:src="@drawable/group"
+                android:src="@drawable/file_text"
                 app:tint="@color/white" />
             <TextView
                 android:layout_width="wrap_content"
@@ -48,6 +65,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_nav_stok"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/primary_red"
@@ -69,6 +87,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_nav_supplier"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -89,6 +108,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_nav_kasir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -109,6 +129,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_nav_laporan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -129,6 +150,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_nav_pengaturan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -147,6 +169,11 @@
                 android:textColor="@color/white"
                 android:textSize="12sp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"></LinearLayout>
 
     </LinearLayout>
 

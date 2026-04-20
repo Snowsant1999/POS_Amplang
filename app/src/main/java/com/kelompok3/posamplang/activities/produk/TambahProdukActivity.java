@@ -31,7 +31,6 @@ public class TambahProdukActivity extends AppCompatActivity {
         etStok = findViewById(R.id.etStok);
         etDeskripsi = findViewById(R.id.etDeskripsi);
         spinnerKategori = findViewById(R.id.spinnerKategori);
-        spinnerSatuan = findViewById(R.id.spinnerSatuan);
         btnBatal = findViewById(R.id.btnBatal);
         btnSimpan = findViewById(R.id.btnSimpan);
         btnTambahKategori = findViewById(R.id.btnTambahKategori);

@@ -6,15 +6,8 @@
     android:layout_height="match_parent">
 
     <!-- Layer 0: Background (Manajemen Stok) -->
-    <include
-        layout="@layout/manajemen_stok"
-        android:alpha="0.5" />
 
     <!-- Layer 1: Dark Overlay -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#80FFFFFF" />
 
     <!-- Layer 2: Modal Card -->
     <com.google.android.material.card.MaterialCardView

@@ -6,9 +6,6 @@
     android:layout_height="match_parent">
 
     <!-- Layer 0: Background (Form Tambah Produk tetap terlihat) -->
-    <include
-        layout="@layout/tambah_produk"
-        android:alpha="1.0" />
 
     <!-- Layer 1: Dark Overlay untuk memfokuskan ke Kategori -->
     <View

@@ -17,4 +17,5 @@ import com.kelompok3.posamplang.activities.dashboard.MainActivity;
 import com.kelompok3.posamplang.activities.transaksi.KasirActivity;
 
 public class StokActivity extends AppCompatActivity {
+
 }
