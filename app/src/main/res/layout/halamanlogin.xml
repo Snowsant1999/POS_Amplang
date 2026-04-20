@@ -14,7 +14,7 @@
         android:layout_marginStart="-30dp"
         android:layout_marginTop="-30dp"
         android:alpha="0.4"
-        android:src="@drawable/ic_launcher_foreground"
+        android:src="@mipmap/amplang_foreground"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription"
@@ -31,7 +31,7 @@
         android:layout_marginStart="-20dp"
         android:layout_marginBottom="-20dp"
         android:alpha="0.3"
-        android:src="@drawable/ic_launcher_foreground"
+        android:src="@mipmap/ikan_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="ContentDescription"
@@ -45,7 +45,7 @@
         android:layout_marginEnd="-120dp"
         android:layout_marginBottom="495dp"
         android:alpha="0.3"
-        android:src="@drawable/ic_launcher_foreground"
+        android:src="@mipmap/amplang_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -79,7 +79,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:contentDescription="Logo Amplang Salsabila"
-                android:src="@drawable/ic_launcher_foreground"
+                android:src="@mipmap/amplang_foreground"
                 tools:srcCompat="@mipmap/amplang_foreground" />
 
             <TextView

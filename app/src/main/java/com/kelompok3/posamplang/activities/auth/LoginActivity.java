@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             // Simulasi Login Gagal sesuai gambar
             if (email.equals("admin@gmail.com") && password.equals("admin123")) {
                 Toast.makeText(LoginActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
+                navigateTo("com.kelompok3.posamplang.activities.dashboard.MainActivity");
             } else {
                 // Pindah ke Halaman Login Gagal
                 Intent intent = new Intent(LoginActivity.this, LoginGagalActivity.class);
@@ -67,4 +68,14 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+        private void navigateTo(String className) {
+            try {
+                Class<?> targetClass = Class.forName(className);
+                Intent intent = new Intent(this, targetClass);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+            } catch (ClassNotFoundException e) {
+                android.widget.Toast.makeText(this, "Halaman belum tersedia", android.widget.Toast.LENGTH_SHORT).show();
+            }
+        }
 }
