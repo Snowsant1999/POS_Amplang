@@ -13,27 +13,34 @@
     <LinearLayout
         android:layout_width="160dp"
         android:layout_height="match_parent"
-        android:background="#F4C430"
-        android:orientation="vertical"
-        android:paddingTop="32dp">
+        android:background="#EEBB4D"
+        android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="AMPLANG"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:paddingTop="32dp"
+            android:paddingBottom="24dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            android:gravity="center"
-            android:text="SALSABILA"
-            android:textColor="@android:color/white"
-            android:textSize="12sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="AMPLANG"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SALSABILA"
+                android:textColor="@android:color/white"
+                android:textSize="11sp"
+                android:gravity="center" />
+        </LinearLayout>
 
         <!-- Menu Dashboard -->
         <LinearLayout
@@ -42,146 +49,160 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
-            android:gravity="center"
             android:orientation="vertical"
-            android:padding="16dp">
-
+            android:padding="16dp"
+            android:gravity="center">
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/file_text"
                 app:tint="@android:color/white" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:text="DASHBOARD"
                 android:textColor="@android:color/white"
                 android:textSize="10sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginTop="4dp" />
         </LinearLayout>
 
         <!-- Menu Stok -->
         <LinearLayout
+            android:id="@+id/btn_nav_stok"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="vertical"
-            android:padding="16dp">
-
+            android:padding="16dp"
+            android:gravity="center">
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/box"
                 app:tint="@android:color/white" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:text="STOK"
                 android:textColor="@android:color/white"
                 android:textSize="10sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginTop="4dp" />
         </LinearLayout>
 
         <!-- Menu Supplier -->
         <LinearLayout
+            android:id="@+id/btn_nav_supplier"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="vertical"
-            android:padding="16dp">
-
+            android:padding="16dp"
+            android:gravity="center">
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/shopping_bag"
                 app:tint="@android:color/white" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:text="SUPPLIER"
                 android:textColor="@android:color/white"
                 android:textSize="10sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginTop="4dp" />
         </LinearLayout>
 
-        <!-- Menu Kasir (Aktif - Merah) -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#A52A2A"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/shopping_cart"
-                app:tint="@android:color/white" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="KASIR"
-                android:textColor="@android:color/white"
-                android:textSize="10sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+        <!-- Menu Kasir (Aktif) -->
 
         <!-- Menu Laporan -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="79dp">
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/white" />
+
+            <LinearLayout
+                android:id="@+id/btn_nav_kasir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#B21F1F"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/shopping_cart"
+                    app:tint="@android:color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="KASIR"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </FrameLayout>
+
         <LinearLayout
+            android:id="@+id/btn_nav_laporan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="vertical"
-            android:padding="16dp">
-
+            android:padding="16dp"
+            android:gravity="center">
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/bar_chart_2"
                 app:tint="@android:color/white" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
                 android:text="LAPORAN HARIAN"
                 android:textColor="@android:color/white"
                 android:textSize="10sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="4dp" />
         </LinearLayout>
 
         <!-- Menu Pengaturan -->
         <LinearLayout
+            android:id="@+id/btn_nav_pengaturan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="vertical"
-            android:padding="16dp">
-
+            android:padding="16dp"
+            android:gravity="center">
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/material_symbols_settings"
                 app:tint="@android:color/white" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:text="PENGATURAN"
                 android:textColor="@android:color/white"
                 android:textSize="10sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginTop="4dp" />
         </LinearLayout>
 
         <View
@@ -205,14 +226,14 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:src="@drawable/signout"
-                app:tint="#A52A2A" />
+                app:tint="#B21F1F" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Keluar"
-                android:textColor="#A52A2A"
+                android:textColor="#B21F1F"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -223,145 +244,156 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="KASIR"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+        <!-- Header Bar -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0" />
 
-        <!-- Search Bar -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:background="@android:color/white"
-            android:elevation="2dp"
-            android:gravity="center_vertical"
-            android:padding="8dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="24dp">
 
-            <EditText
-                android:id="@+id/et_search"
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:hint="Search"
-                android:padding="8dp"
-                android:textSize="14sp" />
+                android:layout_marginBottom="16dp"
+                android:text="KASIR"
+                android:textColor="@android:color/black"
+                android:textSize="28sp"
+                android:fontFamily="serif"
+                android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/search"
-                app:tint="#888" />
+            <!-- Search Bar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:background="@android:color/white"
+                android:elevation="2dp"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="Search"
+                    android:padding="8dp"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/search"
+                    app:tint="#888" />
+            </LinearLayout>
+
+            <!-- Quick Item Grid -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:clipToPadding="false"
+                android:padding="8dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_gabin_susu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="6dp"
+                    app:strokeWidth="0dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:text="Gabin Susu"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_gabin_keju"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="6dp"
+                    app:strokeWidth="0dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:text="Gabin Keju"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_kuku_macan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="6dp"
+                    app:strokeWidth="0dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:text="Amplang Kuku Macan"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_ikan_pipih"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="6dp"
+                    app:strokeWidth="0dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:text="Amplang Ikan Pipih"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp" />
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
         </LinearLayout>
-
-        <!-- Quick Item Grid -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_gabin_susu"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="0dp"
-                app:strokeColor="#DDD"
-                app:strokeWidth="1dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="16dp"
-                    android:text="Gabin Susu"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp" />
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_gabin_keju"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="0dp"
-                app:strokeColor="#DDD"
-                app:strokeWidth="1dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="16dp"
-                    android:text="Gabin Keju"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp" />
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_kuku_macan"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="0dp"
-                app:strokeColor="#DDD"
-                app:strokeWidth="1dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="16dp"
-                    android:text="Amplang Kuku Macan"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp" />
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_ikan_pipih"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="0dp"
-                app:strokeColor="#DDD"
-                app:strokeWidth="1dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="16dp"
-                    android:text="Amplang Ikan Pipih"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp" />
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
-
     </LinearLayout>
 
     <!-- STRUK -->
@@ -370,7 +402,7 @@
         android:layout_height="match_parent"
         android:layout_margin="16dp"
         app:cardCornerRadius="4dp"
-        app:cardElevation="4dp"
+        app:cardElevation="10dp"
         app:strokeWidth="0dp">
 
         <LinearLayout
@@ -387,6 +419,7 @@
                 android:text="AMPLANG"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
+                android:fontFamily="serif"
                 android:textStyle="bold" />
 
             <TextView
@@ -517,7 +550,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="TOTAL"
-                        android:textColor="#F4C430"
+                        android:textColor="#B21F1F"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -526,7 +559,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         android:text="IDR"
-                        android:textColor="#F4C430"
+                        android:textColor="#B21F1F"
                         android:textSize="11sp" />
 
                     <TextView
@@ -535,7 +568,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="end"
                         android:text="0"
-                        android:textColor="#F4C430"
+                        android:textColor="#B21F1F"
                         android:textSize="14sp"
                         android:textStyle="bold" />
                 </LinearLayout>

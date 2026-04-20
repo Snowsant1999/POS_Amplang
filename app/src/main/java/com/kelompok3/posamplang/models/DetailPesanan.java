@@ -20,6 +20,11 @@ public class DetailPesanan {
         this.total_harga = this.harga_produk * jumlah;
     }
 
+    public void setJumlah_produk(int jumlah_produk) {
+        this.jumlah_produk = jumlah_produk;
+        this.total_harga = this.harga_produk * this.jumlah_produk;
+    }
+
     public void tambahJumlah(int qty) {
         this.jumlah_produk += qty;
         this.total_harga = this.harga_produk * this.jumlah_produk;

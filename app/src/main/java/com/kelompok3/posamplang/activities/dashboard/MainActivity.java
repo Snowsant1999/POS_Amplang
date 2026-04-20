@@ -15,7 +15,7 @@ import com.kelompok3.posamplang.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    LinearLayout menuKasir;
+    private LinearLayout btnNavDashboard, btnNavStok, btnNavSupplier, btnNavKasir, btnNavLaporan, btnNavPengaturan, btnNavLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +23,8 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        menuKasir = findViewById(R.id.menu_kasir_layout);
-
-        menuKasir.setOnClickListener(v -> {
-           Intent intent = new Intent(MainActivity.this, com.kelompok3.posamplang.activities.transaksi.KasirActivity.class);
-           startActivity(intent);
-           overridePendingTransition(0, 0);
-        });
+        initNavigation();
+        setupNavigationListeners();
 
         View mainView = findViewById(R.id.main);
         if (mainView != null) {
@@ -38,6 +33,38 @@ public class MainActivity extends AppCompatActivity {
                 v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
                 return insets;
             });
+        }
+    }
+
+    private void initNavigation() {
+        btnNavDashboard = findViewById(R.id.btn_nav_dashboard);
+        btnNavStok = findViewById(R.id.btn_nav_stok);
+        btnNavSupplier = findViewById(R.id.btn_nav_supplier);
+        btnNavKasir = findViewById(R.id.btn_nav_kasir);
+        btnNavLaporan = findViewById(R.id.btn_nav_laporan);
+        btnNavPengaturan = findViewById(R.id.btn_nav_pengaturan);
+        btnNavLogout = findViewById(R.id.btn_nav_logout);
+    }
+
+    private void setupNavigationListeners() {
+        // Dashboard is current activity
+        btnNavKasir.setOnClickListener(v -> navigateTo("com.kelompok3.posamplang.activities.transaksi.KasirActivity"));
+        btnNavStok.setOnClickListener(v -> navigateTo("com.kelompok3.posamplang.activities.stok.StokActivity"));
+        btnNavSupplier.setOnClickListener(v -> navigateTo("com.kelompok3.posamplang.activities.supplier.SupplierActivity"));
+        btnNavLaporan.setOnClickListener(v -> navigateTo("com.kelompok3.posamplang.activities.laporan.LaporanActivity"));
+        btnNavPengaturan.setOnClickListener(v -> navigateTo("com.kelompok3.posamplang.activities.pengaturan.PengaturanActivity"));
+
+        btnNavLogout.setOnClickListener(v -> finish());
+    }
+
+    private void navigateTo(String className) {
+        try {
+            Class<?> targetClass = Class.forName(className);
+            Intent intent = new Intent(this, targetClass);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+        } catch (ClassNotFoundException e) {
+            android.widget.Toast.makeText(this, "Halaman belum tersedia", android.widget.Toast.LENGTH_SHORT).show();
         }
     }
 }
