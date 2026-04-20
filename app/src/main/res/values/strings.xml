@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">POSAmplang</string>
+    <string name="total_items">Total Items : %1$d</string>
+    <string name="pembayaran_berhasil_msg">Pembayaran sebesar %1$s telah berhasil.</string>
 </resources>
