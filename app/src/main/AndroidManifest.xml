@@ -31,10 +31,10 @@
             android:name=".activities.auth.LoginGagalActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.auth.LupaSandiActivity"
+            android:name=".activities.auth.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.auth.VerifikasiTerkirimActivity"
+            android:name=".activities.auth.LupaSandiActivity"
             android:exported="true" />
         <activity
             android:name=".activities.auth.AturSandiActivity"
@@ -43,10 +43,10 @@
             android:name=".activities.auth.SandiBerhasilActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.auth.RegisterActivity"
+            android:name=".activities.auth.DaftarBerhasilActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.auth.DaftarBerhasilActivity"
+            android:name=".activities.auth.VerifikasiTerkirimActivity"
             android:exported="true" />
         <activity
             android:name=".activities.dashboard.MainActivity"

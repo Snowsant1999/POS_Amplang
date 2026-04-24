@@ -55,16 +55,16 @@ public class KasirActivity extends AppCompatActivity {
     // -------------------------------------------------------------------------
 
     private RecyclerView rvStruk;
-    private TextView     tvTotalItems;
-    private TextView     tvSubtotal;
-    private TextView     tvTotalHarga;
-    private Button       btnBayar;
+    private TextView tvTotalItems;
+    private TextView tvSubtotal;
+    private TextView tvTotalHarga;
+    private Button btnBayar;
 
     // -------------------------------------------------------------------------
     // Data & Adapter
     // -------------------------------------------------------------------------
 
-    private StrukAdapter      adapter;
+    private StrukAdapter adapter;
     private List<DetailPesanan> keranjangList = new ArrayList<>();
     private double currentTotal = 0;
 

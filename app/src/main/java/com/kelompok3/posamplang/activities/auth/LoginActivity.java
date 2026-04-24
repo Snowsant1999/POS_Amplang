@@ -3,12 +3,17 @@ package com.kelompok3.posamplang.activities.auth;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.kelompok3.posamplang.R;
 import com.kelompok3.posamplang.activities.dashboard.MainActivity;
@@ -47,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.halamanlogin);
+        EdgeToEdge.enable(this);
 
         initViews();
         setupClickListeners();
@@ -76,7 +82,6 @@ public class LoginActivity extends AppCompatActivity {
     // Logic Utama
     // -------------------------------------------------------------------------
 
-    /** Memvalidasi input dan memproses percobaan login. */
     private void handleLogin() {
         String email    = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
@@ -102,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    /** Dipanggil ketika login berhasil. */
     private void onLoginSuccess() {
         Toast.makeText(this, "Login Berhasil", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
@@ -111,20 +115,16 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /** Dipanggil ketika login gagal. */
     private void onLoginFailed() {
         Intent intent = new Intent(this, LoginGagalActivity.class);
         startActivity(intent);
     }
 
-    /** Mengosongkan semua field input. */
     private void clearForm() {
         etEmail.setText("");
         etPassword.setText("");
         etEmail.requestFocus();
     }
-
-    /** Navigasi ke halaman pendaftaran akun baru. */
     private void navigateToRegister() {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
