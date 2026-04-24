@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -36,6 +35,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.kelompok3.posamplang.parent.BaseActivity;
+
 /**
  * KasirActivity — Halaman transaksi / kasir POS Amplang.
  *
@@ -48,7 +49,7 @@ import java.util.Locale;
  * TODO: Muat produk dari ProdukDao via Room Database (saat ini masih dummy).
  * TODO: Simpan transaksi ke PesananDao dan DetailPesananDao setelah pembayaran sukses.
  */
-public class KasirActivity extends AppCompatActivity {
+public class KasirActivity extends BaseActivity {
 
     // -------------------------------------------------------------------------
     // Views — Keranjang & Ringkasan
@@ -90,10 +91,10 @@ public class KasirActivity extends AppCompatActivity {
         setContentView(R.layout.activity_kasir);
 
         setupWindowInsets();
+        setupSidebar(R.id.btn_nav_kasir);
         initViews();
         initDummyProducts();
         setupRecyclerView();
-        setupNavigationListeners();
         setupProductClickListeners();
         setupPaymentButton();
     }
@@ -102,7 +103,6 @@ public class KasirActivity extends AppCompatActivity {
     // Inisialisasi
     // -------------------------------------------------------------------------
 
-    /** Mengatur padding agar konten tidak tertutup system bars. */
     private void setupWindowInsets() {
         View mainView = findViewById(R.id.main);
         if (mainView != null) {
@@ -114,7 +114,6 @@ public class KasirActivity extends AppCompatActivity {
         }
     }
 
-    /** Menghubungkan variabel ke elemen UI dari layout. */
     private void initViews() {
         rvStruk       = findViewById(R.id.rv_struk);
         tvTotalItems  = findViewById(R.id.tv_total_items);
@@ -155,23 +154,6 @@ public class KasirActivity extends AppCompatActivity {
 
         rvStruk.setLayoutManager(new LinearLayoutManager(this));
         rvStruk.setAdapter(adapter);
-    }
-
-    /** Mendaftarkan listener untuk navigasi sidebar. */
-    private void setupNavigationListeners() {
-        // Navigasi ke modul yang sudah tersedia
-        findViewById(R.id.btn_nav_dashboard).setOnClickListener(v -> navigateTo(MainActivity.class));
-        findViewById(R.id.btn_nav_stok).setOnClickListener(v     -> navigateTo(ProdukListActivity.class));
-
-        // Modul yang belum diimplementasikan
-        // TODO: Ganti dengan navigasi eksplisit ke SupplierActivity, LaporanActivity, PengaturanActivity
-        //       setelah modul-modul tersebut selesai dibuat.
-        findViewById(R.id.btn_nav_supplier).setOnClickListener(v   -> showComingSoon("Supplier"));
-        findViewById(R.id.btn_nav_laporan).setOnClickListener(v    -> showComingSoon("Laporan"));
-        findViewById(R.id.btn_nav_pengaturan).setOnClickListener(v -> showComingSoon("Pengaturan"));
-
-        // Logout — kembali ke LoginActivity dan hapus semua activity dari back stack
-        findViewById(R.id.btn_nav_logout).setOnClickListener(v -> handleLogout());
     }
 
     /** Mendaftarkan listener klik untuk setiap card produk. */
@@ -411,17 +393,6 @@ public class KasirActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    // -------------------------------------------------------------------------
-    // Navigasi & Aksi
-    // -------------------------------------------------------------------------
-
-
-    private void navigateTo(Class<?> targetClass) {
-        Intent intent = new Intent(this, targetClass);
-        startActivity(intent);
-        overridePendingTransition(0, 0);
-    }
-
     /**
      * Menampilkan pesan bahwa fitur belum tersedia.
      *
@@ -429,13 +400,6 @@ public class KasirActivity extends AppCompatActivity {
      */
     private void showComingSoon(String moduleName) {
         Toast.makeText(this, "Modul " + moduleName + " belum tersedia", Toast.LENGTH_SHORT).show();
-    }
-
-    /** Keluar dari sesi dan kembali ke halaman Login. */
-    private void handleLogout() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
     }
 
     // -------------------------------------------------------------------------

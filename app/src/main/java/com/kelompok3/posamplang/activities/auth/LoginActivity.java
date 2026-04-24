@@ -113,11 +113,13 @@ public class LoginActivity extends AppCompatActivity {
         // Hapus LoginActivity dari back stack agar pengguna tidak bisa kembali ke layar login
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
     private void onLoginFailed() {
         Intent intent = new Intent(this, LoginGagalActivity.class);
         startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
     private void clearForm() {
@@ -128,5 +130,6 @@ public class LoginActivity extends AppCompatActivity {
     private void navigateToRegister() {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 }

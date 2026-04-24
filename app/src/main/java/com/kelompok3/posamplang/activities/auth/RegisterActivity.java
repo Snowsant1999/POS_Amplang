@@ -55,8 +55,12 @@ public class RegisterActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Pendaftaran Berhasil!", Toast.LENGTH_SHORT).show();
             finish(); // Kembali ke login
+            overridePendingTransition(0, 0);
         });
 
-        tvMasuk.setOnClickListener(v -> finish());
+        tvMasuk.setOnClickListener(v -> {
+            finish();
+            overridePendingTransition(0, 0);
+        });
     }
 }

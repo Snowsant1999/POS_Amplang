@@ -1,8 +1,12 @@
 package com.kelompok3.posamplang.activities.laporan;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.activity.EdgeToEdge;
+
+import com.kelompok3.posamplang.R;
+import com.kelompok3.posamplang.parent.BaseActivity;
 
 /**
  * LaporanActivity — Halaman laporan penjualan.
@@ -10,12 +14,17 @@ import androidx.appcompat.app.AppCompatActivity;
  * TODO: Implementasikan tampilan laporan harian, mingguan, dan bulanan
  *       menggunakan data dari PesananDao dan DetailPesananDao.
  */
-public class LaporanActivity extends AppCompatActivity {
+public class LaporanActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: Buat layout activity_laporan.xml dan hubungkan di sini
-        // setContentView(R.layout.activity_laporan);
+        EdgeToEdge.enable(this);
+        
+        setContentView(R.layout.activity_main);
+        
+        setupSidebar(R.id.btn_nav_laporan);
+        
+        Toast.makeText(this, "Modul Laporan sedang dalam pengembangan", Toast.LENGTH_SHORT).show();
     }
 }

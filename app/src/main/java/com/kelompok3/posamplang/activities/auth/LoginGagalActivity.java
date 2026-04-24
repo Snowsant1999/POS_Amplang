@@ -46,16 +46,19 @@ public class LoginGagalActivity extends AppCompatActivity {
         btnBatal.setOnClickListener(v -> {
             // Kembali ke halaman login normal
             finish();
+            overridePendingTransition(0, 0);
         });
 
         tvLupaSandi.setOnClickListener(v -> {
             Intent intent = new Intent(this, LupaSandiActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);
         });
 
         tvDaftar.setOnClickListener(v -> {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);
         });
     }
 }

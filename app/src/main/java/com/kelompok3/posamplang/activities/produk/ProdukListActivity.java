@@ -7,12 +7,10 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -21,11 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 import com.kelompok3.posamplang.R;
-import com.kelompok3.posamplang.activities.auth.LoginActivity;
-import com.kelompok3.posamplang.activities.dashboard.MainActivity;
-import com.kelompok3.posamplang.activities.transaksi.KasirActivity;
 import com.kelompok3.posamplang.adapters.ProdukAdapter;
 import com.kelompok3.posamplang.models.Produk;
+import com.kelompok3.posamplang.parent.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,15 +33,15 @@ import java.util.List;
  *
  * TODO: Ganti data dummy dengan query dari ProdukDao via Room Database.
  */
-public class ProdukListActivity extends AppCompatActivity {
+public class ProdukListActivity extends BaseActivity {
 
     // -------------------------------------------------------------------------
     // Views
     // -------------------------------------------------------------------------
 
-    private RecyclerView    rvProduk;
+    private RecyclerView rvProduk;
     private EditText        etSearch;
-    private MaterialButton  btnTambahProduk;
+    private MaterialButton btnTambahProduk;
     private TextView        tvSuccessNotification;
 
     // -------------------------------------------------------------------------
@@ -81,10 +77,10 @@ public class ProdukListActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.manajemen_stok);
 
-        initViews();
         setupWindowInsets();
+        setupSidebar(R.id.btn_nav_stok);
+        initViews();
         loadDummyData();
-        setupNavigationListener();
         setupRecyclerView();
         setupClickListeners();
         setupSearch();
@@ -128,26 +124,6 @@ public class ProdukListActivity extends AppCompatActivity {
         filteredList = new ArrayList<>(produkList);
     }
 
-    /** Mendaftarkan semua listener navigasi sidebar. */
-    private void setupNavigationListener() {
-        // Stok — sudah berada di halaman ini
-        findViewById(R.id.btn_nav_stok).setOnClickListener(v      -> { /* Aktif saat ini */ });
-
-        // Modul yang sudah tersedia
-        findViewById(R.id.btn_nav_dashboard).setOnClickListener(v -> navigateTo(MainActivity.class));
-        findViewById(R.id.btn_nav_kasir).setOnClickListener(v     -> navigateTo(KasirActivity.class));
-
-        // Modul yang belum diimplementasikan
-        // TODO: Ganti dengan intent eksplisit setelah modul-modul ini selesai dibuat
-        findViewById(R.id.btn_nav_supplier).setOnClickListener(v   -> showComingSoon("Supplier"));
-        findViewById(R.id.btn_nav_laporan).setOnClickListener(v    -> showComingSoon("Laporan"));
-        findViewById(R.id.btn_nav_pengaturan).setOnClickListener(v -> showComingSoon("Pengaturan"));
-
-        // Logout — kembali ke LoginActivity dan hapus semua activity dari back stack
-        findViewById(R.id.btn_nav_logout).setOnClickListener(v     -> handleLogout());
-    }
-
-    /** Menyiapkan RecyclerView dengan adapter dan layout manager. */
     private void setupRecyclerView() {
         rvProduk.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ProdukAdapter(filteredList);
@@ -211,34 +187,4 @@ public class ProdukListActivity extends AppCompatActivity {
         );
     }
 
-    // -------------------------------------------------------------------------
-    // Navigasi & Aksi
-    // -------------------------------------------------------------------------
-
-    /**
-     * Navigasi ke activity tertentu menggunakan explicit intent.
-     *
-     * @param targetClass Class activity tujuan.
-     */
-    private void navigateTo(Class<?> targetClass) {
-        Intent intent = new Intent(this, targetClass);
-        startActivity(intent);
-        overridePendingTransition(0, 0);
-    }
-
-    /**
-     * Menampilkan pesan bahwa fitur belum tersedia.
-     *
-     * @param moduleName Nama modul yang dituju.
-     */
-    private void showComingSoon(String moduleName) {
-        Toast.makeText(this, "Modul " + moduleName + " belum tersedia", Toast.LENGTH_SHORT).show();
-    }
-
-    /** Keluar dari sesi dan kembali ke halaman Login. */
-    private void handleLogout() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-    }
 }

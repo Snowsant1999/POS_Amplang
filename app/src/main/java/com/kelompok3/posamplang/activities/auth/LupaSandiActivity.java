@@ -41,6 +41,7 @@ public class LupaSandiActivity extends AppCompatActivity {
         tvKembaliLogin.setOnClickListener(v -> {
             // Kembali ke halaman login
             finish();
+            overridePendingTransition(0, 0);
         });
     }
 }
