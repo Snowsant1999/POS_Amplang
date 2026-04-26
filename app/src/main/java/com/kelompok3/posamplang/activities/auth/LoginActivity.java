@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.halamanlogin);
+        setContentView(R.layout.activity_login);
         EdgeToEdge.enable(this);
 
         initViews();

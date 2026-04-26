@@ -20,7 +20,7 @@ public class LoginGagalActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.halamanlogingagal);
+        setContentView(R.layout.activity_login_gagal);
 
         etEmail = findViewById(R.id.etEmailGagal);
         etPassword = findViewById(R.id.etPasswordGagal);

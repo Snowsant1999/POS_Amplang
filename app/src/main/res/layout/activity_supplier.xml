@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="#F8F9FA"
+    tools:context=".activities.supplier.SupplierListActivity">
+
+    <!-- SIDEBAR -->
+    <include layout="@layout/layout_sidebar" />
+
+    <!-- KONTEN UTAMA -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="24dp"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SUPPLIER"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp"
+                    android:fontFamily="serif"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kelola Data Pemasok Barang"
+                    android:textColor="#888"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_tambah_supplier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+ Tambah supplier"
+                android:backgroundTint="#F4C430"
+                android:textColor="@android:color/white"
+                android:textAllCaps="false"
+                app:cornerRadius="8dp" />
+        </LinearLayout>
+
+        <!-- Filter & Search -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/et_search_supplier"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_input"
+                android:hint="Search"
+                android:paddingStart="16dp"
+                android:paddingEnd="40dp"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/spinner_status"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/bg_spinner_border" />
+
+            <Spinner
+                android:id="@+id/spinner_sort"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/bg_spinner_border" />
+        </LinearLayout>
+
+        <!-- Table Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="#FFF"
+            android:elevation="1dp">
+
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.5" android:text="Nama Supplier" android:textStyle="bold" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Kontak" android:textStyle="bold" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Alamat" android:textStyle="bold" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.5" android:text="Email" android:textStyle="bold" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="0.8" android:text="Status" android:textStyle="bold" android:gravity="center" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Aksi" android:textStyle="bold" android:gravity="center" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="#B21F1F" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_supplier"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="#FFF"
+            tools:listitem="@layout/item_supplier" />
+
+        <!-- Pagination -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="#FFF"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_pagination_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Menampilkan 1 dari 5 data"
+                android:textSize="14sp" />
+
+            <!-- Tombol navigasi halaman sederhana -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                 <Button android:layout_width="32dp" android:layout_height="32dp" android:text="1" android:backgroundTint="#F4C430" android:padding="0dp" android:textSize="12sp" />
+                 <Button android:layout_width="32dp" android:layout_height="32dp" android:text="2" android:backgroundTint="#EEE" android:textColor="#333" android:padding="0dp" android:textSize="12sp" android:layout_marginStart="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

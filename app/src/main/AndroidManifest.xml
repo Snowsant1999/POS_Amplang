@@ -22,9 +22,6 @@
         </activity>
 
         <activity
-            android:name=".activities.transaksi.KasirActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.auth.LoginGagalActivity"
             android:exported="true" />
         <activity
@@ -49,7 +46,13 @@
             android:name=".activities.dashboard.MainActivity"
             android:exported="true" />
         <activity
+            android:name=".activities.transaksi.KasirActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.supplier.SupplierListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.supplier.SupplierDetailActivity"
             android:exported="false" />
         <activity
             android:name=".activities.laporan.LaporanActivity"
@@ -66,7 +69,7 @@
         <activity
             android:name=".activities.produk.EditProdukActivity"
             android:exported="false"
-            />
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
     </application>
 
 </manifest>

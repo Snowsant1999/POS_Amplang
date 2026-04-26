@@ -1,5 +1,6 @@
 package com.kelompok3.posamplang.activities.produk;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -75,7 +76,7 @@ public class ProdukListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.manajemen_stok);
+        setContentView(R.layout.activity_produk_list);
 
         setupWindowInsets();
         setupSidebar(R.id.btn_nav_stok);
@@ -133,8 +134,7 @@ public class ProdukListActivity extends BaseActivity {
     /** Mendaftarkan listener untuk tombol-tombol interaktif. */
     private void setupClickListeners() {
         btnTambahProduk.setOnClickListener(v -> {
-            Intent intent = new Intent(ProdukListActivity.this, TambahProdukActivity.class);
-            tambahProdukLauncher.launch(intent);
+            tambahProduk();
         });
     }
 
@@ -187,4 +187,8 @@ public class ProdukListActivity extends BaseActivity {
         );
     }
 
+    private void tambahProduk(){
+        Intent intent = new Intent(this, TambahProdukActivity.class);
+        tambahProdukLauncher.launch(intent);
+    }
 }

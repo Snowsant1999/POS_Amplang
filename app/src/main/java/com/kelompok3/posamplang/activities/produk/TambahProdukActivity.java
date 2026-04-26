@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.kelompok3.posamplang.R;
 
-public class TambahProdukActivity extends AppCompatActivity {
+public class TambahProdukActivity extends ProdukListActivity {
 
     private EditText etNamaProduk, etKodeProduk, etMerek, etHargaPokok, etHargaJual, etStok, etDeskripsi, etSatuan;
     private Spinner spinnerKategori;
@@ -20,7 +20,7 @@ public class TambahProdukActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tambah_produk);
+        setContentView(R.layout.activity_tambah_produk);
 
         // Inisialisasi View
         etNamaProduk = findViewById(R.id.etNamaProduk);

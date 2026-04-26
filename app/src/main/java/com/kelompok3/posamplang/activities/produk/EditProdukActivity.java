@@ -11,7 +11,7 @@ public class EditProdukActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_stok);
+        setContentView(R.layout.activity_edit_produk);
 
         MaterialButton btnSimpan = findViewById(R.id.btnSimpan);
         MaterialButton btnEdit = findViewById(R.id.btnEditAction);

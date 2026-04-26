@@ -15,7 +15,7 @@ public class SandiBerhasilActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.halamanloginsandiberhasil);
+        setContentView(R.layout.activity_sandi_berhasil);
 
         btnLoginSekarang = findViewById(R.id.btnLoginSekarang);
 

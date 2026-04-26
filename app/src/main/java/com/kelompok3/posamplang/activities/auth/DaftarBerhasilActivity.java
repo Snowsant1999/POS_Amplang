@@ -15,7 +15,7 @@ public class DaftarBerhasilActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.halamanlogindaftarberhasil);
+        setContentView(R.layout.activity_daftar_berhasil);
 
         btnLoginSekarang = findViewById(R.id.btnLoginSekarangDaftar);
 

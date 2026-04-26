@@ -20,7 +20,7 @@ public class AturSandiActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.halamanloginatursandi);
+        setContentView(R.layout.activity_atur_sandi);
 
         etSandiBaru = findViewById(R.id.etSandiBaru);
         etSandiKonfirmasi = findViewById(R.id.etSandiKonfirmasi);
