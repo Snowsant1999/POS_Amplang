@@ -1,31 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="#FFFFFF"
+    android:orientation="horizontal">
 
     <!-- Sidebar -->
     <LinearLayout
         android:id="@+id/sidebar"
-        android:layout_width="200dp"
+        android:layout_width="180dp"
         android:layout_height="match_parent"
         android:background="@color/primary_yellow"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_top_toTopOf="parent">
+        android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="24dp"
-            android:text="AMPLANG\nSALSABILA"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:paddingTop="40dp"
+            android:paddingBottom="30dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AMPLANG"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SALSABILA"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,7 +46,6 @@
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:contentDescription="Dashboard Icon"
                 android:src="@drawable/group"
                 app:tint="@color/white" />
             <TextView
@@ -44,20 +53,18 @@
                 android:layout_height="wrap_content"
                 android:text="DASHBOARD"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primary_red"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="16dp">
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:contentDescription="@string/desc_stok_icon"
                 android:src="@drawable/box"
                 app:tint="@color/white" />
             <TextView
@@ -65,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:text="STOK"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -77,7 +84,6 @@
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:contentDescription="Supplier Icon"
                 android:src="@drawable/shopping_bag"
                 app:tint="@color/white" />
             <TextView
@@ -85,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:text="SUPPLIER"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -97,7 +103,6 @@
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:contentDescription="Kasir Icon"
                 android:src="@drawable/shopping_cart"
                 app:tint="@color/white" />
             <TextView
@@ -105,27 +110,29 @@
                 android:layout_height="wrap_content"
                 android:text="KASIR"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#A52A2A"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="16dp">
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:contentDescription="Laporan Icon"
                 android:src="@drawable/bar_chart_2"
                 app:tint="@color/white" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="LAPORAN HARIAN"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="11sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -137,7 +144,6 @@
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:contentDescription="Settings Icon"
                 android:src="@drawable/material_symbols_settings"
                 app:tint="@color/white" />
             <TextView
@@ -145,111 +151,39 @@
                 android:layout_height="wrap_content"
                 android:text="PENGATURAN"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
         </LinearLayout>
-
     </LinearLayout>
 
-    <!-- Main Content -->
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="0dp"
+    <!-- Main Content Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/sidebar">
+        android:orientation="vertical">
 
+        <!-- Header Content -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="32dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp">
+                android:layout_marginBottom="32dp"
+                android:text="LAPORAN HARIAN"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="MANAJEMEN STOK"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnTambahProduk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:backgroundTint="@color/primary_red"
-                    android:text="+ Tambah produk"
-                    android:textAllCaps="false"
-                    app:cornerRadius="4dp" />
-
-                <!-- Success Notification -->
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Show " />
-
-                <Spinner
-                    android:id="@+id/spinnerEntries"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" entries" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <RelativeLayout
-                    android:layout_width="200dp"
-                    android:layout_height="48dp">
-                    <EditText
-                        android:id="@+id/etSearch"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:background="@drawable/border_gray_rounded"
-                        android:hint="Search"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="32dp"
-                        android:textSize="14sp"
-                        android:inputType="text" />
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/search"
-                        app:tint="@color/border_gray" />
-                </RelativeLayout>
-            </LinearLayout>
-
-            <!-- Table Header Line -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:background="@color/primary_red" />
-
-            <!-- Table -->
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:fadeScrollbars="false"
+                android:overScrollMode="never"
                 android:scrollbars="none">
 
                 <LinearLayout
@@ -257,93 +191,123 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <!-- Headers -->
-                    <TableRow
-                        android:layout_width="1034dp"
+                    <!-- Table Header -->
+
+                    <!-- Mock Data Rows for Preview -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#F5F5F5"
-                        android:padding="12dp">
+                        android:background="#F2F2F2"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
 
                         <TextView
-                            android:layout_width="150dp"
-                            android:text="@string/label_nama"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="12dp"
+                            android:text="Tanggal"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="115dp"
+                            android:layout_height="wrap_content"
+                            android:text="Penjualan Awal"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="115dp"
+                            android:layout_height="wrap_content"
+                            android:text="Penjualan Tunai"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="80dp"
-                            android:text="Kode"
+                            android:layout_height="wrap_content"
+                            android:text="Uang Tunai"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:layout_width="100dp"
-                            android:text="Merek"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="100dp"
-                            android:text="Kategori"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="80dp"
-                            android:text="Satuan"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="100dp"
-                            android:text="Harga Beli"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="100dp"
-                            android:text="Harga Jual"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="60dp"
-                            android:text="Stok"
+                            android:layout_width="115dp"
+                            android:layout_height="wrap_content"
+                            android:text="Total Penjualan"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="65dp"
-                            android:text="Min.stok"
+                            android:layout_height="wrap_content"
+                            android:text="Cash"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="135dp"
+                            android:layout_height="wrap_content"
+                            android:text="Pembayaran Online"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="65dp"
-                            android:text="Status"
+                            android:layout_height="wrap_content"
+                            android:text="BON"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:layout_width="80dp"
-                            android:gravity="center"
-                            android:text="Aksi"
+                            android:layout_width="250dp"
+                            android:layout_height="wrap_content"
+                            android:text="Actions"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
-                    </TableRow>
+                    </LinearLayout>
+
+                    <include layout="@layout/item_laporan_harian" />
+                    <include layout="@layout/item_laporan_harian_alt" />
+                    <include layout="@layout/item_laporan_harian" />
+                    <include layout="@layout/item_laporan_harian_alt" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvProduk"
+                        android:id="@+id/rvLaporanHarian"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:itemCount="1"
-                        tools:listitem="@layout/item_produk" />
-
+                        android:visibility="gone" />
                 </LinearLayout>
             </HorizontalScrollView>
-
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Menampilkan 1 dari 5 data"
+                android:textColor="#666666" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <TextView android:layout_width="32dp" android:layout_height="32dp" android:background="@color/primary_yellow" android:gravity="center" android:text="1" android:textColor="@color/white" />
+                <TextView android:layout_width="32dp" android:layout_height="32dp" android:layout_marginStart="8dp" android:background="#F2F2F2" android:gravity="center" android:text="2" android:textColor="@color/black" />
+                <TextView android:layout_width="32dp" android:layout_height="32dp" android:layout_marginStart="8dp" android:background="#F2F2F2" android:gravity="center" android:text="3" android:textColor="@color/black" />
+                <TextView android:layout_width="32dp" android:layout_height="32dp" android:layout_marginStart="8dp" android:background="#F2F2F2" android:gravity="center" android:text="4" android:textColor="@color/black" />
+                <ImageView android:layout_width="20dp" android:layout_height="20dp" android:layout_marginStart="12dp" android:src="@drawable/chevron_right" app:tint="@color/black" />
+                <ImageView android:layout_width="32dp" android:layout_height="32dp" android:layout_marginStart="12dp" android:background="#DDDDDD" android:padding="8dp" android:src="@drawable/chevrons_left" app:tint="@color/white" />
+                <ImageView android:layout_width="32dp" android:layout_height="32dp" android:layout_marginStart="4dp" android:background="#DDDDDD" android:padding="8dp" android:src="@drawable/chevrons_right" app:tint="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

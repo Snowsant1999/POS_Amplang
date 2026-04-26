@@ -51,9 +51,10 @@
     <string name="zero_hint">0</string>
     <string name="label_nama">Nama</string>
     <string name="desc_stok_icon">Stok Icon</string>
-    <string name="apakah_anda_yakin_ingin_menghapus_produk_ini">Apakah Anda yakin ingin menghapus produk ini?</string>
-    <string name="produk_yang_sudah_dihapus_tidak_dapat_dikembalikan">Produk yang sudah dihapus tidak dapat dikembalikan.</string>
+    <string name="apakah_anda_yakin_ingin_menghapus_laporan_ini">Apakah Anda yakin ingin menghapus laporan ini?</string>
+    <string name="laporan_yang_sudah_dihapus_tidak_dapat_dikembalikan">Laporan yang sudah dihapus tidak dapat dikembalikan.</string>
     <string name="lt_batal"><![CDATA[< Batal]]></string>
     <string name="tutup_dialog">Tutup Dialog</string>
     <string name="lt_hapus">Hapus</string>
+    <string name="hapus_laporan">Hapus Laporan</string>
 </resources>

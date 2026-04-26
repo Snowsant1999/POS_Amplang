@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FA">
+
+    <!-- Sidebar -->
+    <LinearLayout
+        android:id="@+id/sidebar"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:background="@color/primary_yellow"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_top_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="24dp"
+            android:text="AMPLANG\nSALSABILA"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/group"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DASHBOARD"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/box"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="STOK"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/shopping_bag"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SUPPLIER"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/shopping_cart"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="KASIR"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_red"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/bar_chart_2"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LAPORAN HARIAN"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/material_symbols_settings"
+                app:tint="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PENGATURAN"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Main Content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/sidebar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="32dp">
+
+            <!-- Header Laporan -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LAPORAN KEUANGAN HARIAN"
+                        android:textColor="@color/black"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tanggal saat ini: 09/04/2026"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:layout_marginTop="8dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical"
+                    android:gravity="end">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnLihatLaporan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/primary_red"
+                        android:text="Lihat Laporan Harian"
+                        android:textAllCaps="false"
+                        app:cornerRadius="4dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnPrint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/primary_yellow"
+                            android:text="Print"
+                            android:textAllCaps="false"
+                            app:cornerRadius="4dp"
+                            android:layout_marginEnd="8dp"/>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnSimpanLaporan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="#5CB85C"
+                            android:text="Simpan Laporan"
+                            android:textAllCaps="false"
+                            app:cornerRadius="4dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <!-- Left Column -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="32dp">
+
+                    <!-- Tabel Ringkasan Penjualan -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="#DDDDDD">
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:divider="?android:attr/dividerVertical"
+                            android:showDividers="middle">
+                            <TableRow android:background="#F2F2F2" android:padding="12dp">
+                                <TextView android:layout_width="150dp" android:text="Penjualan Awal" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                            <TableRow android:background="#FFFFFF" android:padding="12dp">
+                                <TextView android:text="Penjualan Tunai" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                            <TableRow android:background="#F2F2F2" android:padding="12dp">
+                                <TextView android:text="Uang Tunai" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                            <TableRow android:background="#FFFFFF" android:padding="12dp">
+                                <TextView android:text="Pembatalan" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                            <TableRow android:background="#F2F2F2" android:padding="12dp">
+                                <TextView android:text="Retur" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                        </TableLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Metode Pembayaran -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Metode Pembayaran"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="12dp" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="#DDDDDD">
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TableRow android:background="#F2F2F2" android:padding="12dp">
+                                <TextView android:layout_width="150dp" android:text="Pembayaran Tunai" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                            <TableRow android:background="#FFFFFF" android:padding="12dp">
+                                <TextView android:text="Pembayaran Online" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                            <TableRow android:background="#F2F2F2" android:padding="12dp">
+                                <TextView android:text="Pembayaran Tertunda" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                            <TableRow android:background="#FFFFFF" android:padding="12dp">
+                                <TextView android:text="Total Penjualan" android:textStyle="bold" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                        </TableLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Pajak Pembayaran -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pajak Pembayaran"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="12dp" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="#DDDDDD">
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TableRow android:background="#F2F2F2" android:padding="12dp">
+                                <TextView android:layout_width="150dp" android:text="PPN" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                            <TableRow android:background="#FFFFFF" android:padding="12dp">
+                                <TextView android:text="DPP" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                        </TableLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <!-- Right Column -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!-- Jumlah Penjualan -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jumlah Penjualan"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="#DDDDDD">
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TableRow android:background="#F2F2F2" android:padding="12dp">
+                                <TextView android:layout_width="150dp" android:text="Sembako Basah" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                            <TableRow android:background="#FFFFFF" android:padding="12dp">
+                                <TextView android:text="Sembako Kering" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                            <TableRow android:background="#F2F2F2" android:padding="12dp">
+                                <TextView android:text="Combo" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                        </TableLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Jumlah Penjualan (BON) -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jumlah Penjualan (BON)"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="12dp" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="#DDDDDD">
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TableRow android:background="#F2F2F2" android:padding="12dp">
+                                <TextView android:layout_width="150dp" android:text="Sembako Basah" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                            <TableRow android:background="#FFFFFF" android:padding="12dp">
+                                <TextView android:text="Sembako Kering" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                            <TableRow android:background="#F2F2F2" android:padding="12dp">
+                                <TextView android:text="Combo" />
+                                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#DDDDDD" />
+                                <TextView android:layout_marginStart="12dp" android:text="Rp0" android:textStyle="bold" />
+                            </TableRow>
+                        </TableLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
