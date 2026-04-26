@@ -7,7 +7,7 @@
 
     <!-- Layer 0: Background (Manajemen Stok tetap terlihat di belakang) -->
     <include
-        layout="@layout/manajemen_stok"
+        layout="@layout/activity_produk_list"
         android:alpha="0.5" />
 
     <!-- Layer 1: Dark Overlay -->

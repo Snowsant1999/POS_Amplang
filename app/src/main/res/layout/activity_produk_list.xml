@@ -115,10 +115,6 @@
             </LinearLayout>
 
             <!-- Table Header Line -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:background="@color/primary_red" />
 
             <!-- Table -->
             <HorizontalScrollView
@@ -205,6 +201,11 @@
                             android:textColor="@color/black"
                             android:textStyle="bold" />
                     </TableRow>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:background="@color/primary_red" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvProduk"
