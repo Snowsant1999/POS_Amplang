@@ -55,8 +55,7 @@
             android:name=".activities.supplier.SupplierDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.laporan.LaporanActivity"
-            android:exported="false" />
+            android:name=".activities.laporan.LaporanHarianActivity"/>
         <activity
             android:name=".activities.pengaturan.PengaturanActivity"
             android:exported="false" />

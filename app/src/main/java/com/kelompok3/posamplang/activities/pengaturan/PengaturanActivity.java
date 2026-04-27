@@ -14,11 +14,8 @@ public class PengaturanActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.pengaturan);
         
         setupSidebar(R.id.btn_nav_pengaturan);
-        
-        Toast.makeText(this, "Modul Pengaturan sedang dalam pengembangan", Toast.LENGTH_SHORT).show();
     }
 }

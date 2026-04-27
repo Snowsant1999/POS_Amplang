@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kelompok3.posamplang.R;
 import com.kelompok3.posamplang.adapters.LaporanHarianAdapter;
 import com.kelompok3.posamplang.models.LaporanHarian;
+import com.kelompok3.posamplang.parent.BaseActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class LaporanHarianActivity extends AppCompatActivity {
+public class LaporanHarianActivity extends BaseActivity {
 
     private RecyclerView rvLaporanHarian;
     private LaporanHarianAdapter adapter;
@@ -21,6 +23,8 @@ public class LaporanHarianActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.laporan_harian);
+
+        setupSidebar(R.id.btn_nav_laporan);
 
         rvLaporanHarian = findViewById(R.id.rvLaporanHarian);
         rvLaporanHarian.setLayoutManager(new LinearLayoutManager(this));

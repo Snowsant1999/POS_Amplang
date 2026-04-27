@@ -1,7 +1,6 @@
 package com.kelompok3.posamplang.parent;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -10,10 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.kelompok3.posamplang.R;
 import com.kelompok3.posamplang.activities.auth.LoginActivity;
 import com.kelompok3.posamplang.activities.dashboard.MainActivity;
+import com.kelompok3.posamplang.activities.laporan.LaporanHarianActivity;
 import com.kelompok3.posamplang.activities.transaksi.KasirActivity;
 import com.kelompok3.posamplang.activities.produk.ProdukListActivity;
 import com.kelompok3.posamplang.activities.supplier.SupplierListActivity;
-import com.kelompok3.posamplang.activities.laporan.LaporanActivity;
 import com.kelompok3.posamplang.activities.pengaturan.PengaturanActivity;
 
 
@@ -56,7 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         if (btnLaporan != null) {
-            btnLaporan.setOnClickListener(v -> navigateTo(LaporanActivity.class));
+            btnLaporan.setOnClickListener(v -> navigateTo(LaporanHarianActivity.class));
         }
 
         if (btnSetting != null) {
