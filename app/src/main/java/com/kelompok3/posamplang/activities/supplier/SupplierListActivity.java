@@ -68,6 +68,9 @@ public class SupplierListActivity extends BaseActivity {
         TextView tvMessage = dialog.findViewById(R.id.tv_dialog_message);
         tvMessage.setText("Data Supplier baru berhasil disimpan.");
 
+        TextView tvTitleMessage = dialog.findViewById(R.id.tv_title_dialog_berhasil);
+        tvTitleMessage.setText("Supplier Ditambahkan!");
+
         dialog.findViewById(R.id.btn_cetak_struk).setVisibility(android.view.View.GONE);
         
         dialog.findViewById(R.id.btn_close).setOnClickListener(v -> dialog.dismiss());

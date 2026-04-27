@@ -29,6 +29,7 @@
             app:tint="@color/success_green" />
 
         <TextView
+            android:id="@+id/tv_title_dialog_berhasil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"

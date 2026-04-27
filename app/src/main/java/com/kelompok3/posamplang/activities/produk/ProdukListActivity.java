@@ -72,7 +72,6 @@ public class ProdukListActivity extends BaseActivity {
         tvSuccessNotification = findViewById(R.id.tvSuccessNotification);
     }
 
-
     // Mengisi data produk sementara
     private void loadDummyData() {
         produkList = new ArrayList<>();

@@ -10,7 +10,11 @@
     tools:context=".activities.dashboard.MainActivity">
 
     <!-- SIDEBAR -->
-    <include layout="@layout/layout_sidebar" />
+    <include
+        android:id="@+id/sidebar"
+        layout="@layout/layout_sidebar"
+        android:layout_width="160dp"
+        android:layout_height="match_parent" />
 
     <!-- KONTEN UTAMA -->
     <LinearLayout

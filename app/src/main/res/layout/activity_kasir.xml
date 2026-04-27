@@ -10,7 +10,11 @@
     tools:context=".activities.transaksi.KasirActivity">
 
     <!-- SIDEBAR -->
-    <include layout="@layout/layout_sidebar" />
+    <include
+        android:id="@+id/sidebar"
+        layout="@layout/layout_sidebar"
+        android:layout_width="160dp"
+        android:layout_height="match_parent" />
 
     <!-- KONTEN TENGAH -->
     <LinearLayout
@@ -96,7 +100,8 @@
                         android:padding="16dp"
                         android:text="Gabin Susu"
                         android:textColor="@android:color/black"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:background="@color/white"/>
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -118,6 +123,7 @@
                         android:padding="16dp"
                         android:text="Gabin Keju"
                         android:textColor="@android:color/black"
+                        android:background = "@color/white"
                         android:textSize="12sp" />
                 </com.google.android.material.card.MaterialCardView>
 
@@ -140,6 +146,7 @@
                         android:padding="16dp"
                         android:text="Amplang Kuku Macan"
                         android:textColor="@android:color/black"
+                        android:background = "@color/white"
                         android:textSize="12sp" />
                 </com.google.android.material.card.MaterialCardView>
 
@@ -161,6 +168,7 @@
                         android:padding="16dp"
                         android:text="Amplang Ikan Pipih"
                         android:textColor="@android:color/black"
+                        android:background = "@color/white"
                         android:textSize="12sp" />
                 </com.google.android.material.card.MaterialCardView>
 
@@ -182,7 +190,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:background="@color/white">
 
             <TextView
                 android:layout_width="match_parent"

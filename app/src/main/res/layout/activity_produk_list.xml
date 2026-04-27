@@ -8,14 +8,21 @@
     android:background="@color/white">
 
     <!-- Sidebar -->
-    <include layout="@layout/layout_sidebar" />
+    <include
+        android:id="@+id/sidebar"
+        layout="@layout/layout_sidebar"
+        android:layout_width="160dp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Main Content -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/sidebar_container">
+        app:layout_constraintStart_toEndOf="@id/sidebar">
 
         <LinearLayout
             android:layout_width="match_parent"

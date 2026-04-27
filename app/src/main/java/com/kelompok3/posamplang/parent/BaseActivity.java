@@ -10,6 +10,7 @@ import com.kelompok3.posamplang.R;
 import com.kelompok3.posamplang.activities.auth.LoginActivity;
 import com.kelompok3.posamplang.activities.dashboard.MainActivity;
 import com.kelompok3.posamplang.activities.laporan.LaporanHarianActivity;
+import com.kelompok3.posamplang.activities.laporan.LaporanHarianDetailActivity;
 import com.kelompok3.posamplang.activities.transaksi.KasirActivity;
 import com.kelompok3.posamplang.activities.produk.ProdukListActivity;
 import com.kelompok3.posamplang.activities.supplier.SupplierListActivity;
@@ -55,7 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         if (btnLaporan != null) {
-            btnLaporan.setOnClickListener(v -> navigateTo(LaporanHarianActivity.class));
+            btnLaporan.setOnClickListener(v -> navigateTo(LaporanHarianDetailActivity.class));
         }
 
         if (btnSetting != null) {

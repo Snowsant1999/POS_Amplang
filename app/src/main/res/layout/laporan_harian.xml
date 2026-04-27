@@ -9,8 +9,10 @@
 
     <!-- Sidebar -->
     <include
+        android:id="@+id/sidebar"
         layout="@layout/layout_sidebar"
-        android:layout_weight="1" />
+        android:layout_width="160dp"
+        android:layout_height="match_parent" />
 
     <!-- Main Content Container -->
     <LinearLayout
@@ -132,7 +134,7 @@
                         android:id="@+id/rvLaporanHarian"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
                 </LinearLayout>
             </HorizontalScrollView>
         </LinearLayout>
