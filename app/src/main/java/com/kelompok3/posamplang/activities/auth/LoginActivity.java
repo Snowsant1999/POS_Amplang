@@ -18,17 +18,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.kelompok3.posamplang.R;
 import com.kelompok3.posamplang.activities.dashboard.MainActivity;
 
-/**
- * LoginActivity — Halaman autentikasi pengguna.
- *
- * TODO: Ganti validasi hardcoded dengan autentikasi dari Room Database
- *       setelah implementasi AppDatabase dan UserDao selesai.
- */
-public class LoginActivity extends AppCompatActivity {
 
-    // -------------------------------------------------------------------------
-    // Views
-    // -------------------------------------------------------------------------
+// Halaman untuk proses autentikasi pengguna
+public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail;
     private EditText etPassword;
@@ -36,17 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnBatal;
     private TextView tvDaftar;
 
-    // -------------------------------------------------------------------------
-    // Kredensial sementara (HARDCODED — hanya untuk tahap prototyping)
-    // TODO: Hapus ini dan ganti dengan query ke UserDao
-    // -------------------------------------------------------------------------
-
     private static final String DEMO_EMAIL    = "admin@gmail.com";
     private static final String DEMO_PASSWORD = "admin123";
-
-    // -------------------------------------------------------------------------
-    // Lifecycle
-    // -------------------------------------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +41,8 @@ public class LoginActivity extends AppCompatActivity {
         setupClickListeners();
     }
 
-    // -------------------------------------------------------------------------
-    // Inisialisasi
-    // -------------------------------------------------------------------------
 
-    /** Menghubungkan variabel ke elemen UI dari layout. */
+    // Menghubungkan variabel dengan komponen di layout
     private void initViews() {
         etEmail    = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
@@ -71,17 +51,15 @@ public class LoginActivity extends AppCompatActivity {
         tvDaftar   = findViewById(R.id.tvDaftar);
     }
 
-    /** Mendaftarkan semua listener untuk elemen interaktif. */
+
+    // Menentukan aksi ketika tombol diklik
     private void setupClickListeners() {
         btnMasuk.setOnClickListener(v -> handleLogin());
         btnBatal.setOnClickListener(v -> clearForm());
         tvDaftar.setOnClickListener(v -> navigateToRegister());
     }
 
-    // -------------------------------------------------------------------------
-    // Logic Utama
-    // -------------------------------------------------------------------------
-
+    // Memvalidasi input dan memproses login
     private void handleLogin() {
         String email    = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
@@ -107,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    // Aksi jika login berhasil
     private void onLoginSuccess() {
         Toast.makeText(this, "Login Berhasil", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
@@ -116,17 +95,20 @@ public class LoginActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
+    // Aksi jika login gagal
     private void onLoginFailed() {
         Intent intent = new Intent(this, LoginGagalActivity.class);
         startActivity(intent);
         overridePendingTransition(0, 0);
     }
 
+    // Mengosongkan isian form
     private void clearForm() {
         etEmail.setText("");
         etPassword.setText("");
         etEmail.requestFocus();
     }
+    // Pindah ke halaman register
     private void navigateToRegister() {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);

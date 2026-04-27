@@ -27,35 +27,18 @@ import com.kelompok3.posamplang.parent.BaseActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * ProdukListActivity — Halaman manajemen daftar produk.
- *
- * Menampilkan semua produk beserta fitur pencarian dan tombol tambah produk.
- *
- * TODO: Ganti data dummy dengan query dari ProdukDao via Room Database.
- */
-public class ProdukListActivity extends BaseActivity {
 
-    // -------------------------------------------------------------------------
-    // Views
-    // -------------------------------------------------------------------------
+// Halaman manajemen daftar produk
+public class ProdukListActivity extends BaseActivity {
 
     private RecyclerView rvProduk;
     private EditText        etSearch;
     private MaterialButton btnTambahProduk;
     private TextView        tvSuccessNotification;
 
-    // -------------------------------------------------------------------------
-    // Data & Adapter
-    // -------------------------------------------------------------------------
-
     private ProdukAdapter adapter;
     private List<Produk>  produkList;
     private List<Produk>  filteredList;
-
-    // -------------------------------------------------------------------------
-    // Activity Result Launcher (pengganti startActivityForResult yang sudah deprecated)
-    // -------------------------------------------------------------------------
 
     private final ActivityResultLauncher<Intent> tambahProdukLauncher =
             registerForActivityResult(
@@ -68,42 +51,20 @@ public class ProdukListActivity extends BaseActivity {
                     }
             );
 
-    // -------------------------------------------------------------------------
-    // Lifecycle
-    // -------------------------------------------------------------------------
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_produk_list);
 
-        setupWindowInsets();
         setupSidebar(R.id.btn_nav_stok);
+
         initViews();
         loadDummyData();
         setupRecyclerView();
         setupClickListeners();
         setupSearch();
     }
-
-    // -------------------------------------------------------------------------
-    // Inisialisasi
-    // -------------------------------------------------------------------------
-
-    private void setupWindowInsets()
-    {
-        View mainView = findViewById(R.id.main);
-        if (mainView != null) {
-            ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
-                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-                return insets;
-            });
-        }
-    }
-
-    /** Menghubungkan variabel ke elemen UI dari layout. */
     private void initViews() {
         etSearch              = findViewById(R.id.etSearch);
         btnTambahProduk       = findViewById(R.id.btnTambahProduk);
@@ -111,10 +72,8 @@ public class ProdukListActivity extends BaseActivity {
         tvSuccessNotification = findViewById(R.id.tvSuccessNotification);
     }
 
-    /**
-     * Memuat data produk sementara (dummy).
-     * TODO: Ganti dengan pemanggilan ProdukDao.getAllProduk() dari Room Database.
-     */
+
+    // Mengisi data produk sementara
     private void loadDummyData() {
         produkList = new ArrayList<>();
         produkList.add(new Produk(1, 1, 1, 1, "Gabin Susu",       "Pcs", 20000, 30));
@@ -125,6 +84,7 @@ public class ProdukListActivity extends BaseActivity {
         filteredList = new ArrayList<>(produkList);
     }
 
+    // Setup list dan adapter produk
     private void setupRecyclerView() {
         rvProduk.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ProdukAdapter(filteredList);
@@ -138,7 +98,8 @@ public class ProdukListActivity extends BaseActivity {
         });
     }
 
-    /** Mendaftarkan TextWatcher untuk kolom pencarian produk. */
+
+    // Menjalankan pencarian saat pengguna mengetik
     private void setupSearch() {
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -151,15 +112,7 @@ public class ProdukListActivity extends BaseActivity {
         });
     }
 
-    // -------------------------------------------------------------------------
-    // Logic Utama
-    // -------------------------------------------------------------------------
 
-    /**
-     * Memfilter daftar produk berdasarkan nama atau ID produk.
-     *
-     * @param keyword Kata kunci pencarian dari input pengguna.
-     */
     private void filterProduk(String keyword) {
         filteredList.clear();
         String lowerKeyword = keyword.toLowerCase().trim();
@@ -176,9 +129,7 @@ public class ProdukListActivity extends BaseActivity {
         adapter.notifyDataSetChanged();
     }
 
-    /**
-     * Menampilkan notifikasi sukses selama 3 detik kemudian menyembunyikannya otomatis.
-     */
+
     private void showSuccessNotification() {
         tvSuccessNotification.setVisibility(View.VISIBLE);
         tvSuccessNotification.postDelayed(
@@ -187,6 +138,7 @@ public class ProdukListActivity extends BaseActivity {
         );
     }
 
+    // Membuka halaman tambah produk baru
     private void tambahProduk(){
         Intent intent = new Intent(this, TambahProdukActivity.class);
         tambahProdukLauncher.launch(intent);

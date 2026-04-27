@@ -45,8 +45,7 @@ public class SupplierListActivity extends BaseActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_tambah_supplier);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        
-        // Atur ukuran dialog (600dp seperti di desain)
+
         int width = (int)(600 * getResources().getDisplayMetrics().density);
         dialog.getWindow().setLayout(width, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -54,7 +53,6 @@ public class SupplierListActivity extends BaseActivity {
         dialog.findViewById(R.id.iv_close_dialog).setOnClickListener(v -> dialog.dismiss());
         
         dialog.findViewById(R.id.btn_simpan_dialog).setOnClickListener(v -> {
-            // Logic simpan data
             dialog.dismiss();
             showSuccessDialog();
         });
@@ -69,10 +67,6 @@ public class SupplierListActivity extends BaseActivity {
 
         TextView tvMessage = dialog.findViewById(R.id.tv_dialog_message);
         tvMessage.setText("Data Supplier baru berhasil disimpan.");
-        
-        TextView tvTitle = dialog.findViewById(android.R.id.text1); // Mengasumsikan ada TextView judul
-        // Karena layout dialog_berhasil yang saya lihat sebelumnya khusus untuk pembayaran,
-        // Kita sesuaikan sedikit teksnya di sini.
 
         dialog.findViewById(R.id.btn_cetak_struk).setVisibility(android.view.View.GONE);
         
