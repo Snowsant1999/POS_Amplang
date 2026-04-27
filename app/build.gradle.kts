@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.activity)
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation(libs.constraintlayout)
+    implementation(libs.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
