@@ -37,23 +37,9 @@ import java.util.Locale;
 
 import com.kelompok3.posamplang.parent.BaseActivity;
 
-/**
- * KasirActivity — Halaman transaksi / kasir POS Amplang.
- *
- * Fitur:
- * - Menampilkan produk yang tersedia
- * - Mengelola keranjang belanja (tambah, kurangi, hapus item)
- * - Memproses pembayaran tunai dan QRIS
- * - Menampilkan struk transaksi
- *
- * TODO: Muat produk dari ProdukDao via Room Database (saat ini masih dummy).
- * TODO: Simpan transaksi ke PesananDao dan DetailPesananDao setelah pembayaran sukses.
- */
-public class KasirActivity extends BaseActivity {
 
-    // -------------------------------------------------------------------------
-    // Views — Keranjang & Ringkasan
-    // -------------------------------------------------------------------------
+// Halaman untuk mengelola transaksi pembayaran
+public class KasirActivity extends BaseActivity {
 
     private RecyclerView rvStruk;
     private TextView tvTotalItems;
@@ -61,28 +47,14 @@ public class KasirActivity extends BaseActivity {
     private TextView tvTotalHarga;
     private Button btnBayar;
 
-    // -------------------------------------------------------------------------
-    // Data & Adapter
-    // -------------------------------------------------------------------------
-
     private StrukAdapter adapter;
     private List<DetailPesanan> keranjangList = new ArrayList<>();
     private double currentTotal = 0;
-
-    // -------------------------------------------------------------------------
-    // Data Produk Sementara (Dummy)
-    // TODO: Ganti dengan query dari ProdukDao setelah Room Database diimplementasikan
-    //       Format: new Produk(id, id_kategori, id_merek, id_supplier, nama, unit, harga, stok)
-    // -------------------------------------------------------------------------
 
     private Produk produkGabinSusu;
     private Produk produkGabinKeju;
     private Produk produkKukuMacan;
     private Produk produkIkanPipih;
-
-    // -------------------------------------------------------------------------
-    // Lifecycle
-    // -------------------------------------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,28 +62,13 @@ public class KasirActivity extends BaseActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_kasir);
 
-        setupWindowInsets();
         setupSidebar(R.id.btn_nav_kasir);
+
         initViews();
         initDummyProducts();
         setupRecyclerView();
         setupProductClickListeners();
         setupPaymentButton();
-    }
-
-    // -------------------------------------------------------------------------
-    // Inisialisasi
-    // -------------------------------------------------------------------------
-
-    private void setupWindowInsets() {
-        View mainView = findViewById(R.id.main);
-        if (mainView != null) {
-            ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
-                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-                return insets;
-            });
-        }
     }
 
     private void initViews() {
@@ -122,10 +79,7 @@ public class KasirActivity extends BaseActivity {
         btnBayar      = findViewById(R.id.btn_bayar);
     }
 
-    /**
-     * Menginisialisasi data produk sementara.
-     * TODO: Hapus metode ini dan ganti dengan loadProdukFromDatabase() saat DB siap.
-     */
+
     private void initDummyProducts() {
         produkGabinSusu  = new Produk(101, 1, 1, 1, "Gabin Susu",       "Pcs", 20000, 50);
         produkGabinKeju  = new Produk(102, 1, 1, 1, "Gabin Keju",       "Pcs", 25000, 30);
@@ -133,7 +87,8 @@ public class KasirActivity extends BaseActivity {
         produkIkanPipih  = new Produk(104, 2, 2, 1, "Amplang Ikan Pipih", "Pcs", 40000, 20);
     }
 
-    /** Menyiapkan RecyclerView keranjang belanja beserta callback-nya. */
+
+    // Setup daftar item keranjang belanja
     private void setupRecyclerView() {
         adapter = new StrukAdapter(keranjangList, new StrukAdapter.OnItemQuantityChangeListener() {
             @Override
@@ -156,7 +111,7 @@ public class KasirActivity extends BaseActivity {
         rvStruk.setAdapter(adapter);
     }
 
-    /** Mendaftarkan listener klik untuk setiap card produk. */
+
     private void setupProductClickListeners() {
         findViewById(R.id.card_gabin_susu).setOnClickListener(v -> tambahKeKeranjang(produkGabinSusu));
         findViewById(R.id.card_gabin_keju).setOnClickListener(v -> tambahKeKeranjang(produkGabinKeju));
@@ -164,7 +119,7 @@ public class KasirActivity extends BaseActivity {
         findViewById(R.id.card_ikan_pipih).setOnClickListener(v -> tambahKeKeranjang(produkIkanPipih));
     }
 
-    /** Mendaftarkan listener untuk tombol bayar. */
+
     private void setupPaymentButton() {
         btnBayar.setOnClickListener(v -> {
             if (keranjangList.isEmpty()) {
@@ -175,15 +130,8 @@ public class KasirActivity extends BaseActivity {
         });
     }
 
-    // -------------------------------------------------------------------------
-    // Logic Keranjang
-    // -------------------------------------------------------------------------
 
-    /**
-     * Menambahkan produk ke keranjang. Jika produk sudah ada, jumlahnya ditambah 1.
-     *
-     * @param produk Produk yang akan ditambahkan ke keranjang.
-     */
+    // Menambahkan item ke dalam keranjang
     private void tambahKeKeranjang(Produk produk) {
         for (DetailPesanan detail : keranjangList) {
             if (detail.getId_produk() == produk.getId_produk()) {
@@ -200,7 +148,8 @@ public class KasirActivity extends BaseActivity {
         updateSummary();
     }
 
-    /** Memperbarui tampilan ringkasan total item dan harga. */
+
+    // Hitung ulang total belanjaan
     private void updateSummary() {
         int    totalQty  = 0;
         double subtotal  = 0;
@@ -216,18 +165,15 @@ public class KasirActivity extends BaseActivity {
         tvTotalHarga.setText(formatRupiah(subtotal));
     }
 
-    /** Mengosongkan keranjang dan mereset tampilan ringkasan. */
+
     private void resetKasir() {
         keranjangList.clear();
         adapter.notifyDataSetChanged();
         updateSummary();
     }
 
-    // -------------------------------------------------------------------------
-    // Dialog Pembayaran
-    // -------------------------------------------------------------------------
 
-    /** Menampilkan dialog pemilihan metode pembayaran (Tunai / QRIS). */
+    // Membuka dialog pilihan Tunai atau QRIS
     private void showDialogPilihMetode() {
         Dialog dialog = createDialog(R.layout.dialog_pilih_metode);
 
@@ -401,10 +347,6 @@ public class KasirActivity extends BaseActivity {
     private void showComingSoon(String moduleName) {
         Toast.makeText(this, "Modul " + moduleName + " belum tersedia", Toast.LENGTH_SHORT).show();
     }
-
-    // -------------------------------------------------------------------------
-    // Helper
-    // -------------------------------------------------------------------------
 
     /**
      * Membuat Dialog dengan layout tertentu dan latar transparan.
