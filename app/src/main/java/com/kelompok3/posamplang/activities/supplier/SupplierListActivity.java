@@ -79,9 +79,16 @@ public class SupplierListActivity extends BaseActivity {
     }
 
     private void loadDummyData() {
-        supplierList.add(new Supplier(1, "Indah Abdi", "Banjarmasin", "087698092547", "indaahabdii77@gmail.com", true));
-        supplierList.add(new Supplier(2, "Sumber Makmur", "Samarinda", "083131991015", "sumbermakmur3@gmail.com", true));
-        supplierList.add(new Supplier(3, "Maju Jaya", "Berau", "082145715782", "majujayasher@gmail.com", false));
-        adapter.notifyDataSetChanged();
+        com.kelompok3.posamplang.database.AppDatabase db = com.kelompok3.posamplang.database.AppDatabase.getInstance(this);
+        java.util.concurrent.Executors.newSingleThreadExecutor().execute(() -> {
+            java.util.List<Supplier> suppliers = db.supplierDao().getAll();
+            runOnUiThread(() -> {
+                supplierList.clear();
+                supplierList.addAll(suppliers);
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        });
     }
 }

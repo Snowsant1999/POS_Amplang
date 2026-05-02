@@ -42,7 +42,14 @@ dependencies {
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation(libs.constraintlayout)
     implementation(libs.recyclerview)
+    implementation(libs.room.common.jvm)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    // Room Database
+    val roomVersion = "2.7.2"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
 }

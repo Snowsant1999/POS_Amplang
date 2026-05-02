@@ -73,106 +73,13 @@
                     app:tint="#888" />
             </LinearLayout>
 
-            <!-- Quick Item Grid -->
-            <LinearLayout
+            <!-- Quick Item Grid (Dynamic) -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_menu_produk"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:padding="8dp">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_gabin_susu"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="6dp"
-                    app:strokeWidth="0dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="16dp"
-                        android:text="Gabin Susu"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp"
-                        android:background="@color/white"/>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_gabin_keju"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="6dp"
-                    app:strokeWidth="0dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="16dp"
-                        android:text="Gabin Keju"
-                        android:textColor="@android:color/black"
-                        android:background = "@color/white"
-                        android:textSize="12sp" />
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_kuku_macan"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="6dp"
-                    app:strokeWidth="0dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="16dp"
-                        android:text="Amplang Kuku Macan"
-                        android:textColor="@android:color/black"
-                        android:background = "@color/white"
-                        android:textSize="12sp" />
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_ikan_pipih"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="6dp"
-                    app:strokeWidth="0dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="16dp"
-                        android:text="Amplang Ikan Pipih"
-                        android:textColor="@android:color/black"
-                        android:background = "@color/white"
-                        android:textSize="12sp" />
-                </com.google.android.material.card.MaterialCardView>
-
-            </LinearLayout>
+                android:padding="4dp" />
 
         </LinearLayout>
     </LinearLayout>

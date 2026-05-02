@@ -1,11 +1,16 @@
 package com.kelompok3.posamplang.models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "pelanggan")
 public class Pelanggan {
+
+    @PrimaryKey(autoGenerate = true)
     private int id_pelanggan;
     private String nama_pelanggan;
 
-    public Pelanggan(int id_pelanggan, String nama_pelanggan) {
-        this.id_pelanggan = id_pelanggan;
+    public Pelanggan(String nama_pelanggan) {
         this.nama_pelanggan = nama_pelanggan;
     }
 

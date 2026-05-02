@@ -1,6 +1,27 @@
 package com.kelompok3.posamplang.models;
 
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Ignore;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
+@Entity(
+    tableName = "detail_pesanan",
+    foreignKeys = {
+        @ForeignKey(entity = Produk.class, parentColumns = "id_produk", childColumns = "id_produk", onDelete = ForeignKey.RESTRICT),
+        @ForeignKey(entity = Pesanan.class, parentColumns = "id_pesanan", childColumns = "id_pesanan", onDelete = ForeignKey.CASCADE),
+        @ForeignKey(entity = User.class, parentColumns = "id_users", childColumns = "id_users", onDelete = ForeignKey.RESTRICT)
+    },
+    indices = {
+        @Index("id_produk"),
+        @Index("id_pesanan"),
+        @Index("id_users")
+    }
+)
 public class DetailPesanan {
+
+    @PrimaryKey(autoGenerate = true)
     private int id_detail_pesanan;
     private int id_produk;
     private int id_pesanan;
@@ -9,25 +30,17 @@ public class DetailPesanan {
     private double harga_produk;
     private double total_harga;
 
-    // Field tambahan untuk keperluan display di UI
+    // Field tambahan untuk display di UI (tidak disimpan ke DB)
+    @Ignore
     private String nama_produk_display;
 
-    public DetailPesanan(int id_detail_pesanan, int id_produk, int id_pesanan, int id_users, int jumlah_produk, double harga_produk, double total_harga) {
-        this.id_detail_pesanan = id_detail_pesanan;
+    public DetailPesanan(int id_produk, int id_pesanan, int id_users, int jumlah_produk, double harga_produk, double total_harga) {
         this.id_produk = id_produk;
         this.id_pesanan = id_pesanan;
         this.id_users = id_users;
         this.jumlah_produk = jumlah_produk;
         this.harga_produk = harga_produk;
         this.total_harga = total_harga;
-    }
-
-    public DetailPesanan(Produk produk, int jumlah) {
-        this.id_produk = produk.getId_produk();
-        this.nama_produk_display = produk.getNama_produk();
-        this.jumlah_produk = jumlah;
-        this.harga_produk = produk.getHarga_produk();
-        this.total_harga = this.harga_produk * jumlah;
     }
 
     public int getId_detail_pesanan() { return id_detail_pesanan; }

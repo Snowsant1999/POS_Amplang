@@ -11,13 +11,13 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.kelompok3.posamplang.R;
 import com.kelompok3.posamplang.activities.dashboard.MainActivity;
+import com.kelompok3.posamplang.database.AppDatabase;
+import com.kelompok3.posamplang.models.User;
 
+import java.util.concurrent.Executors;
 
 // Halaman untuk proses autentikasi pengguna
 public class LoginActivity extends AppCompatActivity {
@@ -27,9 +27,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnMasuk;
     private Button btnBatal;
     private TextView tvDaftar;
-
-    private static final String DEMO_EMAIL    = "admin@gmail.com";
-    private static final String DEMO_PASSWORD = "admin123";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +74,20 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Proses autentikasi
-        if (email.equals(DEMO_EMAIL) && password.equals(DEMO_PASSWORD)) {
-            onLoginSuccess();
-        } else {
-            onLoginFailed();
-        }
+        // Proses autentikasi melalui database (Background Thread)
+        AppDatabase db = AppDatabase.getInstance(this);
+        Executors.newSingleThreadExecutor().execute(() -> {
+            User user = db.userDao().login(email, password);
+            
+            // Kembali ke Main Thread untuk update UI
+            runOnUiThread(() -> {
+                if (user != null) {
+                    onLoginSuccess();
+                } else {
+                    onLoginFailed();
+                }
+            });
+        });
     }
 
     // Aksi jika login berhasil

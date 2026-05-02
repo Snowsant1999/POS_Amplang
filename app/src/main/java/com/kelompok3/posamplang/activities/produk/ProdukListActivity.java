@@ -72,15 +72,23 @@ public class ProdukListActivity extends BaseActivity {
         tvSuccessNotification = findViewById(R.id.tvSuccessNotification);
     }
 
-    // Mengisi data produk sementara
+    // Mengisi data produk dari database
     private void loadDummyData() {
         produkList = new ArrayList<>();
-        produkList.add(new Produk(1, 1, 1, 1, "Gabin Susu",       "Pcs", 20000, 30));
-        produkList.add(new Produk(2, 1, 1, 1, "Gabin Keju",       "Pcs", 20000, 30));
-        produkList.add(new Produk(3, 2, 2, 1, "Amplang Kuku Macan", "Pcs", 35000, 150));
-
-        // Sinkronkan filteredList dengan produkList
-        filteredList = new ArrayList<>(produkList);
+        filteredList = new ArrayList<>();
+        com.kelompok3.posamplang.database.AppDatabase db = com.kelompok3.posamplang.database.AppDatabase.getInstance(this);
+        java.util.concurrent.Executors.newSingleThreadExecutor().execute(() -> {
+            java.util.List<Produk> produks = db.produkDao().getAll();
+            runOnUiThread(() -> {
+                produkList.clear();
+                produkList.addAll(produks);
+                filteredList.clear();
+                filteredList.addAll(produks);
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        });
     }
 
     // Setup list dan adapter produk

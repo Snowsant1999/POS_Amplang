@@ -243,12 +243,11 @@
                             android:text="Pendapatan Harian"
                             android:textStyle="bold"
                             android:textSize="16sp" />
-                        <!-- Placeholder untuk Line Chart -->
-                        <View
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/lineChartPendapatan"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginTop="12dp"
-                            android:background="#FAFAFA" />
+                            android:layout_marginTop="12dp" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -280,11 +279,11 @@
                                 android:text="Metode Pembayaran"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
-                            <View
+                            <com.github.mikephil.charting.charts.PieChart
+                                android:id="@+id/pieChartMetode"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_marginTop="12dp"
-                                android:background="#FAFAFA" />
+                                android:layout_marginTop="12dp" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
@@ -308,11 +307,11 @@
                                 android:text="Pendapatan vs Pengeluaran"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
-                            <View
+                            <com.github.mikephil.charting.charts.BarChart
+                                android:id="@+id/barChartPerbandingan"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_marginTop="12dp"
-                                android:background="#FAFAFA" />
+                                android:layout_marginTop="12dp" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +26,9 @@ import com.kelompok3.posamplang.R;
 import com.kelompok3.posamplang.activities.auth.LoginActivity;
 import com.kelompok3.posamplang.activities.dashboard.MainActivity;
 import com.kelompok3.posamplang.activities.produk.ProdukListActivity;
+import com.kelompok3.posamplang.adapters.MenuKasirAdapter;
 import com.kelompok3.posamplang.adapters.StrukAdapter;
+import androidx.recyclerview.widget.GridLayoutManager;
 import com.kelompok3.posamplang.models.DetailPesanan;
 import com.kelompok3.posamplang.models.Produk;
 
@@ -51,10 +54,9 @@ public class KasirActivity extends BaseActivity {
     private List<DetailPesanan> keranjangList = new ArrayList<>();
     private double currentTotal = 0;
 
-    private Produk produkGabinSusu;
-    private Produk produkGabinKeju;
-    private Produk produkKukuMacan;
-    private Produk produkIkanPipih;
+    private RecyclerView rvMenuProduk;
+    private MenuKasirAdapter menuAdapter;
+    private List<Produk> menuProdukList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +67,15 @@ public class KasirActivity extends BaseActivity {
         setupSidebar(R.id.btn_nav_kasir);
 
         initViews();
-        initDummyProducts();
+        loadProductsFromDb();
+        setupMenuRecyclerView();
         setupRecyclerView();
-        setupProductClickListeners();
         setupPaymentButton();
     }
 
     private void initViews() {
         rvStruk       = findViewById(R.id.rv_struk);
+        rvMenuProduk  = findViewById(R.id.rv_menu_produk);
         tvTotalItems  = findViewById(R.id.tv_total_items);
         tvSubtotal    = findViewById(R.id.tv_subtotal);
         tvTotalHarga  = findViewById(R.id.tv_total_harga);
@@ -80,11 +83,29 @@ public class KasirActivity extends BaseActivity {
     }
 
 
-    private void initDummyProducts() {
-        produkGabinSusu  = new Produk(101, 1, 1, 1, "Gabin Susu",       "Pcs", 20000, 50);
-        produkGabinKeju  = new Produk(102, 1, 1, 1, "Gabin Keju",       "Pcs", 25000, 30);
-        produkKukuMacan  = new Produk(103, 2, 2, 1, "Amplang Kuku Macan", "Pcs", 35000, 100);
-        produkIkanPipih  = new Produk(104, 2, 2, 1, "Amplang Ikan Pipih", "Pcs", 40000, 20);
+    private void loadProductsFromDb() {
+        com.kelompok3.posamplang.database.AppDatabase db = com.kelompok3.posamplang.database.AppDatabase.getInstance(this);
+        java.util.concurrent.Executors.newSingleThreadExecutor().execute(() -> {
+            List<Produk> produks = db.produkDao().getAll();
+            runOnUiThread(() -> {
+                menuProdukList.clear();
+                menuProdukList.addAll(produks);
+                if (menuAdapter != null) {
+                    menuAdapter.notifyDataSetChanged();
+                }
+            });
+        });
+    }
+
+    // Setup list menu produk dinamis
+    private void setupMenuRecyclerView() {
+        // Menggunakan GridLayoutManager dengan 4 kolom (bisa disesuaikan)
+        rvMenuProduk.setLayoutManager(new GridLayoutManager(this, 4));
+        menuAdapter = new MenuKasirAdapter(menuProdukList, produk -> {
+            // Tampilkan dialog konfirmasi stok sebelum menambahkan
+            showDialogKonfirmasiStok(produk);
+        });
+        rvMenuProduk.setAdapter(menuAdapter);
     }
 
 
@@ -112,14 +133,6 @@ public class KasirActivity extends BaseActivity {
     }
 
 
-    private void setupProductClickListeners() {
-        findViewById(R.id.card_gabin_susu).setOnClickListener(v -> tambahKeKeranjang(produkGabinSusu));
-        findViewById(R.id.card_gabin_keju).setOnClickListener(v -> tambahKeKeranjang(produkGabinKeju));
-        findViewById(R.id.card_kuku_macan).setOnClickListener(v -> tambahKeKeranjang(produkKukuMacan));
-        findViewById(R.id.card_ikan_pipih).setOnClickListener(v -> tambahKeKeranjang(produkIkanPipih));
-    }
-
-
     private void setupPaymentButton() {
         btnBayar.setOnClickListener(v -> {
             if (keranjangList.isEmpty()) {
@@ -131,21 +144,104 @@ public class KasirActivity extends BaseActivity {
     }
 
 
-    // Menambahkan item ke dalam keranjang
-    private void tambahKeKeranjang(Produk produk) {
+    // Menambahkan item ke dalam keranjang dengan kuantitas khusus
+    private void tambahKeKeranjang(Produk produk, int qty) {
         for (DetailPesanan detail : keranjangList) {
             if (detail.getId_produk() == produk.getId_produk()) {
-                detail.tambahJumlah(1);
+                // Periksa apakah penambahan ini melebihi stok yang ada
+                if (detail.getJumlah_produk() + qty > produk.getStok_tersedia()) {
+                    Toast.makeText(this, "Gagal: Total di keranjang melebihi stok!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                detail.tambahJumlah(qty);
                 adapter.notifyDataSetChanged();
                 updateSummary();
                 return;
             }
         }
 
-        // Produk belum ada di keranjang, tambahkan sebagai item baru
-        keranjangList.add(new DetailPesanan(produk, 1));
+        // Jika produk belum ada di keranjang, validasi qty terhadap stok
+        if (qty > produk.getStok_tersedia()) {
+            Toast.makeText(this, "Gagal: Jumlah melebihi stok!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Tambahkan sebagai item baru
+        DetailPesanan newDetail = new DetailPesanan(
+                produk.getId_produk(), 
+                0, // id_pesanan (belum ada karena keranjang)
+                0, // id_users
+                qty, 
+                produk.getHarga_produk(), 
+                produk.getHarga_produk() * qty
+        );
+        newDetail.setNama_produk_display(produk.getNama_produk());
+        keranjangList.add(newDetail);
+        
         adapter.notifyItemInserted(keranjangList.size() - 1);
         updateSummary();
+    }
+    
+    /** Menampilkan dialog konfirmasi jumlah pembelian dan sisa stok. */
+    private void showDialogKonfirmasiStok(Produk produk) {
+        Dialog dialog = createDialog(R.layout.dialog_konfirmasi_stok);
+
+        TextView tvNama   = dialog.findViewById(R.id.tv_produk_nama);
+        TextView tvHarga  = dialog.findViewById(R.id.tv_produk_harga);
+        TextView tvStok   = dialog.findViewById(R.id.tv_stok_tersisa);
+        EditText etQty    = dialog.findViewById(R.id.et_qty);
+
+        tvNama.setText(produk.getNama_produk());
+        tvHarga.setText(formatRupiah(produk.getHarga_produk()));
+        tvStok.setText(String.valueOf(produk.getStok_tersedia()));
+
+        // Tombol Plus
+        dialog.findViewById(R.id.btn_plus).setOnClickListener(v -> {
+            try {
+                int currentQty = Integer.parseInt(etQty.getText().toString());
+                if (currentQty < produk.getStok_tersedia()) {
+                    etQty.setText(String.valueOf(currentQty + 1));
+                } else {
+                    Toast.makeText(this, "Maksimal stok tercapai", Toast.LENGTH_SHORT).show();
+                }
+            } catch (NumberFormatException e) {
+                etQty.setText("1");
+            }
+        });
+
+        // Tombol Minus
+        dialog.findViewById(R.id.btn_minus).setOnClickListener(v -> {
+            try {
+                int currentQty = Integer.parseInt(etQty.getText().toString());
+                if (currentQty > 1) {
+                    etQty.setText(String.valueOf(currentQty - 1));
+                }
+            } catch (NumberFormatException e) {
+                etQty.setText("1");
+            }
+        });
+
+        // Konfirmasi Tambah
+        dialog.findViewById(R.id.btn_konfirmasi).setOnClickListener(v -> {
+            try {
+                int qty = Integer.parseInt(etQty.getText().toString());
+                if (qty > 0 && qty <= produk.getStok_tersedia()) {
+                    tambahKeKeranjang(produk, qty);
+                    dialog.dismiss();
+                } else if (qty > produk.getStok_tersedia()) {
+                    Toast.makeText(this, "Jumlah melebihi stok tersedia!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Jumlah tidak valid!", Toast.LENGTH_SHORT).show();
+                }
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Masukkan angka yang valid!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Batal
+        dialog.findViewById(R.id.btn_batal).setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
     }
 
 

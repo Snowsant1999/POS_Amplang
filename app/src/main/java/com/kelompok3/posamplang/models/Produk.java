@@ -1,6 +1,26 @@
 package com.kelompok3.posamplang.models;
 
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
+@Entity(
+    tableName = "produk",
+    foreignKeys = {
+        @ForeignKey(entity = Kategori.class, parentColumns = "id_kategori", childColumns = "id_kategori_produk", onDelete = ForeignKey.RESTRICT),
+        @ForeignKey(entity = Merek.class, parentColumns = "id_merek", childColumns = "id_merek", onDelete = ForeignKey.RESTRICT),
+        @ForeignKey(entity = Supplier.class, parentColumns = "id_supplier", childColumns = "id_supplier", onDelete = ForeignKey.RESTRICT)
+    },
+    indices = {
+        @Index("id_kategori_produk"),
+        @Index("id_merek"),
+        @Index("id_supplier")
+    }
+)
 public class Produk {
+
+    @PrimaryKey(autoGenerate = true)
     private int id_produk;
     private int id_kategori_produk;
     private int id_merek;
@@ -10,8 +30,7 @@ public class Produk {
     private double harga_produk;
     private int stok_tersedia;
 
-    public Produk(int id_produk, int id_kategori_produk, int id_merek, int id_supplier, String nama_produk, String unit, double harga_produk, int stok_tersedia) {
-        this.id_produk = id_produk;
+    public Produk(int id_kategori_produk, int id_merek, int id_supplier, String nama_produk, String unit, double harga_produk, int stok_tersedia) {
         this.id_kategori_produk = id_kategori_produk;
         this.id_merek = id_merek;
         this.id_supplier = id_supplier;
@@ -19,12 +38,6 @@ public class Produk {
         this.unit = unit;
         this.harga_produk = harga_produk;
         this.stok_tersedia = stok_tersedia;
-    }
-
-    // Constructor untuk dummy data/kemudahan
-    public Produk(String nama_produk, double harga_produk) {
-        this.nama_produk = nama_produk;
-        this.harga_produk = harga_produk;
     }
 
     public int getId_produk() { return id_produk; }

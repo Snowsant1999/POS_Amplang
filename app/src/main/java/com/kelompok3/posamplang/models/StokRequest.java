@@ -1,17 +1,32 @@
 package com.kelompok3.posamplang.models;
 
-import java.util.Date;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
 
+@Entity(
+    tableName = "stok_request",
+    foreignKeys = {
+        @ForeignKey(entity = Supplier.class, parentColumns = "id_supplier", childColumns = "id_supplier", onDelete = ForeignKey.RESTRICT),
+        @ForeignKey(entity = User.class, parentColumns = "id_users", childColumns = "id_users", onDelete = ForeignKey.RESTRICT)
+    },
+    indices = {
+        @Index("id_supplier"),
+        @Index("id_users")
+    }
+)
 public class StokRequest {
+
+    @PrimaryKey(autoGenerate = true)
     private int id_request;
     private int id_supplier;
     private int id_users;
     private String nomor_request;
-    private Date tanggal_request;
+    private long tanggal_request; // timestamp
     private String status;
 
-    public StokRequest(int id_request, int id_supplier, int id_users, String nomor_request, Date tanggal_request, String status) {
-        this.id_request = id_request;
+    public StokRequest(int id_supplier, int id_users, String nomor_request, long tanggal_request, String status) {
         this.id_supplier = id_supplier;
         this.id_users = id_users;
         this.nomor_request = nomor_request;
@@ -27,8 +42,8 @@ public class StokRequest {
     public void setId_users(int id_users) { this.id_users = id_users; }
     public String getNomor_request() { return nomor_request; }
     public void setNomor_request(String nomor_request) { this.nomor_request = nomor_request; }
-    public Date getTanggal_request() { return tanggal_request; }
-    public void setTanggal_request(Date tanggal_request) { this.tanggal_request = tanggal_request; }
+    public long getTanggal_request() { return tanggal_request; }
+    public void setTanggal_request(long tanggal_request) { this.tanggal_request = tanggal_request; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 }

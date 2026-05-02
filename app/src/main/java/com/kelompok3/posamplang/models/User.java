@@ -1,6 +1,23 @@
 package com.kelompok3.posamplang.models;
 
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
+@Entity(
+    tableName = "users",
+    foreignKeys = @ForeignKey(
+        entity = UserRole.class,
+        parentColumns = "user_roles_id",
+        childColumns = "user_roles_id",
+        onDelete = ForeignKey.RESTRICT
+    ),
+    indices = {@Index("user_roles_id")}
+)
 public class User {
+
+    @PrimaryKey(autoGenerate = true)
     private int id_users;
     private int user_roles_id;
     private String nik_karyawan;
@@ -9,8 +26,7 @@ public class User {
     private String password;
     private String no_telepon;
 
-    public User(int id_users, int user_roles_id, String nik_karyawan, String nama_karyawan, String email, String password, String no_telepon) {
-        this.id_users = id_users;
+    public User(int user_roles_id, String nik_karyawan, String nama_karyawan, String email, String password, String no_telepon) {
         this.user_roles_id = user_roles_id;
         this.nik_karyawan = nik_karyawan;
         this.nama_karyawan = nama_karyawan;

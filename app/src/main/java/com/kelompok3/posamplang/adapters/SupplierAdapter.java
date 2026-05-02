@@ -41,9 +41,9 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.ViewHo
         holder.tvNama.setText(supplier.getNama_supplier());
         holder.tvKontak.setText(supplier.getNo_telepon());
         holder.tvAlamat.setText(supplier.getAlamat_supplier());
-        holder.tvEmail.setText(supplier.getEmail());
+        holder.tvEmail.setText("-"); // Email tidak ada di ERD
         
-        if (supplier.isStatus()) {
+        if (supplier.isAktif()) {
             holder.tvStatus.setText("Aktif");
             holder.tvStatus.setBackgroundResource(R.drawable.bg_status_aktif);
         } else {

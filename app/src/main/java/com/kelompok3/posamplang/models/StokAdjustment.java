@@ -1,17 +1,32 @@
 package com.kelompok3.posamplang.models;
 
-import java.util.Date;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
 
+@Entity(
+    tableName = "stok_adjustment",
+    foreignKeys = {
+        @ForeignKey(entity = Produk.class, parentColumns = "id_produk", childColumns = "id_produk", onDelete = ForeignKey.RESTRICT),
+        @ForeignKey(entity = User.class, parentColumns = "id_users", childColumns = "id_users", onDelete = ForeignKey.RESTRICT)
+    },
+    indices = {
+        @Index("id_produk"),
+        @Index("id_users")
+    }
+)
 public class StokAdjustment {
-    private int id_stok_adjust;
+
+    @PrimaryKey(autoGenerate = true)
+    private int id_stok_adjus;
     private int id_produk;
     private int id_users;
-    private Date tanggal;
-    private String tipe;
+    private long tanggal; // timestamp
+    private String tipe;  // contoh: "masuk", "keluar", "koreksi"
     private int jumlah_produk;
 
-    public StokAdjustment(int id_stok_adjust, int id_produk, int id_users, Date tanggal, String tipe, int jumlah_produk) {
-        this.id_stok_adjust = id_stok_adjust;
+    public StokAdjustment(int id_produk, int id_users, long tanggal, String tipe, int jumlah_produk) {
         this.id_produk = id_produk;
         this.id_users = id_users;
         this.tanggal = tanggal;
@@ -19,14 +34,14 @@ public class StokAdjustment {
         this.jumlah_produk = jumlah_produk;
     }
 
-    public int getId_stok_adjust() { return id_stok_adjust; }
-    public void setId_stok_adjust(int id_stok_adjust) { this.id_stok_adjust = id_stok_adjust; }
+    public int getId_stok_adjus() { return id_stok_adjus; }
+    public void setId_stok_adjus(int id_stok_adjus) { this.id_stok_adjus = id_stok_adjus; }
     public int getId_produk() { return id_produk; }
     public void setId_produk(int id_produk) { this.id_produk = id_produk; }
     public int getId_users() { return id_users; }
     public void setId_users(int id_users) { this.id_users = id_users; }
-    public Date getTanggal() { return tanggal; }
-    public void setTanggal(Date tanggal) { this.tanggal = tanggal; }
+    public long getTanggal() { return tanggal; }
+    public void setTanggal(long tanggal) { this.tanggal = tanggal; }
     public String getTipe() { return tipe; }
     public void setTipe(String tipe) { this.tipe = tipe; }
     public int getJumlah_produk() { return jumlah_produk; }
