@@ -24,11 +24,23 @@ public interface PembayaranDao {
     @Query("SELECT * FROM pembayaran_pesanan ORDER BY tanggal_pembayaran DESC")
     List<PembayaranPesanan> getAll();
 
-    // Total pendapatan untuk dashboard
-    @Query("SELECT SUM(total_pembayaran) FROM pembayaran_pesanan WHERE tanggal_pembayaran >= :startOfDay AND tanggal_pembayaran <= :endOfDay")
+    // Total seluruh pendapatan (semua waktu)
+    @Query("SELECT COALESCE(SUM(total_pembayaran), 0) FROM pembayaran_pesanan WHERE status_pembayaran = 'Lunas'")
+    double getTotalPendapatanAll();
+
+    // Total pendapatan hari ini
+    @Query("SELECT COALESCE(SUM(total_pembayaran), 0) FROM pembayaran_pesanan WHERE tanggal_pembayaran >= :startOfDay AND tanggal_pembayaran <= :endOfDay")
     double getTotalPendapatanHariIni(long startOfDay, long endOfDay);
 
-    // Data untuk grafik (pendapatan per hari dalam 7 hari terakhir)
-    @Query("SELECT SUM(total_pembayaran) FROM pembayaran_pesanan WHERE tanggal_pembayaran >= :start AND tanggal_pembayaran <= :end")
+    // Total pendapatan dalam rentang waktu (untuk grafik 7 hari)
+    @Query("SELECT COALESCE(SUM(total_pembayaran), 0) FROM pembayaran_pesanan WHERE tanggal_pembayaran >= :start AND tanggal_pembayaran <= :end AND status_pembayaran = 'Lunas'")
     double getTotalPendapatanPeriode(long start, long end);
+
+    // Count per metode pembayaran untuk Pie Chart
+    @Query("SELECT COUNT(*) FROM pembayaran_pesanan WHERE metode_pembayaran = :metode")
+    int countByMetode(String metode);
+
+    // Total jumlah transaksi
+    @Query("SELECT COUNT(*) FROM pembayaran_pesanan WHERE status_pembayaran = 'Lunas'")
+    int getTotalTransaksi();
 }

@@ -1,13 +1,11 @@
 package com.kelompok3.posamplang.activities.transaksi;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,48 +14,55 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kelompok3.posamplang.R;
-import com.kelompok3.posamplang.activities.auth.LoginActivity;
-import com.kelompok3.posamplang.activities.dashboard.MainActivity;
-import com.kelompok3.posamplang.activities.produk.ProdukListActivity;
 import com.kelompok3.posamplang.adapters.MenuKasirAdapter;
 import com.kelompok3.posamplang.adapters.StrukAdapter;
-import androidx.recyclerview.widget.GridLayoutManager;
+import com.kelompok3.posamplang.database.AppDatabase;
 import com.kelompok3.posamplang.models.DetailPesanan;
+import com.kelompok3.posamplang.models.PembayaranPesanan;
+import com.kelompok3.posamplang.models.Pesanan;
 import com.kelompok3.posamplang.models.Produk;
+import com.kelompok3.posamplang.models.StokAdjustment;
+import com.kelompok3.posamplang.parent.BaseActivity;
+import com.kelompok3.posamplang.utils.FormatUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import com.kelompok3.posamplang.parent.BaseActivity;
-
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 // Halaman untuk mengelola transaksi pembayaran
 public class KasirActivity extends BaseActivity {
 
+    // ─── Komponen UI ───────────────────────────────────────────────────────────
     private RecyclerView rvStruk;
+    private RecyclerView rvMenuProduk;
     private TextView tvTotalItems;
     private TextView tvSubtotal;
     private TextView tvTotalHarga;
     private Button btnBayar;
 
+    // ─── Data & Adapter ────────────────────────────────────────────────────────
     private StrukAdapter adapter;
+    private MenuKasirAdapter menuAdapter;
     private List<DetailPesanan> keranjangList = new ArrayList<>();
+    private List<Produk> menuProdukList = new ArrayList<>();
     private double currentTotal = 0;
 
-    private RecyclerView rvMenuProduk;
-    private MenuKasirAdapter menuAdapter;
-    private List<Produk> menuProdukList = new ArrayList<>();
+    // ID user yang sedang login (default 1 = admin; nanti bisa diambil dari SharedPreferences)
+    private int currentUserId = 1;
 
+    // Nomor urut pesanan dalam satu sesi (untuk generate nomor otomatis)
+    private static final AtomicInteger nomorUrut = new AtomicInteger(1);
+
+    // ─── Lifecycle ─────────────────────────────────────────────────────────────
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,56 +70,58 @@ public class KasirActivity extends BaseActivity {
         setContentView(R.layout.activity_kasir);
 
         setupSidebar(R.id.btn_nav_kasir);
-
         initViews();
-        loadProductsFromDb();
         setupMenuRecyclerView();
-        setupRecyclerView();
-        setupPaymentButton();
+        setupStrukRecyclerView();
+        setupBayarButton();
+        loadProductsFromDb();
     }
 
+    // ─── Inisialisasi View ─────────────────────────────────────────────────────
     private void initViews() {
-        rvStruk       = findViewById(R.id.rv_struk);
-        rvMenuProduk  = findViewById(R.id.rv_menu_produk);
-        tvTotalItems  = findViewById(R.id.tv_total_items);
-        tvSubtotal    = findViewById(R.id.tv_subtotal);
-        tvTotalHarga  = findViewById(R.id.tv_total_harga);
-        btnBayar      = findViewById(R.id.btn_bayar);
+        rvStruk      = findViewById(R.id.rv_struk);
+        rvMenuProduk = findViewById(R.id.rv_menu_produk);
+        tvTotalItems = findViewById(R.id.tv_total_items);
+        tvSubtotal   = findViewById(R.id.tv_subtotal);
+        tvTotalHarga = findViewById(R.id.tv_total_harga);
+        btnBayar     = findViewById(R.id.btn_bayar);
     }
 
-
+    // ─── Load Produk dari Database ─────────────────────────────────────────────
     private void loadProductsFromDb() {
-        com.kelompok3.posamplang.database.AppDatabase db = com.kelompok3.posamplang.database.AppDatabase.getInstance(this);
-        java.util.concurrent.Executors.newSingleThreadExecutor().execute(() -> {
+        AppDatabase db = AppDatabase.getInstance(this);
+        Executors.newSingleThreadExecutor().execute(() -> {
             List<Produk> produks = db.produkDao().getAll();
             runOnUiThread(() -> {
                 menuProdukList.clear();
                 menuProdukList.addAll(produks);
-                if (menuAdapter != null) {
-                    menuAdapter.notifyDataSetChanged();
-                }
+                if (menuAdapter != null) menuAdapter.notifyDataSetChanged();
             });
         });
     }
 
-    // Setup list menu produk dinamis
+    // ─── Setup RecyclerView Menu Produk (Grid 4 Kolom) ────────────────────────
     private void setupMenuRecyclerView() {
-        // Menggunakan GridLayoutManager dengan 4 kolom (bisa disesuaikan)
         rvMenuProduk.setLayoutManager(new GridLayoutManager(this, 4));
-        menuAdapter = new MenuKasirAdapter(menuProdukList, produk -> {
-            // Tampilkan dialog konfirmasi stok sebelum menambahkan
-            showDialogKonfirmasiStok(produk);
-        });
+        menuAdapter = new MenuKasirAdapter(menuProdukList, this::showDialogKonfirmasiStok);
         rvMenuProduk.setAdapter(menuAdapter);
     }
 
-
-    // Setup daftar item keranjang belanja
-    private void setupRecyclerView() {
+    // ─── Setup RecyclerView Keranjang / Struk ─────────────────────────────────
+    private void setupStrukRecyclerView() {
         adapter = new StrukAdapter(keranjangList, new StrukAdapter.OnItemQuantityChangeListener() {
             @Override
             public void onQuantityChanged(int position, int newQty) {
-                keranjangList.get(position).setJumlah_produk(newQty);
+                DetailPesanan item = keranjangList.get(position);
+                // Cek stok di memori (list produk menu)
+                Produk produk = findProdukById(item.getId_produk());
+                if (produk != null && newQty > produk.getStok_tersedia()) {
+                    Toast.makeText(KasirActivity.this,
+                            "Stok tersedia hanya " + produk.getStok_tersedia(), Toast.LENGTH_SHORT).show();
+                    adapter.notifyItemChanged(position);
+                    return;
+                }
+                item.setJumlah_produk(newQty);
                 adapter.notifyItemChanged(position);
                 updateSummary();
             }
@@ -127,13 +134,12 @@ public class KasirActivity extends BaseActivity {
                 updateSummary();
             }
         });
-
         rvStruk.setLayoutManager(new LinearLayoutManager(this));
         rvStruk.setAdapter(adapter);
     }
 
-
-    private void setupPaymentButton() {
+    // ─── Tombol Bayar ─────────────────────────────────────────────────────────
+    private void setupBayarButton() {
         btnBayar.setOnClickListener(v -> {
             if (keranjangList.isEmpty()) {
                 Toast.makeText(this, "Keranjang masih kosong!", Toast.LENGTH_SHORT).show();
@@ -143,137 +149,102 @@ public class KasirActivity extends BaseActivity {
         });
     }
 
-
-    // Menambahkan item ke dalam keranjang dengan kuantitas khusus
-    private void tambahKeKeranjang(Produk produk, int qty) {
-        for (DetailPesanan detail : keranjangList) {
-            if (detail.getId_produk() == produk.getId_produk()) {
-                // Periksa apakah penambahan ini melebihi stok yang ada
-                if (detail.getJumlah_produk() + qty > produk.getStok_tersedia()) {
-                    Toast.makeText(this, "Gagal: Total di keranjang melebihi stok!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                detail.tambahJumlah(qty);
-                adapter.notifyDataSetChanged();
-                updateSummary();
-                return;
-            }
-        }
-
-        // Jika produk belum ada di keranjang, validasi qty terhadap stok
-        if (qty > produk.getStok_tersedia()) {
-            Toast.makeText(this, "Gagal: Jumlah melebihi stok!", Toast.LENGTH_SHORT).show();
+    // ─── Dialog Konfirmasi Stok (saat produk diklik) ───────────────────────────
+    private void showDialogKonfirmasiStok(Produk produk) {
+        if (produk.getStok_tersedia() == 0) {
+            Toast.makeText(this, "Stok produk ini habis!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Tambahkan sebagai item baru
-        DetailPesanan newDetail = new DetailPesanan(
-                produk.getId_produk(), 
-                0, // id_pesanan (belum ada karena keranjang)
-                0, // id_users
-                qty, 
-                produk.getHarga_produk(), 
-                produk.getHarga_produk() * qty
-        );
-        newDetail.setNama_produk_display(produk.getNama_produk());
-        keranjangList.add(newDetail);
-        
-        adapter.notifyItemInserted(keranjangList.size() - 1);
-        updateSummary();
-    }
-    
-    /** Menampilkan dialog konfirmasi jumlah pembelian dan sisa stok. */
-    private void showDialogKonfirmasiStok(Produk produk) {
         Dialog dialog = createDialog(R.layout.dialog_konfirmasi_stok);
+        TextView tvNama  = dialog.findViewById(R.id.tv_produk_nama);
+        TextView tvHarga = dialog.findViewById(R.id.tv_produk_harga);
+        TextView tvStok  = dialog.findViewById(R.id.tv_stok_tersisa);
+        EditText etQty   = dialog.findViewById(R.id.et_qty);
 
-        TextView tvNama   = dialog.findViewById(R.id.tv_produk_nama);
-        TextView tvHarga  = dialog.findViewById(R.id.tv_produk_harga);
-        TextView tvStok   = dialog.findViewById(R.id.tv_stok_tersisa);
-        EditText etQty    = dialog.findViewById(R.id.et_qty);
+        // Hitung sisa stok yang belum masuk keranjang
+        int sudahDiKeranjang = getQtyDiKeranjang(produk.getId_produk());
+        int sisaStok = produk.getStok_tersedia() - sudahDiKeranjang;
 
         tvNama.setText(produk.getNama_produk());
         tvHarga.setText(formatRupiah(produk.getHarga_produk()));
-        tvStok.setText(String.valueOf(produk.getStok_tersedia()));
+        tvStok.setText(String.valueOf(sisaStok));
+        etQty.setText("1");
 
         // Tombol Plus
         dialog.findViewById(R.id.btn_plus).setOnClickListener(v -> {
             try {
-                int currentQty = Integer.parseInt(etQty.getText().toString());
-                if (currentQty < produk.getStok_tersedia()) {
-                    etQty.setText(String.valueOf(currentQty + 1));
+                int cur = Integer.parseInt(etQty.getText().toString());
+                if (cur < sisaStok) {
+                    etQty.setText(String.valueOf(cur + 1));
                 } else {
-                    Toast.makeText(this, "Maksimal stok tercapai", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Maksimal stok tersedia: " + sisaStok, Toast.LENGTH_SHORT).show();
                 }
-            } catch (NumberFormatException e) {
-                etQty.setText("1");
-            }
+            } catch (NumberFormatException e) { etQty.setText("1"); }
         });
 
         // Tombol Minus
         dialog.findViewById(R.id.btn_minus).setOnClickListener(v -> {
             try {
-                int currentQty = Integer.parseInt(etQty.getText().toString());
-                if (currentQty > 1) {
-                    etQty.setText(String.valueOf(currentQty - 1));
-                }
-            } catch (NumberFormatException e) {
-                etQty.setText("1");
-            }
+                int cur = Integer.parseInt(etQty.getText().toString());
+                if (cur > 1) etQty.setText(String.valueOf(cur - 1));
+            } catch (NumberFormatException e) { etQty.setText("1"); }
         });
 
-        // Konfirmasi Tambah
+        // Konfirmasi
         dialog.findViewById(R.id.btn_konfirmasi).setOnClickListener(v -> {
             try {
                 int qty = Integer.parseInt(etQty.getText().toString());
-                if (qty > 0 && qty <= produk.getStok_tersedia()) {
+                if (qty <= 0) {
+                    Toast.makeText(this, "Jumlah tidak valid!", Toast.LENGTH_SHORT).show();
+                } else if (qty > sisaStok) {
+                    Toast.makeText(this, "Melebihi stok tersedia!", Toast.LENGTH_SHORT).show();
+                } else {
                     tambahKeKeranjang(produk, qty);
                     dialog.dismiss();
-                } else if (qty > produk.getStok_tersedia()) {
-                    Toast.makeText(this, "Jumlah melebihi stok tersedia!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Jumlah tidak valid!", Toast.LENGTH_SHORT).show();
                 }
             } catch (NumberFormatException e) {
                 Toast.makeText(this, "Masukkan angka yang valid!", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Batal
         dialog.findViewById(R.id.btn_batal).setOnClickListener(v -> dialog.dismiss());
-
         dialog.show();
     }
 
-
-    // Hitung ulang total belanjaan
-    private void updateSummary() {
-        int    totalQty  = 0;
-        double subtotal  = 0;
-
+    // ─── Tambah Produk ke Keranjang ────────────────────────────────────────────
+    private void tambahKeKeranjang(Produk produk, int qty) {
+        // Jika produk sudah ada di keranjang → tambah jumlahnya
         for (DetailPesanan detail : keranjangList) {
-            totalQty += detail.getJumlah_produk();
-            subtotal += detail.getTotal_harga();
+            if (detail.getId_produk() == produk.getId_produk()) {
+                detail.tambahJumlah(qty);
+                adapter.notifyDataSetChanged();
+                updateSummary();
+                Toast.makeText(this, "Jumlah " + produk.getNama_produk() + " diperbarui", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
-        currentTotal = subtotal;
-        tvTotalItems.setText(getString(R.string.total_items, totalQty));
-        tvSubtotal.setText(formatRupiah(subtotal));
-        tvTotalHarga.setText(formatRupiah(subtotal));
-    }
-
-
-    private void resetKasir() {
-        keranjangList.clear();
-        adapter.notifyDataSetChanged();
+        // Produk baru → buat entri baru di keranjang
+        DetailPesanan newDetail = new DetailPesanan(
+                produk.getId_produk(),
+                0,                           // id_pesanan (belum ada, diisi saat checkout)
+                currentUserId,
+                qty,
+                produk.getHarga_produk(),
+                produk.getHarga_produk() * qty
+        );
+        newDetail.setNama_produk_display(produk.getNama_produk());
+        keranjangList.add(newDetail);
+        adapter.notifyItemInserted(keranjangList.size() - 1);
         updateSummary();
+        Toast.makeText(this, produk.getNama_produk() + " ditambahkan", Toast.LENGTH_SHORT).show();
     }
 
-
-    // Membuka dialog pilihan Tunai atau QRIS
+    // ─── Dialog Pilih Metode Pembayaran ────────────────────────────────────────
     private void showDialogPilihMetode() {
         Dialog dialog = createDialog(R.layout.dialog_pilih_metode);
-
-        dialog.findViewById(R.id.btn_close).setOnClickListener(v   -> dialog.dismiss());
+        dialog.findViewById(R.id.btn_close).setOnClickListener(v -> dialog.dismiss());
         dialog.findViewById(R.id.btn_kembali).setOnClickListener(v -> dialog.dismiss());
         dialog.findViewById(R.id.btn_cash).setOnClickListener(v -> {
             dialog.dismiss();
@@ -281,60 +252,39 @@ public class KasirActivity extends BaseActivity {
         });
         dialog.findViewById(R.id.btn_qris).setOnClickListener(v -> {
             dialog.dismiss();
-            showDialogQRIS();
+            prosesTransaksi("QRIS", currentTotal, 0);
         });
-
         dialog.show();
     }
 
-    /** Menampilkan dialog pembayaran tunai dengan kalkulasi kembalian real-time. */
+    // ─── Dialog Bayar Tunai ────────────────────────────────────────────────────
     private void showDialogBayarTunai() {
         Dialog dialog = createDialog(R.layout.dialog_bayar_tunai);
-
-        TextView tvTotal      = dialog.findViewById(R.id.tv_dialog_total);
-        EditText etBayar      = dialog.findViewById(R.id.et_bayar_tunai);
-        TextView tvKembalian  = dialog.findViewById(R.id.tv_dialog_kembalian);
+        TextView tvTotal     = dialog.findViewById(R.id.tv_dialog_total);
+        EditText etBayar     = dialog.findViewById(R.id.et_bayar_tunai);
+        TextView tvKembalian = dialog.findViewById(R.id.tv_dialog_kembalian);
 
         tvTotal.setText(formatRupiah(currentTotal));
+        tvKembalian.setText(formatRupiah(0));
 
-        // Hitung kembalian secara real-time saat pengguna mengetik jumlah uang
-        etBayar.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void afterTextChanged(Editable s) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 0) {
-                    try {
-                        double bayar     = Double.parseDouble(s.toString());
-                        double kembalian = Math.max(0, bayar - currentTotal);
-                        tvKembalian.setText(formatRupiah(kembalian));
-                    } catch (NumberFormatException e) {
-                        tvKembalian.setText(formatRupiah(0));
-                    }
-                } else {
-                    tvKembalian.setText(formatRupiah(0));
-                }
-            }
+        FormatUtils.setupRupiahInput(etBayar, parsed -> {
+            tvKembalian.setText(formatRupiah(Math.max(0, parsed - currentTotal)));
         });
 
         dialog.findViewById(R.id.btn_proses).setOnClickListener(v -> {
-            String bayarStr = etBayar.getText().toString().trim();
-
-            if (bayarStr.isEmpty()) {
+            String str = etBayar.getText().toString().trim().replaceAll("[^\\d]", "");
+            if (str.isEmpty()) {
                 Toast.makeText(this, "Masukkan jumlah uang!", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            double bayar = Double.parseDouble(bayarStr);
+            double bayar = Double.parseDouble(str);
             if (bayar < currentTotal) {
-                Toast.makeText(this, "Uang tidak cukup!", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
                 showDialogGagal();
             } else {
                 double kembalian = bayar - currentTotal;
                 dialog.dismiss();
-                showDialogBerhasil(bayar, kembalian);
+                prosesTransaksi("Tunai", bayar, kembalian);
             }
         });
 
@@ -346,26 +296,85 @@ public class KasirActivity extends BaseActivity {
         dialog.show();
     }
 
-    /** Menampilkan dialog pembayaran QRIS. */
-    private void showDialogQRIS() {
-        Dialog dialog = createDialog(R.layout.dialog_qris);
+    // ─── PROSES UTAMA TRANSAKSI (SIMPAN KE DATABASE) ──────────────────────────
+    /**
+     * Menyimpan seluruh data transaksi ke database sesuai ERD:
+     * 1. Insert ke tabel `pesanan`
+     * 2. Insert tiap item ke tabel `detail_pesanan`
+     * 3. Kurangi `stok_tersedia` di tabel `produk`
+     * 4. Catat perubahan stok di tabel `stok_adjustment`
+     * 5. Insert ke tabel `pembayaran_pesanan`
+     */
+    private void prosesTransaksi(String metode, double bayar, double kembalian) {
+        AppDatabase db = AppDatabase.getInstance(this);
+        long now = System.currentTimeMillis();
+        String noPesanan = generateNomorPesanan();
 
-        dialog.findViewById(R.id.btn_selesai).setOnClickListener(v -> {
-            dialog.dismiss();
-            showDialogBerhasil(currentTotal, 0);
-        });
-        dialog.findViewById(R.id.btn_kembali).setOnClickListener(v -> {
-            dialog.dismiss();
-            showDialogPilihMetode();
-        });
+        // Salin daftar keranjang agar aman dipakai di background thread
+        List<DetailPesanan> snapshot = new ArrayList<>(keranjangList);
 
-        dialog.show();
+        Executors.newSingleThreadExecutor().execute(() -> {
+            // 1. Buat record Pesanan
+            Pesanan pesanan = new Pesanan(
+                    1,             // id_pelanggan = 1 (Pelanggan Umum)
+                    noPesanan,
+                    now,
+                    "Langsung",
+                    "Selesai"
+            );
+            long idPesanan = db.pesananDao().insert(pesanan);
+
+            // 2. Insert tiap detail & kurangi stok
+            for (DetailPesanan item : snapshot) {
+                // Tetapkan id_pesanan yang baru saja digenerate
+                item.setId_pesanan((int) idPesanan);
+                item.setId_users(currentUserId);
+                db.detailPesananDao().insert(item);
+
+                // 3. Kurangi stok produk
+                db.produkDao().kurangiStok(item.getId_produk(), item.getJumlah_produk());
+
+                // 4. Catat ke stok_adjustment (tipe = "Penjualan")
+                StokAdjustment adj = new StokAdjustment(
+                        item.getId_produk(),
+                        currentUserId,
+                        now,
+                        "Penjualan",
+                        item.getJumlah_produk()
+                );
+                db.stokAdjustmentDao().insert(adj);
+            }
+
+            // 5. Catat pembayaran
+            PembayaranPesanan pembayaran = new PembayaranPesanan(
+                    (int) idPesanan,
+                    metode,
+                    "Lunas",
+                    now,
+                    currentTotal,
+                    kembalian
+            );
+            db.pembayaranDao().insert(pembayaran);
+
+            // 6. Refresh daftar produk (stok sudah berubah)
+            List<Produk> produks = db.produkDao().getAll();
+
+            // 7. Kembali ke UI thread
+            runOnUiThread(() -> {
+                // Perbarui daftar produk di menu agar stok yang tampil ikut berkurang
+                menuProdukList.clear();
+                menuProdukList.addAll(produks);
+                menuAdapter.notifyDataSetChanged();
+
+                // Tampilkan dialog berhasil
+                showDialogBerhasil(bayar, kembalian);
+            });
+        });
     }
 
-    /** Menampilkan dialog konfirmasi pembayaran berhasil. */
+    // ─── Dialog Berhasil ───────────────────────────────────────────────────────
     private void showDialogBerhasil(double bayar, double kembalian) {
         Dialog dialog = createDialog(R.layout.dialog_berhasil);
-
         TextView tvMsg = dialog.findViewById(R.id.tv_dialog_message);
         tvMsg.setText(getString(R.string.pembayaran_berhasil_msg, formatRupiah(currentTotal)));
 
@@ -374,55 +383,42 @@ public class KasirActivity extends BaseActivity {
             showDialogStrukFinal(bayar, kembalian);
         });
         dialog.findViewById(R.id.btn_close).setOnClickListener(v -> {
-            resetKasir();
             dialog.dismiss();
+            resetKasir();
         });
-
         dialog.show();
     }
 
-    /** Menampilkan dialog pemberitahuan pembayaran gagal. */
+    // ─── Dialog Gagal ──────────────────────────────────────────────────────────
     private void showDialogGagal() {
         Dialog dialog = createDialog(R.layout.dialog_gagal);
-
         dialog.findViewById(R.id.btn_coba_lagi).setOnClickListener(v -> {
             dialog.dismiss();
             showDialogPilihMetode();
         });
         dialog.findViewById(R.id.btn_kembali).setOnClickListener(v -> dialog.dismiss());
-
         dialog.show();
     }
 
-    /**
-     * Menampilkan dialog struk transaksi lengkap.
-     *
-     * @param bayar     Jumlah uang yang dibayarkan pelanggan.
-     * @param kembalian Jumlah uang kembalian untuk pelanggan.
-     */
+    // ─── Dialog Struk Final ────────────────────────────────────────────────────
     private void showDialogStrukFinal(double bayar, double kembalian) {
         Dialog dialog = createDialog(R.layout.dialog_struk_final);
+        TextView tvDateTime = dialog.findViewById(R.id.tv_struk_datetime);
+        TextView tvTotal    = dialog.findViewById(R.id.tv_struk_total);
+        TextView tvPayment  = dialog.findViewById(R.id.tv_struk_payment);
+        TextView tvChange   = dialog.findViewById(R.id.tv_struk_change);
+        RecyclerView rvItems = dialog.findViewById(R.id.rv_struk_items);
 
-        TextView     tvDateTime = dialog.findViewById(R.id.tv_struk_datetime);
-        TextView     tvTotal    = dialog.findViewById(R.id.tv_struk_total);
-        TextView     tvPayment  = dialog.findViewById(R.id.tv_struk_payment);
-        TextView     tvChange   = dialog.findViewById(R.id.tv_struk_change);
-        RecyclerView rvItems    = dialog.findViewById(R.id.rv_struk_items);
-
-        // Tampilkan waktu transaksi
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
         tvDateTime.setText("Date time : " + sdf.format(new Date()));
-
         tvTotal.setText(formatRupiah(currentTotal));
         tvPayment.setText(formatRupiah(bayar));
         tvChange.setText(formatRupiah(kembalian));
 
-        // Tampilkan item dalam struk (mode read-only, tanpa tombol +/-)
         rvItems.setLayoutManager(new LinearLayoutManager(this));
         rvItems.setAdapter(new StrukAdapter(new ArrayList<>(keranjangList)));
 
         dialog.findViewById(R.id.btn_cetak).setOnClickListener(v -> {
-            // TODO: Implementasikan koneksi ke printer Bluetooth/WiFi
             Toast.makeText(this, "Mencetak struk...", Toast.LENGTH_SHORT).show();
             resetKasir();
             dialog.dismiss();
@@ -431,25 +427,56 @@ public class KasirActivity extends BaseActivity {
             resetKasir();
             dialog.dismiss();
         });
-
         dialog.show();
     }
 
-    /**
-     * Menampilkan pesan bahwa fitur belum tersedia.
-     *
-     * @param moduleName Nama modul yang dituju.
-     */
-    private void showComingSoon(String moduleName) {
-        Toast.makeText(this, "Modul " + moduleName + " belum tersedia", Toast.LENGTH_SHORT).show();
+    // ─── Helper ───────────────────────────────────────────────────────────────
+
+    /** Hitung total & tampilkan di ringkasan bawah. */
+    private void updateSummary() {
+        int totalQty = 0;
+        double subtotal = 0;
+        for (DetailPesanan d : keranjangList) {
+            totalQty += d.getJumlah_produk();
+            subtotal += d.getTotal_harga();
+        }
+        currentTotal = subtotal;
+        tvTotalItems.setText(getString(R.string.total_items, totalQty));
+        tvSubtotal.setText(formatRupiah(subtotal));
+        tvTotalHarga.setText(formatRupiah(subtotal));
     }
 
-    /**
-     * Membuat Dialog dengan layout tertentu dan latar transparan.
-     *
-     * @param layoutResId ID resource layout untuk dialog.
-     * @return Dialog yang sudah dikonfigurasi.
-     */
+    /** Reset keranjang setelah transaksi selesai. */
+    private void resetKasir() {
+        keranjangList.clear();
+        adapter.notifyDataSetChanged();
+        updateSummary();
+    }
+
+    /** Cari objek Produk di menu berdasarkan id. */
+    private Produk findProdukById(int idProduk) {
+        for (Produk p : menuProdukList) {
+            if (p.getId_produk() == idProduk) return p;
+        }
+        return null;
+    }
+
+    /** Hitung berapa unit produk yang sudah ada di keranjang. */
+    private int getQtyDiKeranjang(int idProduk) {
+        for (DetailPesanan d : keranjangList) {
+            if (d.getId_produk() == idProduk) return d.getJumlah_produk();
+        }
+        return 0;
+    }
+
+    /** Generate nomor pesanan otomatis: TRX-YYYYMMDD-XXXX */
+    private String generateNomorPesanan() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        String tanggal = sdf.format(new Date());
+        return "TRX-" + tanggal + "-" + String.format(Locale.getDefault(), "%04d", nomorUrut.getAndIncrement());
+    }
+
+    /** Membuat Dialog dengan latar transparan. */
     private Dialog createDialog(int layoutResId) {
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -458,16 +485,8 @@ public class KasirActivity extends BaseActivity {
         return dialog;
     }
 
-    /**
-     * Memformat angka menjadi format Rupiah Indonesia.
-     * Contoh: 25000 → "Rp25.000"
-     *
-     * @param amount Jumlah dalam bentuk double.
-     * @return String dalam format Rupiah.
-     */
+    /** Format angka ke Rupiah menggunakan FormatUtils */
     private String formatRupiah(double amount) {
-        String formatted = String.format(new Locale("id", "ID"), "%,.0f", amount)
-                .replace(".", ",");
-        return "Rp" + formatted;
+        return FormatUtils.formatRupiah(amount);
     }
 }
