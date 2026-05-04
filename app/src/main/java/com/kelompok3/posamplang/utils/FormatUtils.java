@@ -49,7 +49,7 @@ public class FormatUtils {
 
                             current = formatted;
                             editText.setText(formatted);
-                            editText.setSelection(formatted.length()); // Taruh kursor di akhir
+                            editText.setSelection(formatted.length());
 
                             if (listener != null) {
                                 listener.onValueChanged(parsed);

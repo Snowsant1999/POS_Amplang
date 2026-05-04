@@ -71,7 +71,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract DetailStokRequestDao detailStokRequestDao();
     public abstract StokAdjustmentDao stokAdjustmentDao();
 
-    // Singleton — pastikan hanya ada 1 instance database di seluruh aplikasi
     public static synchronized AppDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(
