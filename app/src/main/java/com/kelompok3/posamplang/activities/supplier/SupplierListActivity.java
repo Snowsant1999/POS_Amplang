@@ -88,7 +88,16 @@ public class SupplierListActivity extends BaseActivity {
                 if (adapter != null) {
                     adapter.notifyDataSetChanged();
                 }
+                updatePaginationInfo();
             });
         });
+    }
+
+    private void updatePaginationInfo() {
+        TextView tvPaginationInfo = findViewById(R.id.tv_pagination_info);
+        if (tvPaginationInfo != null) {
+            int total = supplierList.size();
+            tvPaginationInfo.setText("Menampilkan " + total + " dari " + total + " data");
+        }
     }
 }

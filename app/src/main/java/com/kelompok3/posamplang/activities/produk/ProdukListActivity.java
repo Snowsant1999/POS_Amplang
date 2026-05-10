@@ -31,14 +31,22 @@ import java.util.List;
 // Halaman manajemen daftar produk
 public class ProdukListActivity extends BaseActivity {
 
-    private RecyclerView rvProduk;
+    private RecyclerView    rvProduk;
     private EditText        etSearch;
-    private MaterialButton btnTambahProduk;
+    private MaterialButton  btnTambahProduk;
     private TextView        tvSuccessNotification;
+    private TextView        tvPaginationInfo;
+    private TextView        tvCurrentPage;
+    private android.widget.Button btnPagePrev, btnPageNext;
+    private android.widget.Spinner spinnerEntries;
 
     private ProdukAdapter adapter;
     private List<Produk>  produkList;
     private List<Produk>  filteredList;
+    private List<Produk>  pagedList;
+
+    private int currentPage = 1;
+    private int itemsPerPage = 10;
 
     private final ActivityResultLauncher<Intent> tambahProdukLauncher =
             registerForActivityResult(
@@ -46,7 +54,7 @@ public class ProdukListActivity extends BaseActivity {
                     result -> {
                         if (result.getResultCode() == RESULT_OK) {
                             showSuccessNotification();
-                            // TODO: Muat ulang data produk dari database setelah produk berhasil ditambah
+                            loadDummyData(); // Muat ulang data setelah ditambah
                         }
                     }
             );
@@ -60,6 +68,7 @@ public class ProdukListActivity extends BaseActivity {
         setupSidebar(R.id.btn_nav_stok);
 
         initViews();
+        setupSpinnerEntries();
         loadDummyData();
         setupRecyclerView();
         setupClickListeners();
@@ -70,12 +79,37 @@ public class ProdukListActivity extends BaseActivity {
         btnTambahProduk       = findViewById(R.id.btnTambahProduk);
         rvProduk              = findViewById(R.id.rvProduk);
         tvSuccessNotification = findViewById(R.id.tvSuccessNotification);
+        tvPaginationInfo      = findViewById(R.id.tvPaginationInfo);
+        tvCurrentPage         = findViewById(R.id.tvCurrentPage);
+        btnPagePrev           = findViewById(R.id.btnPagePrev);
+        btnPageNext           = findViewById(R.id.btnPageNext);
+        spinnerEntries        = findViewById(R.id.spinnerEntries);
+    }
+
+    private void setupSpinnerEntries() {
+        String[] options = {"10", "25", "50", "100"};
+        android.widget.ArrayAdapter<String> spinnerAdapter = new android.widget.ArrayAdapter<>(this, android.R.layout.simple_spinner_item, options);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerEntries.setAdapter(spinnerAdapter);
+
+        spinnerEntries.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(android.widget.AdapterView<?> parent, View view, int position, long id) {
+                itemsPerPage = Integer.parseInt(options[position]);
+                currentPage = 1; // Reset ke halaman 1
+                updatePagination();
+            }
+            @Override
+            public void onNothingSelected(android.widget.AdapterView<?> parent) {}
+        });
     }
 
     // Mengisi data produk dari database
     private void loadDummyData() {
-        produkList = new ArrayList<>();
-        filteredList = new ArrayList<>();
+        if (produkList == null) produkList = new ArrayList<>();
+        if (filteredList == null) filteredList = new ArrayList<>();
+        if (pagedList == null) pagedList = new ArrayList<>();
+        
         com.kelompok3.posamplang.database.AppDatabase db = com.kelompok3.posamplang.database.AppDatabase.getInstance(this);
         java.util.concurrent.Executors.newSingleThreadExecutor().execute(() -> {
             java.util.List<Produk> produks = db.produkDao().getAll();
@@ -84,9 +118,7 @@ public class ProdukListActivity extends BaseActivity {
                 produkList.addAll(produks);
                 filteredList.clear();
                 filteredList.addAll(produks);
-                if (adapter != null) {
-                    adapter.notifyDataSetChanged();
-                }
+                updatePagination();
             });
         });
     }
@@ -94,14 +126,29 @@ public class ProdukListActivity extends BaseActivity {
     // Setup list dan adapter produk
     private void setupRecyclerView() {
         rvProduk.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ProdukAdapter(filteredList);
+        adapter = new ProdukAdapter(pagedList);
+        // Daftarkan listener: reload penuh dari DB setelah edit/delete
+        adapter.setOnDataChangedListener(() -> loadDummyData());
         rvProduk.setAdapter(adapter);
     }
 
     /** Mendaftarkan listener untuk tombol-tombol interaktif. */
     private void setupClickListeners() {
-        btnTambahProduk.setOnClickListener(v -> {
-            tambahProduk();
+        btnTambahProduk.setOnClickListener(v -> tambahProduk());
+
+        btnPagePrev.setOnClickListener(v -> {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePagination();
+            }
+        });
+
+        btnPageNext.setOnClickListener(v -> {
+            int maxPage = (int) Math.ceil((double) filteredList.size() / itemsPerPage);
+            if (currentPage < maxPage) {
+                currentPage++;
+                updatePagination();
+            }
         });
     }
 
@@ -133,9 +180,50 @@ public class ProdukListActivity extends BaseActivity {
             }
         }
 
-        adapter.notifyDataSetChanged();
+        currentPage = 1; // Reset ke halaman pertama setiap kali mencari
+        updatePagination();
     }
 
+    private void updatePagination() {
+        pagedList.clear();
+        
+        int totalFiltered = filteredList.size();
+        int maxPage = (int) Math.ceil((double) totalFiltered / itemsPerPage);
+        if (maxPage == 0) maxPage = 1; // Minimal 1 halaman walau kosong
+        
+        if (currentPage > maxPage) currentPage = maxPage;
+        
+        int startIndex = (currentPage - 1) * itemsPerPage;
+        int endIndex = Math.min(startIndex + itemsPerPage, totalFiltered);
+        
+        for (int i = startIndex; i < endIndex; i++) {
+            pagedList.add(filteredList.get(i));
+        }
+        
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+        
+        // Update UI info
+        if (tvPaginationInfo != null) {
+            int total = produkList.size();
+            tvPaginationInfo.setText("Menampilkan " + startIndex + "-" + endIndex + " dari " + totalFiltered + " data (Total DB: " + total + ")");
+        }
+        
+        if (tvCurrentPage != null) {
+            tvCurrentPage.setText(" " + currentPage + " ");
+        }
+        
+        // Disable tombol jika tidak diperlukan
+        if (btnPagePrev != null) {
+            btnPagePrev.setEnabled(currentPage > 1);
+            btnPagePrev.setAlpha(currentPage > 1 ? 1.0f : 0.5f);
+        }
+        if (btnPageNext != null) {
+            btnPageNext.setEnabled(currentPage < maxPage);
+            btnPageNext.setAlpha(currentPage < maxPage ? 1.0f : 0.5f);
+        }
+    }
 
     private void showSuccessNotification() {
         tvSuccessNotification.setVisibility(View.VISIBLE);

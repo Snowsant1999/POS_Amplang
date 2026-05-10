@@ -22,6 +22,13 @@ public class StokRendahAdapter extends RecyclerView.Adapter<StokRendahAdapter.Vi
         this.list = list;
     }
 
+    /** Refresh data tanpa harus membuat adapter baru */
+    public void updateData(List<Produk> newList) {
+        list.clear();
+        list.addAll(newList);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

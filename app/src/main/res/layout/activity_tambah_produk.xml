@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Layer 0: Background (Manajemen Stok) -->
+    <include layout="@layout/activity_produk_list" />
 
-    <!-- Layer 1: Dark Overlay -->
-
-    <!-- Layer 2: Modal Card -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80FBFBFB" />
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="600dp"

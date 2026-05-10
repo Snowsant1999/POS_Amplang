@@ -65,6 +65,17 @@ public class MainActivity extends BaseActivity {
         setupSidebar(R.id.btn_nav_dashboard);
         initViews();
         setupTabButtons();
+        // Data pertama kali dimuat di onResume()
+    }
+
+    /**
+     * onResume dipanggil setiap kali pengguna kembali ke Dashboard
+     * (dari Kasir, Edit Produk, atau activity manapun).
+     * Ini memastikan semua data selalu segar dari database.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
         loadAllData();
     }
 
@@ -404,8 +415,15 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setupStokRendah(List<Produk> list) {
-        rvStokRendah.setLayoutManager(new LinearLayoutManager(this));
-        rvStokRendah.setAdapter(new StokRendahAdapter(list));
+        if (rvStokRendah.getLayoutManager() == null) {
+            rvStokRendah.setLayoutManager(new LinearLayoutManager(this));
+        }
+        // Jika adapter sudah ada, update data saja (tanpa buat ulang)
+        if (rvStokRendah.getAdapter() instanceof StokRendahAdapter) {
+            ((StokRendahAdapter) rvStokRendah.getAdapter()).updateData(list);
+        } else {
+            rvStokRendah.setAdapter(new StokRendahAdapter(list));
+        }
         rvStokRendah.setNestedScrollingEnabled(false);
     }
 }
