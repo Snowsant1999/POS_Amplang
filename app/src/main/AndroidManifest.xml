@@ -47,10 +47,6 @@
             android:exported="true"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activities.auth.VerifikasiTerkirimActivity"
-            android:exported="true"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".activities.dashboard.MainActivity"
             android:exported="true"
             android:screenOrientation="landscape" />

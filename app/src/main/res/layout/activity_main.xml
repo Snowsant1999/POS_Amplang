@@ -255,8 +255,8 @@
                         android:text="Pendapatan"
                         android:textSize="12sp"
                         android:textAllCaps="false"
-                        android:backgroundTint="#B22222"
-                        android:textColor="@android:color/white"
+                        android:backgroundTint="@android:color/transparent"
+                        android:textColor="#888"
                         android:layout_marginEnd="4dp"
                         style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
 

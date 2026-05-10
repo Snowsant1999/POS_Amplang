@@ -24,7 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param activeMenuId ID dari layout menu yang ingin diberi warna merah (misal: R.id.btn_nav_dashboard)
      */
     protected void setupSidebar(int activeMenuId) {
-        // 1. Inisialisasi semua button dari layout_sidebar.xml
+        // Inisialisasi semua button dari layout_sidebar.xml
         LinearLayout btnDashboard = findViewById(R.id.btn_nav_dashboard);
         LinearLayout btnKasir      = findViewById(R.id.btn_nav_kasir);
         LinearLayout btnStok       = findViewById(R.id.btn_nav_stok);
@@ -33,7 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         LinearLayout btnSetting    = findViewById(R.id.btn_nav_pengaturan);
         LinearLayout btnLogout     = findViewById(R.id.btn_nav_logout);
 
-        // 2. Tandai menu yang aktif dengan warna merah
+        // Tandai menu yang aktif dengan warna merah
         if (activeMenuId != 0) {
             LinearLayout activeLayout = findViewById(activeMenuId);
             if (activeLayout != null) {
@@ -42,7 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
 
-        // 3. Logika Navigasi (Klik Menu)
+        // Logika Navigasi (Klik Menu)
         if (btnDashboard != null) {
             btnDashboard.setOnClickListener(v -> navigateTo(MainActivity.class));
         }

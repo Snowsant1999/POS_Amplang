@@ -2,14 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E5E5E5">
 
     <!-- Decorative Fish Pattern (Top Left) -->
     <ImageView
-        android:id="@+id/fishTopLeft"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginStart="-30dp"
@@ -18,15 +16,10 @@
         android:src="@mipmap/amplang_foreground"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription"
-        tools:srcCompat="@mipmap/amplang_foreground" />
+        tools:ignore="ContentDescription" />
 
     <!-- Decorative Fish Pattern (Bottom Left) -->
-
-    <!-- Decorative Fish Pattern (Top Right) -->
-
     <ImageView
-        android:id="@+id/fishBottomLeft"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginStart="-20dp"
@@ -35,11 +28,10 @@
         android:src="@mipmap/ikan_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="ContentDescription"
-        tools:srcCompat="@mipmap/ikan_foreground" />
+        tools:ignore="ContentDescription" />
 
+    <!-- Decorative Fish Pattern (Top Right) -->
     <ImageView
-        android:id="@+id/fishTopRight"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginTop="1dp"
@@ -51,11 +43,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="ContentDescription"
-        tools:srcCompat="@mipmap/amplang_foreground" />
+        tools:ignore="ContentDescription" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardLogin"
         android:layout_width="683dp"
         android:layout_height="596dp"
         android:layout_marginHorizontal="40dp"
@@ -69,19 +59,19 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="629dp"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:paddingHorizontal="32dp"
-            android:paddingVertical="32dp">
+            android:paddingTop="32dp"
+            android:paddingBottom="48dp">
 
             <!-- Logo -->
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:contentDescription="Logo Amplang Salsabila"
-                android:src="@mipmap/amplang_foreground"
-                tools:srcCompat="@mipmap/amplang_foreground" />
+                android:src="@mipmap/amplang_foreground" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -97,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Selamat Datang!"
+                android:text="Lupa Sandi"
                 android:textColor="#8B1A1A"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -106,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Silahkan Masuk Ke akun Anda."
+                android:text="Masukkan email Anda beserta sandi baru."
                 android:textColor="#757575"
                 android:textSize="12sp" />
 
@@ -120,11 +110,11 @@
                 app:startIconTint="#757575">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etEmail"
+                    android:id="@+id/etEmailReset"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:background="@drawable/bg_input"
-                    android:hint="Email"
+                    android:hint="Email Akun Anda"
                     android:inputType="textEmailAddress"
                     android:paddingStart="40dp"
                     android:paddingEnd="12dp"
@@ -143,56 +133,54 @@
                 app:startIconTint="#757575">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPassword"
+                    android:id="@+id/etSandiBaru"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:background="@drawable/bg_input"
-                    android:hint="Kata Sandi"
+                    android:hint="Sandi Baru (Min 8 Karakter)"
                     android:inputType="textPassword"
                     android:paddingStart="40dp"
                     android:paddingEnd="12dp"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Lupa Sandi Link -->
-            <TextView
-                android:id="@+id/tvLupaSandi"
-                android:layout_width="wrap_content"
+            <!-- Password Confirm Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="8dp"
-                android:text="Lupa Sandi?"
-                android:textColor="#F0B429"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="12dp"
+                app:hintEnabled="false"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#757575"
+                app:startIconDrawable="@android:drawable/ic_lock_idle_lock"
+                app:startIconTint="#757575">
 
-            <!-- Login Button -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSandiKonfirmasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="@drawable/bg_input"
+                    android:hint="Konfirmasi Sandi Baru"
+                    android:inputType="textPassword"
+                    android:paddingStart="40dp"
+                    android:paddingEnd="12dp"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Reset Button -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnMasuk"
+                android:id="@+id/btnAturUlang"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="24dp"
                 android:backgroundTint="#F0B429"
-                android:text="Masuk"
+                android:text="Perbarui Sandi"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 app:cornerRadius="12dp" />
 
-            <!-- Cancel Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnBatal"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#8B1A1A"
-                android:text="Batal"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                app:cornerRadius="12dp" />
-
-            <!-- Register Link -->
+            <!-- Kembali Link -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -202,17 +190,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Belum punya akun? "
+                    android:text="Teringat sandi Anda? "
                     android:textColor="#757575"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/tvDaftar"
+                    android:id="@+id/tvKembaliLogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Daftar Sekarang"
-                    android:textColor="#F0B429"
-                    android:textSize="11sp"
+                    android:text="Kembali ke Login"
+                    android:textColor="#8B1A1A"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
             </LinearLayout>
 

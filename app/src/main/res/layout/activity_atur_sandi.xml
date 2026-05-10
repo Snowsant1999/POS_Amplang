@@ -93,16 +93,36 @@
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
-            <!-- Password Baru Field -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:lineSpacingExtra="4dp"
-                android:text="Masukkan sandi baru Anda. Pastikan sandi minimal 8 karakter."
+                android:text="Masukkan Email Anda dan sandi baru. Pastikan sandi minimal 8 karakter."
                 android:textAlignment="viewStart"
                 android:textColor="#333333"
                 android:textSize="13sp" />
+
+            <!-- Email Field -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:hintEnabled="false"
+                app:startIconDrawable="@android:drawable/ic_dialog_email"
+                app:startIconTint="#757575">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmailReset"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="@drawable/bg_input"
+                    android:hint="Masukkan Email Akun"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="48dp"
+                    android:paddingEnd="16dp"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

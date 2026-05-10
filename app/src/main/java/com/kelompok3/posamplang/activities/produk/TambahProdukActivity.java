@@ -70,7 +70,6 @@ public class TambahProdukActivity extends ProdukListActivity {
             Toast.makeText(this, "Pilih kategori terlebih dahulu", Toast.LENGTH_SHORT).show();
             return false;
         }
-        // Tambahkan validasi lainnya jika diperlukan
         return true;
     }
 }

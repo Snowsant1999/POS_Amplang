@@ -99,8 +99,7 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="24dp"
-                android:src="@android:drawable/checkbox_on_background"
-                app:tint="#4CAF50"
+                android:src="@mipmap/berhasil_foreground"
                 tools:ignore="ContentDescription"
                 tools:srcCompat="@mipmap/berhasil_foreground" />
 

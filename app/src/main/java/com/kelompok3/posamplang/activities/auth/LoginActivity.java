@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etPassword;
     private Button btnMasuk;
     private Button btnBatal;
-    private TextView tvDaftar;
+    private TextView tvDaftar, tvLupaSandi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         btnMasuk   = findViewById(R.id.btnMasuk);
         btnBatal   = findViewById(R.id.btnBatal);
         tvDaftar   = findViewById(R.id.tvDaftar);
+        tvLupaSandi= findViewById(R.id.tvLupaSandi);
     }
 
 
@@ -54,6 +55,10 @@ public class LoginActivity extends AppCompatActivity {
         btnMasuk.setOnClickListener(v -> handleLogin());
         btnBatal.setOnClickListener(v -> clearForm());
         tvDaftar.setOnClickListener(v -> navigateToRegister());
+        tvLupaSandi.setOnClickListener(v -> {
+            startActivity(new Intent(this, LupaSandiActivity.class));
+            overridePendingTransition(0, 0);
+        });
     }
 
     // Memvalidasi input dan memproses login
@@ -91,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // Aksi jika login berhasil
-    private void onLoginSuccess() {
+    private void  onLoginSuccess() {
         Toast.makeText(this, "Login Berhasil", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         // Hapus LoginActivity dari back stack agar pengguna tidak bisa kembali ke layar login

@@ -53,9 +53,40 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            Toast.makeText(this, "Pendaftaran Berhasil!", Toast.LENGTH_SHORT).show();
-            finish(); // Kembali ke login
-            overridePendingTransition(0, 0);
+            // Proses ke Database (Background Thread)
+            com.kelompok3.posamplang.database.AppDatabase db = com.kelompok3.posamplang.database.AppDatabase.getInstance(this);
+            java.util.concurrent.Executors.newSingleThreadExecutor().execute(() -> {
+                // Cek apakah email sudah terdaftar
+                com.kelompok3.posamplang.models.User existingUser = db.userDao().getByEmail(email);
+                
+                if (existingUser != null) {
+                    runOnUiThread(() -> {
+                        etEmail.setError("Email sudah terdaftar!");
+                        etEmail.requestFocus();
+                    });
+                    return;
+                }
+                
+                try {
+                    // Simpan user baru (Role diset 1 agar tidak error foreign key jika role 2 belum ada)
+                    com.kelompok3.posamplang.models.User newUser = new com.kelompok3.posamplang.models.User(1, "-", nama, email, sandi, "-");
+                    db.userDao().insert(newUser);
+                    
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, "Pendaftaran Berhasil!", Toast.LENGTH_SHORT).show();
+                        
+                        // Lanjut ke halaman daftar berhasil
+                        Intent intent = new Intent(this, com.kelompok3.posamplang.activities.auth.DaftarBerhasilActivity.class);
+                        startActivity(intent);
+                        finish();
+                        overridePendingTransition(0, 0);
+                    });
+                } catch (Exception e) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, "Gagal mendaftar: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    });
+                }
+            });
         });
 
         tvMasuk.setOnClickListener(v -> {

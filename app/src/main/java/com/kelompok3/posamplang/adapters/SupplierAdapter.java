@@ -74,7 +74,8 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvNama, tvKontak, tvAlamat, tvEmail, tvStatus;
-        ImageButton btnEdit, btnDelete;
+        com.google.android.material.button.MaterialButton btnEdit;
+        ImageButton btnDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

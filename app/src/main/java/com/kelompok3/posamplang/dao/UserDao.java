@@ -30,4 +30,10 @@ public interface UserDao {
 
     @Query("SELECT * FROM users WHERE id_users = :id LIMIT 1")
     User getById(int id);
+
+    @Query("SELECT * FROM users WHERE email = :email LIMIT 1")
+    User getByEmail(String email);
+
+    @Query("UPDATE users SET password = :newPassword WHERE email = :email")
+    void updatePassword(String email, String newPassword);
 }
