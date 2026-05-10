@@ -314,7 +314,7 @@ public class KasirActivity extends BaseActivity {
         List<DetailPesanan> snapshot = new ArrayList<>(keranjangList);
 
         Executors.newSingleThreadExecutor().execute(() -> {
-            // 1. Buat record Pesanan
+            // Buat record Pesanan
             Pesanan pesanan = new Pesanan(
                     1,             // id_pelanggan = 1 (Pelanggan Umum)
                     noPesanan,
@@ -324,17 +324,17 @@ public class KasirActivity extends BaseActivity {
             );
             long idPesanan = db.pesananDao().insert(pesanan);
 
-            // 2. Insert tiap detail & kurangi stok
+            // Insert tiap detail & kurangi stok
             for (DetailPesanan item : snapshot) {
                 // Tetapkan id_pesanan yang baru saja digenerate
                 item.setId_pesanan((int) idPesanan);
                 item.setId_users(currentUserId);
                 db.detailPesananDao().insert(item);
 
-                // 3. Kurangi stok produk
+                // Kurangi stok produk
                 db.produkDao().kurangiStok(item.getId_produk(), item.getJumlah_produk());
 
-                // 4. Catat ke stok_adjustment (tipe = "Penjualan")
+                // Catat ke stok_adjustment (tipe = "Penjualan")
                 StokAdjustment adj = new StokAdjustment(
                         item.getId_produk(),
                         currentUserId,
@@ -345,7 +345,7 @@ public class KasirActivity extends BaseActivity {
                 db.stokAdjustmentDao().insert(adj);
             }
 
-            // 5. Catat pembayaran
+            // Catat pembayaran
             PembayaranPesanan pembayaran = new PembayaranPesanan(
                     (int) idPesanan,
                     metode,
@@ -356,10 +356,10 @@ public class KasirActivity extends BaseActivity {
             );
             db.pembayaranDao().insert(pembayaran);
 
-            // 6. Refresh daftar produk (stok sudah berubah)
+            // Refresh daftar produk (stok sudah berubah)
             List<Produk> produks = db.produkDao().getAll();
 
-            // 7. Kembali ke UI thread
+            // Kembali ke UI thread
             runOnUiThread(() -> {
                 // Perbarui daftar produk di menu agar stok yang tampil ikut berkurang
                 menuProdukList.clear();
