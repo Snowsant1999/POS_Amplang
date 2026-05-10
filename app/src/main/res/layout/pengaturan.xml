@@ -17,26 +17,29 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="32dp">
+        android:paddingStart="48dp"
+        android:paddingTop="32dp"
+        android:paddingEnd="32dp"
+        android:paddingBottom="32dp">
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="PENGATURAN"
-            android:textColor="@color/black"
+            android:textColor="@android:color/black"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="serif"/>
 
         <LinearLayout
             android:id="@+id/containerInfoToko"
-            android:layout_width="match_parent"
+            android:layout_width="900dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvTitle"
             android:layout_marginTop="32dp"
             android:background="@drawable/border_gray_rounded"
             android:orientation="vertical">
-
             <!-- Header Informasi Toko -->
             <TextView
                 android:layout_width="match_parent"
@@ -58,12 +61,17 @@
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:text="Nama Toko:"
-                    android:textColor="@color/black" />
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/valNamaToko"
                     android:layout_width="wrap_content"
@@ -81,14 +89,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#F2F2F2"
+                android:background="#FFFFFF"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:text="Alamat Toko:"
-                    android:textColor="@color/black" />
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/valAlamatToko"
                     android:layout_width="wrap_content"
@@ -108,12 +120,16 @@
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:text="Email Toko:"
-                    android:textColor="@color/black" />
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/valEmailToko"
                     android:layout_width="wrap_content"
@@ -132,14 +148,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#F2F2F2"
+                android:background="#FFFFFF"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:text="Nomor Telepon:"
-                    android:textColor="@color/black" />
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/valNoTelp"
                     android:layout_width="wrap_content"
