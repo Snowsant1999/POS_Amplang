@@ -194,4 +194,10 @@ public class TambahProdukActivity extends AppCompatActivity {
         builder.setNegativeButton("Batal", null);
         builder.show();
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, 0); // Hilangkan animasi saat ditutup
+    }
 }

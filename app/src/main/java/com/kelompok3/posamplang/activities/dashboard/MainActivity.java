@@ -65,7 +65,6 @@ public class MainActivity extends BaseActivity {
         setupSidebar(R.id.btn_nav_dashboard);
         initViews();
         setupTabButtons();
-        // Data pertama kali dimuat di onResume()
     }
 
     /**
@@ -159,7 +158,7 @@ public class MainActivity extends BaseActivity {
             // ── Kartu Statistik ─────────────────────────────────────────────
             int totalTransaksi       = db.pembayaranDao().getTotalTransaksi();
             double totalPendapatan   = db.pembayaranDao().getTotalPendapatanAll();
-            double totalPengeluaran  = hitungTotalPengeluaran(db); // dari stok_adjustment
+            double totalPengeluaran  = hitungTotalPengeluaran(db);
 
             // ── Pendapatan 7 Hari (untuk Line Chart) ────────────────────────
             float[] pendapatan7Hari = new float[7];
@@ -418,7 +417,6 @@ public class MainActivity extends BaseActivity {
         if (rvStokRendah.getLayoutManager() == null) {
             rvStokRendah.setLayoutManager(new LinearLayoutManager(this));
         }
-        // Jika adapter sudah ada, update data saja (tanpa buat ulang)
         if (rvStokRendah.getAdapter() instanceof StokRendahAdapter) {
             ((StokRendahAdapter) rvStokRendah.getAdapter()).updateData(list);
         } else {

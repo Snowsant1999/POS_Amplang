@@ -47,7 +47,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="683dp"
-        android:layout_height="596dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         app:cardCornerRadius="24dp"
         app:cardElevation="10dp"
@@ -103,9 +103,11 @@
 
             <!-- Nama Lengkap Field -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilNamaLengkap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                app:errorIconDrawable="@null"
                 app:hintEnabled="false"
                 app:startIconDrawable="@android:drawable/ic_menu_myplaces"
                 app:startIconTint="#757575">
@@ -123,9 +125,11 @@
 
             <!-- Email Field -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilEmailDaftar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                app:errorIconDrawable="@null"
                 app:hintEnabled="false"
                 app:startIconDrawable="@android:drawable/ic_dialog_email"
                 app:startIconTint="#757575">
@@ -143,9 +147,11 @@
 
             <!-- Password Field -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPasswordDaftar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                app:errorIconDrawable="@null"
                 app:hintEnabled="false"
                 app:passwordToggleEnabled="true"
                 app:startIconDrawable="@android:drawable/ic_lock_idle_lock"
@@ -164,9 +170,11 @@
 
             <!-- Konfirmasi Password Field -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilKonfirmasiPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                app:errorIconDrawable="@null"
                 app:hintEnabled="false"
                 app:passwordToggleEnabled="true"
                 app:startIconDrawable="@android:drawable/ic_lock_idle_lock"

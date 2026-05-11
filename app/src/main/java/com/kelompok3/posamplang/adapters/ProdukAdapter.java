@@ -16,6 +16,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.kelompok3.posamplang.R;
 import com.kelompok3.posamplang.activities.produk.EditProdukActivity;
+import com.kelompok3.posamplang.activities.produk.ProdukListActivity;
 import com.kelompok3.posamplang.database.AppDatabase;
 import com.kelompok3.posamplang.models.Kategori;
 import com.kelompok3.posamplang.models.Merek;
@@ -120,18 +121,16 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.ProdukView
                 });
             });
 
-            // Tombol Edit — kirim semua data ke EditProdukActivity
+            // Tombol Edit — memanggil showEditProdukDialog di activity induk
             btnEdit.setOnClickListener(v -> {
-                Intent intent = new Intent(v.getContext(), EditProdukActivity.class);
-                intent.putExtra(EditProdukActivity.EXTRA_PRODUK_ID,    produk.getId_produk());
-                intent.putExtra(EditProdukActivity.EXTRA_PRODUK_NAMA,  produk.getNama_produk());
-                intent.putExtra(EditProdukActivity.EXTRA_PRODUK_HARGA, produk.getHarga_produk());
-                intent.putExtra(EditProdukActivity.EXTRA_PRODUK_STOK,  produk.getStok_tersedia());
-                intent.putExtra(EditProdukActivity.EXTRA_PRODUK_UNIT,  produk.getUnit());
-                intent.putExtra(EditProdukActivity.EXTRA_ID_KATEGORI,  produk.getId_kategori_produk());
-                intent.putExtra(EditProdukActivity.EXTRA_ID_MEREK,     produk.getId_merek());
-                intent.putExtra(EditProdukActivity.EXTRA_ID_SUPPLIER,  produk.getId_supplier());
-                v.getContext().startActivity(intent);
+                android.content.Context context = v.getContext();
+                while (context instanceof android.content.ContextWrapper) {
+                    if (context instanceof ProdukListActivity) {
+                        ((ProdukListActivity) context).showEditProdukDialog(produk);
+                        return;
+                    }
+                    context = ((android.content.ContextWrapper) context).getBaseContext();
+                }
             });
 
             // Tombol Hapus — konfirmasi dialog + hapus dari DB

@@ -47,7 +47,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="683dp"
-        android:layout_height="596dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         app:cardCornerRadius="24dp"
         app:cardElevation="12dp"
@@ -102,9 +102,11 @@
 
             <!-- Email Input -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilEmailReset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                app:errorIconDrawable="@null"
                 app:hintEnabled="false"
                 app:startIconDrawable="@android:drawable/ic_dialog_email"
                 app:startIconTint="#757575">
@@ -123,9 +125,11 @@
 
             <!-- Password Input -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSandiBaru"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                app:errorIconDrawable="@null"
                 app:hintEnabled="false"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="#757575"
@@ -146,9 +150,11 @@
 
             <!-- Password Confirm Input -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSandiKonfirmasi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                app:errorIconDrawable="@null"
                 app:hintEnabled="false"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="#757575"

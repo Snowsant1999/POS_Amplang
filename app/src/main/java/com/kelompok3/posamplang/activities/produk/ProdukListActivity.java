@@ -8,6 +8,11 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
+import android.widget.RadioGroup;
+import android.text.TextUtils;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
@@ -26,6 +31,10 @@ import com.kelompok3.posamplang.parent.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import com.kelompok3.posamplang.database.AppDatabase;
+import com.kelompok3.posamplang.models.Kategori;
+import com.kelompok3.posamplang.models.Merek;
 
 
 // Halaman manajemen daftar produk
@@ -134,7 +143,7 @@ public class ProdukListActivity extends BaseActivity {
 
     /** Mendaftarkan listener untuk tombol-tombol interaktif. */
     private void setupClickListeners() {
-        btnTambahProduk.setOnClickListener(v -> tambahProduk());
+        btnTambahProduk.setOnClickListener(v -> showTambahProdukDialog());
 
         btnPagePrev.setOnClickListener(v -> {
             if (currentPage > 1) {
@@ -233,9 +242,172 @@ public class ProdukListActivity extends BaseActivity {
         );
     }
 
-    // Membuka halaman tambah produk baru
-    private void tambahProduk(){
-        Intent intent = new Intent(this, TambahProdukActivity.class);
-        tambahProdukLauncher.launch(intent);
+    // ─── TAMPILKAN DIALOG TAMBAH PRODUK (SAMA SEPERTI SUPPLIER) ───
+    private void showTambahProdukDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.activity_tambah_produk);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        int width = (int)(600 * getResources().getDisplayMetrics().density);
+        dialog.getWindow().setLayout(width, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        EditText etNama     = dialog.findViewById(R.id.etNamaProduk);
+        EditText etMerek    = dialog.findViewById(R.id.etMerek);
+        EditText etHargaJual= dialog.findViewById(R.id.etHargaJual);
+        EditText etStok     = dialog.findViewById(R.id.etStok);
+        EditText etSatuan   = dialog.findViewById(R.id.etSatuan);
+        Spinner spinnerKat  = dialog.findViewById(R.id.spinnerKategori);
+
+        AppDatabase db = AppDatabase.getInstance(this);
+
+        // Load Kategori
+        List<Kategori> kategoriList = new ArrayList<>();
+        Executors.newSingleThreadExecutor().execute(() -> {
+            kategoriList.addAll(db.kategoriDao().getAll());
+            List<String> namaKategori = new ArrayList<>();
+            namaKategori.add("-- Pilih Kategori --");
+            for (Kategori k : kategoriList) namaKategori.add(k.getNama_kategori());
+            runOnUiThread(() -> {
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, namaKategori);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerKat.setAdapter(adapter);
+            });
+        });
+
+        dialog.findViewById(R.id.btnClose).setOnClickListener(v -> dialog.dismiss());
+        dialog.findViewById(R.id.btnBatal).setOnClickListener(v -> dialog.dismiss());
+        
+        dialog.findViewById(R.id.btnSimpan).setOnClickListener(v -> {
+            String nama = etNama.getText().toString().trim();
+            if (TextUtils.isEmpty(nama)) {
+                etNama.setError("Nama produk wajib diisi");
+                return;
+            }
+            if (spinnerKat.getSelectedItemPosition() == 0) {
+                Toast.makeText(this, "Pilih kategori!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            double harga = Double.parseDouble(etHargaJual.getText().toString().isEmpty() ? "0" : etHargaJual.getText().toString());
+            int stok = Integer.parseInt(etStok.getText().toString().isEmpty() ? "0" : etStok.getText().toString());
+            String satuan = etSatuan.getText().toString().trim();
+            String merek = etMerek.getText().toString().trim();
+
+            int idKat = kategoriList.get(spinnerKat.getSelectedItemPosition() - 1).getId_kategori();
+
+            Executors.newSingleThreadExecutor().execute(() -> {
+                int idMerek = 1;
+                if (!merek.isEmpty()) {
+                    List<Merek> mList = db.merekDao().getAll();
+                    boolean found = false;
+                    for (Merek m : mList) {
+                        if (m.getNama_merek().equalsIgnoreCase(merek)) {
+                            idMerek = m.getId_merek();
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) idMerek = (int) db.merekDao().insert(new Merek(merek));
+                }
+
+                db.produkDao().insert(new Produk(idKat, idMerek, 1, nama, satuan, harga, stok));
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "Produk ditambahkan!", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    showSuccessNotification();
+                    loadDummyData();
+                });
+            });
+        });
+        dialog.show();
+    }
+
+    // ─── TAMPILKAN DIALOG EDIT PRODUK (SAMA SEPERTI SUPPLIER) ───
+    public void showEditProdukDialog(Produk produk) {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.activity_edit_produk2);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        int width = (int)(600 * getResources().getDisplayMetrics().density);
+        dialog.getWindow().setLayout(width, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        EditText etNama     = dialog.findViewById(R.id.etNamaProdukEdit);
+        EditText etMerek    = dialog.findViewById(R.id.etMerekEdit);
+        EditText etHargaJual= dialog.findViewById(R.id.etHargaJualEdit);
+        EditText etStok     = dialog.findViewById(R.id.etStokEdit);
+        EditText etSatuan   = dialog.findViewById(R.id.etSatuanEdit);
+        Spinner spinnerKat  = dialog.findViewById(R.id.spinnerKategoriEdit);
+
+        etNama.setText(produk.getNama_produk());
+        etHargaJual.setText(String.valueOf((long)produk.getHarga_produk()));
+        etStok.setText(String.valueOf(produk.getStok_tersedia()));
+        etSatuan.setText(produk.getUnit());
+
+        AppDatabase db = AppDatabase.getInstance(this);
+        List<Kategori> kategoriList = new ArrayList<>();
+
+        Executors.newSingleThreadExecutor().execute(() -> {
+            // Load Merek
+            Merek m = db.merekDao().getById(produk.getId_merek());
+            final String merekName = (m != null) ? m.getNama_merek() : "";
+
+            // Load Kategori
+            kategoriList.addAll(db.kategoriDao().getAll());
+            List<String> namaKategori = new ArrayList<>();
+            int sel = 0;
+            for (int i=0; i<kategoriList.size(); i++) {
+                namaKategori.add(kategoriList.get(i).getNama_kategori());
+                if (kategoriList.get(i).getId_kategori() == produk.getId_kategori_produk()) sel = i;
+            }
+            final int fsel = sel;
+            runOnUiThread(() -> {
+                etMerek.setText(merekName);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, namaKategori);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerKat.setAdapter(adapter);
+                spinnerKat.setSelection(fsel);
+            });
+        });
+
+        dialog.findViewById(R.id.btnCloseEdit).setOnClickListener(v -> dialog.dismiss());
+        dialog.findViewById(R.id.btnBatalEdit).setOnClickListener(v -> dialog.dismiss());
+
+        dialog.findViewById(R.id.btnSimpanEdit).setOnClickListener(v -> {
+            String nama = etNama.getText().toString().trim();
+            String merek = etMerek.getText().toString().trim();
+            if (TextUtils.isEmpty(nama)) return;
+            
+            produk.setNama_produk(nama);
+            produk.setHarga_produk(Double.parseDouble(etHargaJual.getText().toString().isEmpty() ? "0" : etHargaJual.getText().toString()));
+            produk.setStok_tersedia(Integer.parseInt(etStok.getText().toString().isEmpty() ? "0" : etStok.getText().toString()));
+            produk.setUnit(etSatuan.getText().toString());
+            if (kategoriList.size() > 0) {
+                produk.setId_kategori_produk(kategoriList.get(spinnerKat.getSelectedItemPosition()).getId_kategori());
+            }
+
+            Executors.newSingleThreadExecutor().execute(() -> {
+                int idMerek = produk.getId_merek();
+                if (!merek.isEmpty()) {
+                    List<Merek> mList = db.merekDao().getAll();
+                    boolean found = false;
+                    for (Merek mk : mList) {
+                        if (mk.getNama_merek().equalsIgnoreCase(merek)) {
+                            idMerek = mk.getId_merek();
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) idMerek = (int) db.merekDao().insert(new Merek(merek));
+                }
+                produk.setId_merek(idMerek);
+
+                db.produkDao().update(produk);
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "Produk diperbarui!", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    showSuccessNotification();
+                    loadDummyData();
+                });
+            });
+        });
+        dialog.show();
     }
 }

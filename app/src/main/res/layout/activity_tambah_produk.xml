@@ -1,276 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="600dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="#FFFFFF">
 
-    <include layout="@layout/activity_produk_list" />
-
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#80FBFBFB" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="600dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="8dp"
-        app:strokeWidth="0dp"
-        app:cardBackgroundColor="#FFFFFF">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!-- Modal Header -->
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@color/primary_yellow"
+            android:padding="12dp">
 
-            <!-- Modal Header -->
-            <RelativeLayout
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/btnClose"
+                android:layout_alignParentStart="true"
+                android:text="@string/tambah_produk_title"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/btnClose"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_close"
+                app:tint="@color/white" />
+        </RelativeLayout>
+
+        <!-- Modal Body -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primary_yellow"
-                android:padding="12dp">
+                android:orientation="vertical">
 
+                <!-- Nama Produk -->
                 <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/btnClose"
-                    android:layout_alignParentStart="true"
-                    android:text="@string/tambah_produk_title"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    style="@style/LabelTabel"
+                    android:text="@string/nama_produk" />
+                <EditText
+                    android:id="@+id/etNamaProduk"
+                    style="@style/InputTabel"
+                    android:hint="@string/hint_nama_produk"
+                    android:inputType="text"
+                    android:importantForAutofill="no"
+                    android:layout_marginBottom="12dp"/>
 
-                <ImageView
-                    android:id="@+id/btnClose"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_close"
-                    app:tint="@color/white" />
-            </RelativeLayout>
-
-            <!-- Modal Body -->
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp">
-
+                <!-- Kategori -->
+                <TextView
+                    style="@style/LabelTabel"
+                    android:text="@string/kategori" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <!-- Nama Produk -->
-                    <TextView
-                        style="@style/LabelTabel"
-                        android:text="@string/nama_produk" />
-                    <EditText
-                        android:id="@+id/etNamaProduk"
-                        style="@style/InputTabel"
-                        android:hint="@string/hint_nama_produk"
-                        android:inputType="text"
-                        android:importantForAutofill="no"
-                        android:layout_marginBottom="12dp"/>
-
-                    <!-- Kategori -->
-                    <TextView
-                        style="@style/LabelTabel"
-                        android:text="@string/kategori" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="12dp"
-                        android:baselineAligned="false">
-                        <Spinner
-                            android:id="@+id/spinnerKategori"
-                            android:layout_width="0dp"
-                            android:layout_height="48dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_spinner_border"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp" />
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnTambahKategori"
-                            android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:layout_marginStart="8dp"
-                            android:backgroundTint="@color/primary_yellow"
-                            android:text="@string/tambah_kategori_btn"
-                            android:textAllCaps="false"
-                            android:textSize="12sp"
-                            app:cornerRadius="4dp" />
-                    </LinearLayout>
-
-                    <!-- Row 1: Kode & Merek -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:baselineAligned="false"
-                        android:weightSum="2"
-                        android:layout_marginBottom="12dp">
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="10dp"
-                            android:orientation="vertical">
-                            <TextView style="@style/LabelTabel" android:text="@string/kode_produk" />
-                            <EditText android:id="@+id/etKodeProduk" style="@style/InputTabel" android:hint="@string/hint_kode_produk" android:inputType="text" android:importantForAutofill="no" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-                            <TextView style="@style/LabelTabel" android:text="@string/merek" />
-                            <EditText android:id="@+id/etMerek" style="@style/InputTabel" android:hint="@string/hint_merek" android:inputType="text" android:importantForAutofill="no" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <!-- Row 2: Harga Pokok & Harga Jual -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:baselineAligned="false"
-                        android:weightSum="2"
-                        android:layout_marginBottom="12dp">
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="10dp"
-                            android:orientation="vertical">
-                            <TextView style="@style/LabelTabel" android:text="@string/harga_pokok" />
-                            <EditText android:id="@+id/etHargaPokok" style="@style/InputTabel" android:hint="@string/currency_hint" android:inputType="number" android:importantForAutofill="no" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-                            <TextView style="@style/LabelTabel" android:text="@string/harga_jual" />
-                            <EditText android:id="@+id/etHargaJual" style="@style/InputTabel" android:hint="@string/currency_hint" android:inputType="number" android:importantForAutofill="no" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <!-- Row 3: Stok & Satuan -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:baselineAligned="false"
-                        android:weightSum="2"
-                        android:layout_marginBottom="12dp">
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="10dp"
-                            android:orientation="vertical">
-                            <TextView style="@style/LabelTabel" android:text="@string/stok" />
-                            <EditText android:id="@+id/etStok" style="@style/InputTabel" android:hint="@string/zero_hint" android:inputType="number" android:importantForAutofill="no" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-                            <TextView style="@style/LabelTabel" android:text="@string/satuan" />
-                            <EditText
-                                android:id="@+id/etSatuan"
-                                style="@style/InputTabel"
-                                android:hint="@string/hint_satuan"
-                                android:inputType="text"
-                                android:importantForAutofill="no" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <!-- Deskripsi -->
-                    <TextView
-                        style="@style/LabelTabel"
-                        android:text="@string/deskripsi_opsional" />
-                    <EditText
-                        android:id="@+id/etDeskripsi"
-                        style="@style/InputTabel"
-                        android:layout_height="wrap_content"
-                        android:minHeight="48dp"
-                        android:gravity="top"
-                        android:hint="@string/hint_deskripsi"
-                        android:inputType="textMultiLine"
-                        android:importantForAutofill="no"
-                        android:layout_marginBottom="12dp"/>
-
-                    <!-- Status -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="20dp">
-                        <TextView
-                            style="@style/LabelTabel"
-                            android:text="@string/status"
-                            android:layout_marginBottom="0dp"
-                            android:layout_marginEnd="16dp"/>
-                        <RadioGroup
-                            android:id="@+id/rgStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <RadioButton
-                                android:id="@+id/rbAktif"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/aktif"
-                                android:checked="true"
-                                android:buttonTint="@color/primary_yellow"/>
-                            <RadioButton
-                                android:id="@+id/rbNonaktif"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:text="@string/nonaktif"
-                                android:buttonTint="@color/primary_yellow"/>
-                        </RadioGroup>
-                    </LinearLayout>
-
-                    <!-- Action Buttons -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:orientation="horizontal">
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnBatal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="#E50000"
-                            android:text="@string/batal_btn"
-                            android:textAllCaps="false"
-                            app:cornerRadius="4dp"
-                            android:layout_marginEnd="12dp"/>
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnSimpan"
-                            android:layout_width="120dp"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/primary_yellow"
-                            android:text="@string/simpan"
-                            android:textAllCaps="false"
-                            app:cornerRadius="4dp" />
-                    </LinearLayout>
-
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp"
+                    android:baselineAligned="false">
+                    <Spinner
+                        android:id="@+id/spinnerKategori"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_spinner_border"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnTambahKategori"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="8dp"
+                        android:backgroundTint="@color/primary_yellow"
+                        android:text="@string/tambah_kategori_btn"
+                        android:textAllCaps="false"
+                        android:textSize="12sp"
+                        app:cornerRadius="4dp" />
                 </LinearLayout>
-            </ScrollView>
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-</FrameLayout>
+
+                <!-- Row 1: Kode & Merek -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false"
+                    android:weightSum="2"
+                    android:layout_marginBottom="12dp">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="10dp"
+                        android:orientation="vertical">
+                        <TextView style="@style/LabelTabel" android:text="@string/kode_produk" />
+                        <EditText android:id="@+id/etKodeProduk" style="@style/InputTabel" android:hint="@string/hint_kode_produk" android:inputType="text" android:importantForAutofill="no" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView style="@style/LabelTabel" android:text="@string/merek" />
+                        <EditText android:id="@+id/etMerek" style="@style/InputTabel" android:hint="@string/hint_merek" android:inputType="text" android:importantForAutofill="no" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Row 2: Harga Pokok & Harga Jual -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false"
+                    android:weightSum="2"
+                    android:layout_marginBottom="12dp">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="10dp"
+                        android:orientation="vertical">
+                        <TextView style="@style/LabelTabel" android:text="@string/harga_pokok" />
+                        <EditText android:id="@+id/etHargaPokok" style="@style/InputTabel" android:hint="@string/currency_hint" android:inputType="number" android:importantForAutofill="no" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView style="@style/LabelTabel" android:text="@string/harga_jual" />
+                        <EditText android:id="@+id/etHargaJual" style="@style/InputTabel" android:hint="@string/currency_hint" android:inputType="number" android:importantForAutofill="no" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Row 3: Stok & Satuan -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false"
+                    android:weightSum="2"
+                    android:layout_marginBottom="12dp">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="10dp"
+                        android:orientation="vertical">
+                        <TextView style="@style/LabelTabel" android:text="@string/stok" />
+                        <EditText android:id="@+id/etStok" style="@style/InputTabel" android:hint="@string/zero_hint" android:inputType="number" android:importantForAutofill="no" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView style="@style/LabelTabel" android:text="@string/satuan" />
+                        <EditText
+                            android:id="@+id/etSatuan"
+                            style="@style/InputTabel"
+                            android:hint="@string/hint_satuan"
+                            android:inputType="text"
+                            android:importantForAutofill="no" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Deskripsi -->
+                <TextView
+                    style="@style/LabelTabel"
+                    android:text="@string/deskripsi_opsional" />
+                <EditText
+                    android:id="@+id/etDeskripsi"
+                    style="@style/InputTabel"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:gravity="top"
+                    android:hint="@string/hint_deskripsi"
+                    android:inputType="textMultiLine"
+                    android:importantForAutofill="no"
+                    android:layout_marginBottom="12dp"/>
+
+                <!-- Status -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="20dp">
+                    <TextView
+                        style="@style/LabelTabel"
+                        android:text="@string/status"
+                        android:layout_marginBottom="0dp"
+                        android:layout_marginEnd="16dp"/>
+                    <RadioGroup
+                        android:id="@+id/rgStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <RadioButton
+                            android:id="@+id/rbAktif"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/aktif"
+                            android:checked="true"
+                            android:buttonTint="@color/primary_yellow"/>
+                        <RadioButton
+                            android:id="@+id/rbNonaktif"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:text="@string/nonaktif"
+                            android:buttonTint="@color/primary_yellow"/>
+                    </RadioGroup>
+                </LinearLayout>
+
+                <!-- Action Buttons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnBatal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#E50000"
+                        android:text="@string/batal_btn"
+                        android:textAllCaps="false"
+                        app:cornerRadius="4dp"
+                        android:layout_marginEnd="12dp"/>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSimpan"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/primary_yellow"
+                        android:text="@string/simpan"
+                        android:textAllCaps="false"
+                        app:cornerRadius="4dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

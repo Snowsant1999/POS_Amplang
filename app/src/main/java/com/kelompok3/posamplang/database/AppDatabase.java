@@ -97,24 +97,24 @@ public abstract class AppDatabase extends RoomDatabase {
     };
 
     private static void populateDatabase(AppDatabase db) {
-        // 1. Setup Role & User Admin
+        // Setup Role & User Admin
         long roleId = db.userRoleDao().insert(new UserRole("Admin", "Administrator Sistem"));
         long userId = db.userDao().insert(new User((int)roleId, "EMP-001", "Admin Utama", "admin", "admin", "081234567890"));
 
-        // 2. Setup Kategori & Merek
+        // Setup Kategori & Merek
         long katAmplangId = db.kategoriDao().insert(new Kategori("Amplang", "Makanan ringan khas kaltim"));
         long katKueId = db.kategoriDao().insert(new Kategori("Kue Kering", "Gabin, kuku macan, dll"));
         long merkSalsabilaId = db.merekDao().insert(new Merek("Salsabila"));
         long merkLainId = db.merekDao().insert(new Merek("Khas Kaltim"));
 
-        // 3. Setup 5 Suppliers
+        // Setup 5 Suppliers
         long sup1 = db.supplierDao().insert(new Supplier("PT Ikan Segar", "Jl. Nelayan No 1", "081111111", true));
         long sup2 = db.supplierDao().insert(new Supplier("Toko Terigu Makmur", "Jl. Pasar Pagi", "082222222", true));
         long sup3 = db.supplierDao().insert(new Supplier("CV Minyak Kelapa", "Jl. Industri", "083333333", true));
         long sup4 = db.supplierDao().insert(new Supplier("Bumbu Nusantara", "Jl. Rempah No 4", "084444444", true));
         long sup5 = db.supplierDao().insert(new Supplier("Plastik Kemasan Jaya", "Jl. Gajah Mada", "085555555", true));
 
-        // 4. Setup 15 Produk
+        // Setup 15 Produk
         ProdukDao produkDao = db.produkDao();
         int kA = (int)katAmplangId; int kK = (int)katKueId;
         int mS = (int)merkSalsabilaId; int mL = (int)merkLainId;
@@ -136,10 +136,10 @@ public abstract class AppDatabase extends RoomDatabase {
         produkDao.insert(new Produk(kK, mS, s1, "Pia Coklat Keju", "Kotak", 40000, 35));
         produkDao.insert(new Produk(kA, mL, s1, "Amplang Mini Balado", "Bungkus", 12000, 250));
 
-        // 5. Setup Pelanggan (Umum)
+        // Setup Pelanggan (Umum)
         long pelId = db.pelangganDao().insert(new Pelanggan("Pelanggan Umum"));
 
-        // 6. Setup 5 Transaksi (Laporan / History)
+        // Setup 5 Transaksi (Laporan / History)
         long now = System.currentTimeMillis();
         long oneDay = 86400000L;
 

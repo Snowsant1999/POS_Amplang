@@ -23,10 +23,6 @@
         </activity>
 
         <activity
-            android:name=".activities.auth.LoginGagalActivity"
-            android:exported="true"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".activities.auth.RegisterActivity"
             android:exported="true"
             android:screenOrientation="landscape" />
@@ -36,14 +32,6 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activities.auth.AturSandiActivity"
-            android:exported="true"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".activities.auth.SandiBerhasilActivity"
-            android:exported="true"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".activities.auth.DaftarBerhasilActivity"
             android:exported="true"
             android:screenOrientation="landscape" />
         <activity
@@ -89,12 +77,13 @@
         <activity
             android:name=".activities.produk.TambahProdukActivity"
             android:exported="false"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.POSAmplang.Translucent" />
         <activity
             android:name=".activities.produk.EditProdukActivity"
             android:exported="false"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+            android:theme="@style/Theme.POSAmplang.Translucent" />
     </application>
 
 </manifest>
