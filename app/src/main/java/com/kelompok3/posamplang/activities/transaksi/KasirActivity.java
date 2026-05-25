@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Window;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -91,7 +92,7 @@ public class KasirActivity extends BaseActivity {
     private void loadProductsFromDb() {
         AppDatabase db = AppDatabase.getInstance(this);
         Executors.newSingleThreadExecutor().execute(() -> {
-            List<Produk> produks = db.produkDao().getAll();
+            List<Produk> produks = db.produkDao().getAktif();
             runOnUiThread(() -> {
                 menuProdukList.clear();
                 menuProdukList.addAll(produks);
@@ -357,7 +358,7 @@ public class KasirActivity extends BaseActivity {
             db.pembayaranDao().insert(pembayaran);
 
             // Refresh daftar produk (stok sudah berubah)
-            List<Produk> produks = db.produkDao().getAll();
+            List<Produk> produks = db.produkDao().getAktif();
 
             // Kembali ke UI thread
             runOnUiThread(() -> {
@@ -387,6 +388,10 @@ public class KasirActivity extends BaseActivity {
             resetKasir();
         });
         dialog.show();
+        float density = getResources().getDisplayMetrics().density;
+        int preferredWidth = (int) (480 * density);
+        int availableWidth = getResources().getDisplayMetrics().widthPixels - (int) (48 * density);
+        dialog.getWindow().setLayout(Math.min(preferredWidth, availableWidth), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     // ─── Dialog Gagal ──────────────────────────────────────────────────────────

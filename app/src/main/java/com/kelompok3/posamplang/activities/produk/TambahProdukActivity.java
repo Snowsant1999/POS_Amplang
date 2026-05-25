@@ -1,5 +1,6 @@
 package com.kelompok3.posamplang.activities.produk;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.ArrayAdapter;
@@ -43,7 +44,7 @@ public class TambahProdukActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tambah_produk);
 
         initViews();
-        loadKategoriFromDb();
+        loadKategoriFromDb(-1);
 
         btnClose.setOnClickListener(v -> finish());
         btnBatal.setOnClickListener(v -> finish());
@@ -69,19 +70,28 @@ public class TambahProdukActivity extends AppCompatActivity {
     }
 
     // ─── Load Kategori dari Room Database ────────────────────────────────────
-    private void loadKategoriFromDb() {
+    private void loadKategoriFromDb(int selectedId) {
         AppDatabase db = AppDatabase.getInstance(this);
         Executors.newSingleThreadExecutor().execute(() -> {
             kategoriList = db.kategoriDao().getAll();
             List<String> namaKategori = new ArrayList<>();
             namaKategori.add("-- Pilih Kategori --");
-            for (Kategori k : kategoriList) namaKategori.add(k.getNama_kategori());
+            int selectedPosition = 0;
+            for (int i = 0; i < kategoriList.size(); i++) {
+                Kategori kategori = kategoriList.get(i);
+                namaKategori.add(kategori.getNama_kategori());
+                if (kategori.getId_kategori() == selectedId) {
+                    selectedPosition = i + 1;
+                }
+            }
 
+            int finalSelectedPosition = selectedPosition;
             runOnUiThread(() -> {
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(
                         this, android.R.layout.simple_spinner_item, namaKategori);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerKategori.setAdapter(adapter);
+                spinnerKategori.setSelection(finalSelectedPosition);
             });
         });
     }
@@ -129,6 +139,7 @@ public class TambahProdukActivity extends AppCompatActivity {
         double hargaJual  = Double.parseDouble(etHargaJual.getText().toString().trim());
         int stok          = Integer.parseInt(etStok.getText().toString().trim());
         String satuan     = etSatuan.getText().toString().trim();
+        boolean aktif     = rgStatus.getCheckedRadioButtonId() != R.id.rbNonaktif;
 
         // ID kategori terpilih (posisi -1 karena posisi 0 adalah placeholder)
         int idxKategori = spinnerKategori.getSelectedItemPosition() - 1;
@@ -156,7 +167,7 @@ public class TambahProdukActivity extends AppCompatActivity {
             // Ambil supplier default (ID 1) — bisa dikembangkan dengan Spinner Supplier
             int idSupplier = 1;
 
-            Produk produkBaru = new Produk(idKategori, idMerek, idSupplier, namaProduk, satuan, hargaJual, stok);
+            Produk produkBaru = new Produk(idKategori, idMerek, idSupplier, namaProduk, satuan, hargaJual, stok, aktif);
             db.produkDao().insert(produkBaru);
 
             runOnUiThread(() -> {
@@ -169,30 +180,34 @@ public class TambahProdukActivity extends AppCompatActivity {
 
     // ─── Dialog Tambah Kategori Baru ─────────────────────────────────────────
     private void showTambahKategoriDialog() {
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-        builder.setTitle("Tambah Kategori Baru");
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.tambah_kategori);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
-        final EditText input = new EditText(this);
-        input.setHint("Nama kategori");
-        builder.setView(input);
-
-        builder.setPositiveButton("Tambah", (dialog, which) -> {
-            String namaKategori = input.getText().toString().trim();
+        EditText etNamaKategori = dialog.findViewById(R.id.etNamaKategori);
+        dialog.findViewById(R.id.btnClose).setOnClickListener(v -> dialog.dismiss());
+        dialog.findViewById(R.id.btnBatalKategori).setOnClickListener(v -> dialog.dismiss());
+        dialog.findViewById(R.id.btnSimpanKategori).setOnClickListener(v -> {
+            String namaKategori = etNamaKategori.getText().toString().trim();
             if (TextUtils.isEmpty(namaKategori)) {
-                Toast.makeText(this, "Nama kategori tidak boleh kosong", Toast.LENGTH_SHORT).show();
+                etNamaKategori.setError("Nama kategori wajib diisi");
+                etNamaKategori.requestFocus();
                 return;
             }
             AppDatabase db = AppDatabase.getInstance(this);
             Executors.newSingleThreadExecutor().execute(() -> {
-                db.kategoriDao().insert(new Kategori(namaKategori, ""));
+                long kategoriId = db.kategoriDao().insert(new Kategori(namaKategori, ""));
                 runOnUiThread(() -> {
-                    Toast.makeText(this, "Kategori \"" + namaKategori + "\" ditambahkan!", Toast.LENGTH_SHORT).show();
-                    loadKategoriFromDb(); // Refresh spinner
+                    dialog.dismiss();
+                    loadKategoriFromDb((int) kategoriId);
                 });
             });
         });
-        builder.setNegativeButton("Batal", null);
-        builder.show();
+
+        dialog.show();
+        dialog.getWindow().setLayout(
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
     @Override

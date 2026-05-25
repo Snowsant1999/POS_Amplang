@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -34,9 +35,11 @@ public class EditProdukActivity extends AppCompatActivity {
     public static final String EXTRA_ID_KATEGORI  = "PRODUK_ID_KATEGORI";
     public static final String EXTRA_ID_MEREK     = "PRODUK_ID_MEREK";
     public static final String EXTRA_ID_SUPPLIER  = "PRODUK_ID_SUPPLIER";
+    public static final String EXTRA_PRODUK_AKTIF = "PRODUK_AKTIF";
 
     private EditText etNama, etHargaJual, etStok, etSatuan;
     private Spinner  spinnerKategori;
+    private RadioGroup rgStatus;
     private MaterialButton btnSimpan, btnBatal;
     private ImageButton    btnClose;
 
@@ -60,6 +63,7 @@ public class EditProdukActivity extends AppCompatActivity {
         etStok          = findViewById(R.id.etStokEdit);
         etSatuan        = findViewById(R.id.etSatuanEdit);
         spinnerKategori = findViewById(R.id.spinnerKategoriEdit);
+        rgStatus        = findViewById(R.id.rgStatusEdit);
         btnSimpan       = findViewById(R.id.btnSimpanEdit);
         btnBatal        = findViewById(R.id.btnBatalEdit);
         btnClose        = findViewById(R.id.btnCloseEdit);
@@ -81,12 +85,14 @@ public class EditProdukActivity extends AppCompatActivity {
         double harga  = getIntent().getDoubleExtra(EXTRA_PRODUK_HARGA, 0);
         int stok      = getIntent().getIntExtra(EXTRA_PRODUK_STOK, 0);
         String satuan = getIntent().getStringExtra(EXTRA_PRODUK_UNIT);
+        boolean aktif = getIntent().getBooleanExtra(EXTRA_PRODUK_AKTIF, true);
 
         // Isi field teks langsung
         etNama.setText(nama);
         etHargaJual.setText(String.valueOf((long) harga));
         etStok.setText(String.valueOf(stok));
         etSatuan.setText(satuan);
+        rgStatus.check(aktif ? R.id.rbAktifEdit : R.id.rbNonaktifEdit);
 
         // Muat kategori dari DB, lalu pilih yang sesuai
         AppDatabase db = AppDatabase.getInstance(this);
@@ -150,6 +156,7 @@ public class EditProdukActivity extends AppCompatActivity {
             produk.setHarga_produk(Double.parseDouble(etHargaJual.getText().toString().trim()));
             produk.setStok_tersedia(Integer.parseInt(etStok.getText().toString().trim()));
             produk.setUnit(etSatuan.getText().toString().trim());
+            produk.setAktif(rgStatus.getCheckedRadioButtonId() != R.id.rbNonaktifEdit);
 
             // Update kategori dari spinner
             int selectedPos = spinnerKategori.getSelectedItemPosition();

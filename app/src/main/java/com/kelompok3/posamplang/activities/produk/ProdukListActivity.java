@@ -62,7 +62,7 @@ public class ProdukListActivity extends BaseActivity {
                     new ActivityResultContracts.StartActivityForResult(),
                     result -> {
                         if (result.getResultCode() == RESULT_OK) {
-                            showSuccessNotification();
+                            showSuccessNotification(getString(R.string.produk_berhasil_ditambahkan));
                             loadDummyData(); // Muat ulang data setelah ditambah
                         }
                     }
@@ -234,7 +234,8 @@ public class ProdukListActivity extends BaseActivity {
         }
     }
 
-    private void showSuccessNotification() {
+    private void showSuccessNotification(String message) {
+        tvSuccessNotification.setText(message);
         tvSuccessNotification.setVisibility(View.VISIBLE);
         tvSuccessNotification.postDelayed(
                 () -> tvSuccessNotification.setVisibility(View.GONE),
@@ -256,25 +257,17 @@ public class ProdukListActivity extends BaseActivity {
         EditText etStok     = dialog.findViewById(R.id.etStok);
         EditText etSatuan   = dialog.findViewById(R.id.etSatuan);
         Spinner spinnerKat  = dialog.findViewById(R.id.spinnerKategori);
+        RadioGroup rgStatus = dialog.findViewById(R.id.rgStatus);
 
         AppDatabase db = AppDatabase.getInstance(this);
 
-        // Load Kategori
         List<Kategori> kategoriList = new ArrayList<>();
-        Executors.newSingleThreadExecutor().execute(() -> {
-            kategoriList.addAll(db.kategoriDao().getAll());
-            List<String> namaKategori = new ArrayList<>();
-            namaKategori.add("-- Pilih Kategori --");
-            for (Kategori k : kategoriList) namaKategori.add(k.getNama_kategori());
-            runOnUiThread(() -> {
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, namaKategori);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerKat.setAdapter(adapter);
-            });
-        });
+        loadKategoriForDialog(spinnerKat, kategoriList, -1);
 
         dialog.findViewById(R.id.btnClose).setOnClickListener(v -> dialog.dismiss());
         dialog.findViewById(R.id.btnBatal).setOnClickListener(v -> dialog.dismiss());
+        dialog.findViewById(R.id.btnTambahKategori).setOnClickListener(
+                v -> showTambahKategoriDialog(spinnerKat, kategoriList));
         
         dialog.findViewById(R.id.btnSimpan).setOnClickListener(v -> {
             String nama = etNama.getText().toString().trim();
@@ -291,6 +284,7 @@ public class ProdukListActivity extends BaseActivity {
             int stok = Integer.parseInt(etStok.getText().toString().isEmpty() ? "0" : etStok.getText().toString());
             String satuan = etSatuan.getText().toString().trim();
             String merek = etMerek.getText().toString().trim();
+            boolean aktif = rgStatus.getCheckedRadioButtonId() != R.id.rbNonaktif;
 
             int idKat = kategoriList.get(spinnerKat.getSelectedItemPosition() - 1).getId_kategori();
 
@@ -309,11 +303,11 @@ public class ProdukListActivity extends BaseActivity {
                     if (!found) idMerek = (int) db.merekDao().insert(new Merek(merek));
                 }
 
-                db.produkDao().insert(new Produk(idKat, idMerek, 1, nama, satuan, harga, stok));
+                db.produkDao().insert(new Produk(idKat, idMerek, 1, nama, satuan, harga, stok, aktif));
                 runOnUiThread(() -> {
                     Toast.makeText(this, "Produk ditambahkan!", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
-                    showSuccessNotification();
+                    showSuccessNotification(getString(R.string.produk_berhasil_ditambahkan));
                     loadDummyData();
                 });
             });
@@ -335,11 +329,13 @@ public class ProdukListActivity extends BaseActivity {
         EditText etStok     = dialog.findViewById(R.id.etStokEdit);
         EditText etSatuan   = dialog.findViewById(R.id.etSatuanEdit);
         Spinner spinnerKat  = dialog.findViewById(R.id.spinnerKategoriEdit);
+        RadioGroup rgStatus = dialog.findViewById(R.id.rgStatusEdit);
 
         etNama.setText(produk.getNama_produk());
         etHargaJual.setText(String.valueOf((long)produk.getHarga_produk()));
         etStok.setText(String.valueOf(produk.getStok_tersedia()));
         etSatuan.setText(produk.getUnit());
+        rgStatus.check(produk.isAktif() ? R.id.rbAktifEdit : R.id.rbNonaktifEdit);
 
         AppDatabase db = AppDatabase.getInstance(this);
         List<Kategori> kategoriList = new ArrayList<>();
@@ -379,6 +375,7 @@ public class ProdukListActivity extends BaseActivity {
             produk.setHarga_produk(Double.parseDouble(etHargaJual.getText().toString().isEmpty() ? "0" : etHargaJual.getText().toString()));
             produk.setStok_tersedia(Integer.parseInt(etStok.getText().toString().isEmpty() ? "0" : etStok.getText().toString()));
             produk.setUnit(etSatuan.getText().toString());
+            produk.setAktif(rgStatus.getCheckedRadioButtonId() != R.id.rbNonaktifEdit);
             if (kategoriList.size() > 0) {
                 produk.setId_kategori_produk(kategoriList.get(spinnerKat.getSelectedItemPosition()).getId_kategori());
             }
@@ -401,13 +398,71 @@ public class ProdukListActivity extends BaseActivity {
 
                 db.produkDao().update(produk);
                 runOnUiThread(() -> {
-                    Toast.makeText(this, "Produk diperbarui!", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
-                    showSuccessNotification();
+                    showSuccessNotification(getString(R.string.produk_telah_diubah));
                     loadDummyData();
                 });
             });
         });
         dialog.show();
+    }
+
+    private void showTambahKategoriDialog(Spinner spinnerKategori, List<Kategori> kategoriList) {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.tambah_kategori);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        EditText etNamaKategori = dialog.findViewById(R.id.etNamaKategori);
+        dialog.findViewById(R.id.btnClose).setOnClickListener(v -> dialog.dismiss());
+        dialog.findViewById(R.id.btnBatalKategori).setOnClickListener(v -> dialog.dismiss());
+        dialog.findViewById(R.id.btnSimpanKategori).setOnClickListener(v -> {
+            String namaKategori = etNamaKategori.getText().toString().trim();
+            if (TextUtils.isEmpty(namaKategori)) {
+                etNamaKategori.setError("Nama kategori wajib diisi");
+                etNamaKategori.requestFocus();
+                return;
+            }
+
+            AppDatabase db = AppDatabase.getInstance(this);
+            Executors.newSingleThreadExecutor().execute(() -> {
+                long kategoriId = db.kategoriDao().insert(new Kategori(namaKategori, ""));
+                runOnUiThread(() -> {
+                    dialog.dismiss();
+                    loadKategoriForDialog(spinnerKategori, kategoriList, (int) kategoriId);
+                });
+            });
+        });
+
+        dialog.show();
+        dialog.getWindow().setLayout(
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
+    private void loadKategoriForDialog(Spinner spinnerKategori, List<Kategori> kategoriList, int selectedId) {
+        AppDatabase db = AppDatabase.getInstance(this);
+        Executors.newSingleThreadExecutor().execute(() -> {
+            List<Kategori> hasil = db.kategoriDao().getAll();
+            List<String> namaKategori = new ArrayList<>();
+            namaKategori.add("-- Pilih Kategori --");
+            int selectedPosition = 0;
+            for (int i = 0; i < hasil.size(); i++) {
+                Kategori kategori = hasil.get(i);
+                namaKategori.add(kategori.getNama_kategori());
+                if (kategori.getId_kategori() == selectedId) {
+                    selectedPosition = i + 1;
+                }
+            }
+            int finalSelectedPosition = selectedPosition;
+            runOnUiThread(() -> {
+                kategoriList.clear();
+                kategoriList.addAll(hasil);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        this, android.R.layout.simple_spinner_item, namaKategori);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerKategori.setAdapter(adapter);
+                spinnerKategori.setSelection(finalSelectedPosition);
+            });
+        });
     }
 }

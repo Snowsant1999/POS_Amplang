@@ -1,7 +1,9 @@
 package com.kelompok3.posamplang.models;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -29,8 +31,15 @@ public class Produk {
     private String unit;
     private double harga_produk;
     private int stok_tersedia;
+    @ColumnInfo(defaultValue = "1")
+    private boolean aktif;
 
+    @Ignore
     public Produk(int id_kategori_produk, int id_merek, int id_supplier, String nama_produk, String unit, double harga_produk, int stok_tersedia) {
+        this(id_kategori_produk, id_merek, id_supplier, nama_produk, unit, harga_produk, stok_tersedia, true);
+    }
+
+    public Produk(int id_kategori_produk, int id_merek, int id_supplier, String nama_produk, String unit, double harga_produk, int stok_tersedia, boolean aktif) {
         this.id_kategori_produk = id_kategori_produk;
         this.id_merek = id_merek;
         this.id_supplier = id_supplier;
@@ -38,6 +47,7 @@ public class Produk {
         this.unit = unit;
         this.harga_produk = harga_produk;
         this.stok_tersedia = stok_tersedia;
+        this.aktif = aktif;
     }
 
     public int getId_produk() { return id_produk; }
@@ -56,4 +66,6 @@ public class Produk {
     public void setHarga_produk(double harga_produk) { this.harga_produk = harga_produk; }
     public int getStok_tersedia() { return stok_tersedia; }
     public void setStok_tersedia(int stok_tersedia) { this.stok_tersedia = stok_tersedia; }
+    public boolean isAktif() { return aktif; }
+    public void setAktif(boolean aktif) { this.aktif = aktif; }
 }

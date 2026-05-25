@@ -103,9 +103,13 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.ProdukView
                 tvStok.setTextColor(Color.parseColor("#212121"));
             }
 
-            // Status selalu Aktif (bisa dikembangkan nanti)
-            tvStatus.setText("Aktif");
-            tvStatus.setBackgroundResource(R.drawable.bg_status_aktif);
+            if (produk.isAktif()) {
+                tvStatus.setText("Aktif");
+                tvStatus.setBackgroundResource(R.drawable.bg_status_aktif);
+            } else {
+                tvStatus.setText("Nonaktif");
+                tvStatus.setBackgroundResource(R.drawable.bg_status_nonaktif);
+            }
 
             // Ambil nama Merek & Kategori dari DB (background thread)
             Executors.newSingleThreadExecutor().execute(() -> {

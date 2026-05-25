@@ -5,18 +5,16 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
     android:background="#F8F9FA"
+    android:orientation="horizontal"
     tools:context=".activities.supplier.SupplierListActivity">
 
-    <!-- SIDEBAR -->
     <include
         android:id="@+id/sidebar"
         layout="@layout/layout_sidebar"
         android:layout_width="160dp"
         android:layout_height="match_parent" />
 
-    <!-- KONTEN UTAMA -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,9 +23,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="24dp"
-            android:gravity="center_vertical">
+            android:padding="24dp">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -38,40 +36,53 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="serif"
                     android:text="SUPPLIER"
                     android:textColor="@android:color/black"
                     android:textSize="24sp"
-                    android:fontFamily="serif"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Kelola Data Pemasok Barang"
-                    android:textColor="#888"
+                    android:textColor="#888888"
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_tambah_supplier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+ Tambah supplier"
-                android:backgroundTint="#F4C430"
-                android:textColor="@android:color/white"
+                android:backgroundTint="@color/primary_red"
+                android:text="+ Tambah Supplier"
                 android:textAllCaps="false"
+                android:textColor="@android:color/white"
                 app:cornerRadius="8dp" />
         </LinearLayout>
 
-        <!-- Filter & Search -->
+        <TextView
+            android:id="@+id/tv_supplier_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_notification_success"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp"
+            android:text="Supplier Telah Diubah"
+            android:textColor="#1976D2"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="center_vertical">
+            android:paddingEnd="24dp">
 
             <EditText
                 android:id="@+id/et_search_supplier"
@@ -79,9 +90,10 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_input"
-                android:hint="Search"
+                android:hint="Cari supplier"
+                android:inputType="text"
                 android:paddingStart="16dp"
-                android:paddingEnd="40dp"
+                android:paddingEnd="16dp"
                 android:textSize="14sp" />
 
             <Spinner
@@ -93,29 +105,28 @@
 
             <Spinner
                 android:id="@+id/spinner_sort"
-                android:layout_width="150dp"
+                android:layout_width="170dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="12dp"
                 android:background="@drawable/bg_spinner_border" />
         </LinearLayout>
 
-        <!-- Table Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:background="#FFF"
-            android:elevation="1dp">
+            android:background="#FFFFFF"
+            android:elevation="1dp"
+            android:orientation="horizontal"
+            android:padding="16dp">
 
             <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.5" android:text="Nama Supplier" android:textStyle="bold" />
             <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Kontak" android:textStyle="bold" />
             <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Alamat" android:textStyle="bold" />
             <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.5" android:text="Email" android:textStyle="bold" />
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="0.8" android:text="Status" android:textStyle="bold" android:gravity="center" />
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Aksi" android:textStyle="bold" android:gravity="center" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="0.8" android:gravity="center" android:text="Status" android:textStyle="bold" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.8" android:gravity="center" android:text="Aksi" android:textStyle="bold" />
         </LinearLayout>
 
         <View
@@ -123,45 +134,66 @@
             android:layout_height="2dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:background="#B21F1F" />
+            android:background="@color/primary_red" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_supplier"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:background="#FFF"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_supplier" />
 
-        <!-- Pagination -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:background="#FFF"
-            android:gravity="center_vertical">
+            android:background="#FFFFFF"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
 
             <TextView
                 android:id="@+id/tv_pagination_info"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Menampilkan 1 dari 5 data"
+                android:text="Menampilkan data..."
                 android:textSize="14sp" />
 
-            <!-- Tombol navigasi halaman sederhana -->
-            <LinearLayout
+            <Button
+                android:id="@+id/btn_page_prev_supplier"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:backgroundTint="#EEEEEE"
+                android:padding="0dp"
+                android:text="&lt;"
+                android:textColor="#333333"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_current_page_supplier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                 <Button android:layout_width="32dp" android:layout_height="32dp" android:text="1" android:backgroundTint="#F4C430" android:padding="0dp" android:textSize="12sp" />
-                 <Button android:layout_width="32dp" android:layout_height="32dp" android:text="2" android:backgroundTint="#EEE" android:textColor="#333" android:padding="0dp" android:textSize="12sp" android:layout_marginStart="4dp"/>
-            </LinearLayout>
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="1"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_page_next_supplier"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:backgroundTint="@color/primary_red"
+                android:padding="0dp"
+                android:text="&gt;"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

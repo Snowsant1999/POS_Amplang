@@ -31,10 +31,6 @@
             android:exported="true"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activities.auth.AturSandiActivity"
-            android:exported="true"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".activities.dashboard.MainActivity"
             android:exported="true"
             android:screenOrientation="landscape" />

@@ -149,7 +149,45 @@
                     android:hint="Pcs"
                     android:inputType="text"
                     android:importantForAutofill="no"
-                    android:layout_marginBottom="20dp" />
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Status -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/LabelTabel"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="0dp"
+                        android:text="@string/status" />
+
+                    <RadioGroup
+                        android:id="@+id/rgStatusEdit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbAktifEdit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/action_blue"
+                            android:checked="true"
+                            android:text="@string/aktif" />
+
+                        <RadioButton
+                            android:id="@+id/rbNonaktifEdit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:buttonTint="@color/action_blue"
+                            android:text="@string/nonaktif" />
+                    </RadioGroup>
+                </LinearLayout>
 
                 <!-- Tombol Aksi -->
                 <LinearLayout

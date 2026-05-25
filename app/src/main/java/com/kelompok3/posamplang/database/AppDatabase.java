@@ -3,8 +3,10 @@ package com.kelompok3.posamplang.database;
 import android.content.Context;
 
 import androidx.room.Database;
+import androidx.room.migration.Migration;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.kelompok3.posamplang.dao.DetailPesananDao;
 import com.kelompok3.posamplang.dao.DetailStokRequestDao;
@@ -49,12 +51,30 @@ import com.kelompok3.posamplang.models.UserRole;
         DetailStokRequest.class,
         StokAdjustment.class
     },
-    version = 1,
+    version = 4,
     exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
+    private static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(@androidx.annotation.NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE produk ADD COLUMN aktif INTEGER NOT NULL DEFAULT 1");
+        }
+    };
+    private static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@androidx.annotation.NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE supplier ADD COLUMN email TEXT NOT NULL DEFAULT ''");
+        }
+    };
+    private static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(@androidx.annotation.NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE supplier ADD COLUMN image_uri TEXT NOT NULL DEFAULT ''");
+        }
+    };
 
     // Semua akses ke database (DAO) didaftarkan di sini
     public abstract UserRoleDao userRoleDao();
@@ -78,6 +98,7 @@ public abstract class AppDatabase extends RoomDatabase {
                     AppDatabase.class,
                     "pos_amplang.db"
                 )
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                 .fallbackToDestructiveMigration()
                 .addCallback(roomCallback)
                 .build();
@@ -108,11 +129,11 @@ public abstract class AppDatabase extends RoomDatabase {
         long merkLainId = db.merekDao().insert(new Merek("Khas Kaltim"));
 
         // Setup 5 Suppliers
-        long sup1 = db.supplierDao().insert(new Supplier("PT Ikan Segar", "Jl. Nelayan No 1", "081111111", true));
-        long sup2 = db.supplierDao().insert(new Supplier("Toko Terigu Makmur", "Jl. Pasar Pagi", "082222222", true));
-        long sup3 = db.supplierDao().insert(new Supplier("CV Minyak Kelapa", "Jl. Industri", "083333333", true));
-        long sup4 = db.supplierDao().insert(new Supplier("Bumbu Nusantara", "Jl. Rempah No 4", "084444444", true));
-        long sup5 = db.supplierDao().insert(new Supplier("Plastik Kemasan Jaya", "Jl. Gajah Mada", "085555555", true));
+        long sup1 = db.supplierDao().insert(new Supplier("PT Ikan Segar", "Jl. Nelayan No 1", "081111111", "ikansegar@email.com", true));
+        long sup2 = db.supplierDao().insert(new Supplier("Toko Terigu Makmur", "Jl. Pasar Pagi", "082222222", "terigumakmur@email.com", true));
+        long sup3 = db.supplierDao().insert(new Supplier("CV Minyak Kelapa", "Jl. Industri", "083333333", "minyakkelapa@email.com", true));
+        long sup4 = db.supplierDao().insert(new Supplier("Bumbu Nusantara", "Jl. Rempah No 4", "084444444", "bumbunusantara@email.com", true));
+        long sup5 = db.supplierDao().insert(new Supplier("Plastik Kemasan Jaya", "Jl. Gajah Mada", "085555555", "kemasanjaya@email.com", true));
 
         // Setup 15 Produk
         ProdukDao produkDao = db.produkDao();

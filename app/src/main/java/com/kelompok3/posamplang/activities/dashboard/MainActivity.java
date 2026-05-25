@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity {
 
     /**
      * onResume dipanggil setiap kali pengguna kembali ke Dashboard
-     * (dari Kasir, Edit Produk, atau activity manapun).
+     * (dari Kasir, Edit Produk, atau activity manapxun).
      * Ini memastikan semua data selalu segar dari database.
      */
     @Override
