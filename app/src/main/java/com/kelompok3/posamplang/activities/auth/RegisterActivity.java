@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.kelompok3.posamplang.models.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -84,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
                 
                 try {
                     // Simpan user baru (Role diset 1 agar tidak error foreign key jika role 2 belum ada)
-                    com.kelompok3.posamplang.models.User newUser = new com.kelompok3.posamplang.models.User(1, "-", nama, email, sandi, "-");
+                    User newUser = new com.kelompok3.posamplang.models.User(1, "-", nama, email, sandi, "-");
                     db.userDao().insert(newUser);
                     
                     runOnUiThread(() -> {

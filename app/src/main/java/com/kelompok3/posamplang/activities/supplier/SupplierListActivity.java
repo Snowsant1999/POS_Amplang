@@ -405,6 +405,7 @@ public class SupplierListActivity extends BaseActivity
         Intent intent = new Intent(this, SupplierDetailActivity.class);
         intent.putExtra("SUPPLIER_ID", supplier.getId_supplier());
         startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
     @Override

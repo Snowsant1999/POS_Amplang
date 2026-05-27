@@ -47,6 +47,10 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
+            android:name=".activities.supplier.SupplierPurchaseActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".activities.laporan.LaporanHarianActivity"
             android:exported="false"
             android:screenOrientation="landscape" />

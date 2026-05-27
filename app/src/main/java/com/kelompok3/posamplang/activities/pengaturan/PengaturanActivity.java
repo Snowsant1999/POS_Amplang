@@ -1,8 +1,6 @@
 package com.kelompok3.posamplang.activities.pengaturan;
 
 import android.os.Bundle;
-import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 
 import com.kelompok3.posamplang.R;
@@ -14,7 +12,7 @@ public class PengaturanActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.pengaturan);
+        setContentView(R.layout.activity_pengaturan);
         
         setupSidebar(R.id.btn_nav_pengaturan);
     }

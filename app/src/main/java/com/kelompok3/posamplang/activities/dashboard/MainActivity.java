@@ -29,6 +29,7 @@ import com.kelompok3.posamplang.R;
 import com.kelompok3.posamplang.adapters.StokRendahAdapter;
 import com.kelompok3.posamplang.database.AppDatabase;
 import com.kelompok3.posamplang.models.Produk;
+import com.kelompok3.posamplang.models.PengeluaranProdukSummary;
 import com.kelompok3.posamplang.parent.BaseActivity;
 import com.kelompok3.posamplang.utils.FormatUtils;
 
@@ -177,7 +178,8 @@ public class MainActivity extends BaseActivity {
             }
 
             // ── Pengeluaran per Produk (Bar Chart Pengeluaran) ───────────────
-            List<Produk> semuaProduk = db.produkDao().getAll();
+            List<PengeluaranProdukSummary> pengeluaranProduk =
+                    db.detailStokRequestDao().getPengeluaranPerProdukSelesai();
 
             // ── Pembayaran per Metode (Pie Chart) ───────────────────────────
             int countTunai = db.pembayaranDao().countByMetode("Tunai");
@@ -209,7 +211,7 @@ public class MainActivity extends BaseActivity {
             final double penAll  = totalPengeluaran;
             final int tunai = countTunai;
             final int qris  = countQris;
-            final List<Produk> produksAll = semuaProduk;
+            final List<PengeluaranProdukSummary> expensesByProduct = pengeluaranProduk;
             final List<Produk> stokList   = stokRendah;
 
             runOnUiThread(() -> {
@@ -220,7 +222,7 @@ public class MainActivity extends BaseActivity {
 
                 // Grafik
                 setupLineChart(p7, labels);
-                setupBarChartPengeluaran(produksAll);
+                setupBarChartPengeluaran(expensesByProduct);
                 setupBarChartPerbandingan(p7, e7, labels);
                 setupPieChart(tunai, qris);
 
@@ -235,42 +237,11 @@ public class MainActivity extends BaseActivity {
 
     // ─── Hitung Pengeluaran dari StokAdjustment ────────────────────────────
     private double hitungTotalPengeluaran(AppDatabase db) {
-        // Pengeluaran dihitung dari harga produk * jumlah yang dikurangi karena penjualan
-        // Kita gunakan pendekatan: jumlah unit terjual * harga (dari stok_adjustment tipe Penjualan)
-        // Karena tidak ada tabel pengeluaran terpisah, ini mewakili HPP (Harga Pokok Penjualan)
-        List<com.kelompok3.posamplang.models.StokAdjustment> adjs =
-                db.stokAdjustmentDao().getAll();
-        double total = 0;
-        List<Produk> produkList = db.produkDao().getAll();
-        for (com.kelompok3.posamplang.models.StokAdjustment adj : adjs) {
-            if ("Penjualan".equals(adj.getTipe())) {
-                for (Produk p : produkList) {
-                    if (p.getId_produk() == adj.getId_produk()) {
-                        total += p.getHarga_produk() * adj.getJumlah_produk();
-                        break;
-                    }
-                }
-            }
-        }
-        return total;
+        return db.detailStokRequestDao().getTotalPembelianSelesai();
     }
 
     private double hitungPengeluaranPeriode(AppDatabase db, long start, long end) {
-        List<com.kelompok3.posamplang.models.StokAdjustment> adjs =
-                db.stokAdjustmentDao().getAll();
-        List<Produk> produkList = db.produkDao().getAll();
-        double total = 0;
-        for (com.kelompok3.posamplang.models.StokAdjustment adj : adjs) {
-            if ("Penjualan".equals(adj.getTipe()) && adj.getTanggal() >= start && adj.getTanggal() <= end) {
-                for (Produk p : produkList) {
-                    if (p.getId_produk() == adj.getId_produk()) {
-                        total += p.getHarga_produk() * adj.getJumlah_produk();
-                        break;
-                    }
-                }
-            }
-        }
-        return total;
+        return db.detailStokRequestDao().getTotalPembelianSelesaiPeriode(start, end);
     }
 
     // ─── Setup Grafik ─────────────────────────────────────────────────────────
@@ -311,18 +282,18 @@ public class MainActivity extends BaseActivity {
         lineChartPendapatan.invalidate();
     }
 
-    private void setupBarChartPengeluaran(List<Produk> produkList) {
+    private void setupBarChartPengeluaran(List<PengeluaranProdukSummary> produkList) {
         ArrayList<BarEntry> entries = new ArrayList<>();
         ArrayList<String> produkLabels = new ArrayList<>();
         int max = Math.min(produkList.size(), 8); // Tampilkan maks 8 produk
         for (int i = 0; i < max; i++) {
-            Produk p = produkList.get(i);
-            entries.add(new BarEntry(i, p.getStok_tersedia()));
+            PengeluaranProdukSummary p = produkList.get(i);
+            entries.add(new BarEntry(i, (float) p.getTotal_pengeluaran()));
             String nama = p.getNama_produk();
             produkLabels.add(nama.length() > 10 ? nama.substring(0, 10) + "…" : nama);
         }
 
-        BarDataSet dataSet = new BarDataSet(entries, "Sisa Stok (unit)");
+        BarDataSet dataSet = new BarDataSet(entries, "Pengeluaran (Rp)");
         dataSet.setColor(Color.parseColor("#B22222"));
         dataSet.setValueTextSize(9f);
         dataSet.setDrawValues(true);

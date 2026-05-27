@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <!-- Latar Belakang: Halaman Pengaturan Asli -->
-    <include layout="@layout/pengaturan" />
+    <include layout="@layout/activity_pengaturan" />
 
     <!-- Overlay Gelap (Dim) untuk fokus pada dialog -->
     <View
