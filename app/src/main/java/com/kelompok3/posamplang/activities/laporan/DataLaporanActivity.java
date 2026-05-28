@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.kelompok3.posamplang.R;
@@ -14,6 +15,7 @@ public class DataLaporanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.data_laporan);
         FixedViewportScaler.apply(this);
 
@@ -41,5 +43,11 @@ public class DataLaporanActivity extends AppCompatActivity {
                 Toast.makeText(DataLaporanActivity.this, "Laporan Dihapus", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, 0);
     }
 }

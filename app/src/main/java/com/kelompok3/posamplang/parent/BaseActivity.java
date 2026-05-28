@@ -1,10 +1,12 @@
 package com.kelompok3.posamplang.parent;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.kelompok3.posamplang.R;
@@ -22,6 +24,12 @@ import com.kelompok3.posamplang.utils.StoreSettings;
 import java.util.Locale;
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+    }
     
     /**
      * Inisialisasi Sidebar dan tandai menu yang aktif.
@@ -120,6 +128,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
         // Menghilangkan animasi
+        overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
         overridePendingTransition(0, 0);
     }
 }

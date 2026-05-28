@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.kelompok3.posamplang.models.User;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.kelompok3.posamplang.R;
@@ -28,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
         FixedViewportScaler.apply(this);
 
@@ -129,6 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            overridePendingTransition(0, 0);
         });
 
         dialog.show();
@@ -152,5 +155,11 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail.addTextChangedListener(tw);
         etSandi.addTextChangedListener(tw);
         etKonfirmasi.addTextChangedListener(tw);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, 0);
     }
 }

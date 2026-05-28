@@ -50,8 +50,10 @@ public class LaporanHarianDetailActivity extends BaseActivity {
         database = AppDatabase.getInstance(this);
 
         btnSimpan = findViewById(R.id.btnSimpanLaporan);
-        findViewById(R.id.btnLihatLaporan).setOnClickListener(v ->
-                startActivity(new Intent(this, LaporanHarianActivity.class)));
+        findViewById(R.id.btnLihatLaporan).setOnClickListener(v -> {
+            startActivity(new Intent(this, LaporanHarianActivity.class));
+            overridePendingTransition(0, 0);
+        });
         findViewById(R.id.btnPrint).setOnClickListener(v -> exportDisplayedReport());
         btnSimpan.setOnClickListener(v -> saveCurrentReport());
 
