@@ -161,10 +161,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="9dp"
-                            android:backgroundTint="@color/border_gray"
+                            android:background="@android:color/transparent"
                             android:enabled="false"
                             android:inputType="textCapWords"
-                            android:paddingBottom="16dp"
+                            android:paddingBottom="10dp"
                             android:text="Amplang Salsabila"
                             android:textColor="@color/black"
                             android:textSize="16sp"
@@ -189,12 +189,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="9dp"
-                            android:backgroundTint="@color/border_gray"
+                            android:background="@android:color/transparent"
                             android:enabled="false"
                             android:inputType="textPostalAddress|textCapSentences"
+                            android:paddingBottom="10dp"
                             android:text="Samarinda"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/border_gray" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -216,10 +222,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="9dp"
-                            android:backgroundTint="@color/border_gray"
+                            android:background="@android:color/transparent"
                             android:enabled="false"
                             android:inputType="textEmailAddress"
-                            android:paddingBottom="16dp"
+                            android:paddingBottom="10dp"
                             android:text="amplangsalsabila@gmail.com"
                             android:textColor="@color/action_blue"
                             android:textSize="15sp" />
@@ -243,12 +249,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="9dp"
-                            android:backgroundTint="@color/border_gray"
+                            android:background="@android:color/transparent"
                             android:enabled="false"
                             android:inputType="phone"
+                            android:paddingBottom="10dp"
                             android:text="081273829217"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/border_gray" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
