@@ -43,4 +43,21 @@ public interface PembayaranDao {
     // Total jumlah transaksi
     @Query("SELECT COUNT(*) FROM pembayaran_pesanan WHERE status_pembayaran = 'Lunas'")
     int getTotalTransaksi();
+
+    @Query("SELECT COALESCE(SUM(total_pembayaran), 0) FROM pembayaran_pesanan " +
+            "WHERE status_pembayaran = 'Lunas' AND tanggal_pembayaran >= :start AND tanggal_pembayaran <= :end")
+    double getTotalLunasPeriode(long start, long end);
+
+    @Query("SELECT COALESCE(SUM(total_pembayaran), 0) FROM pembayaran_pesanan " +
+            "WHERE status_pembayaran = 'Lunas' AND metode_pembayaran = :metode " +
+            "AND tanggal_pembayaran >= :start AND tanggal_pembayaran <= :end")
+    double getTotalLunasPeriodeByMetode(String metode, long start, long end);
+
+    @Query("SELECT COALESCE(SUM(total_pembayaran), 0) FROM pembayaran_pesanan " +
+            "WHERE status_pembayaran != 'Lunas' AND tanggal_pembayaran >= :start AND tanggal_pembayaran <= :end")
+    double getTotalTertundaPeriode(long start, long end);
+
+    @Query("SELECT COUNT(*) FROM pembayaran_pesanan WHERE status_pembayaran = 'Lunas' " +
+            "AND tanggal_pembayaran >= :start AND tanggal_pembayaran <= :end")
+    int countLunasPeriode(long start, long end);
 }

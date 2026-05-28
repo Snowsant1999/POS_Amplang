@@ -8,6 +8,16 @@
 
     <style name="Theme.POSAmplang" parent="Base.Theme.POSAmplang" />
 
+    <!-- Tema untuk Modal Popup / Dialog Activity -->
+    <style name="Theme.POSAmplang.Translucent" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
     <style name="LabelTabel">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

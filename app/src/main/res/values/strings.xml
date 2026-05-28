@@ -49,6 +49,7 @@
     <string name="hapus_produk_desc">Produk yang sudah dihapus tidak dapat dikembalikan.</string>
     <string name="hapus">Hapus</string>
     <string name="produk_berhasil_ditambahkan">✓ Produk berhasil ditambahkan!</string>
+    <string name="produk_telah_diubah">Produk Telah Diubah</string>
     <string name="currency_hint">Rp</string>
     <string name="zero_hint">0</string>
     <string name="label_nama">Nama</string>

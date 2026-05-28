@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.kelompok3.posamplang.models.StokRequest;
+import com.kelompok3.posamplang.models.StokRequestSummary;
 
 import java.util.List;
 
@@ -29,4 +30,10 @@ public interface StokRequestDao {
 
     @Query("SELECT * FROM stok_request WHERE status = :status")
     List<StokRequest> getByStatus(String status);
+
+    @Query("SELECT r.id_request, r.id_supplier, r.id_users, r.nomor_request, r.tanggal_request, r.tanggal_selesai, r.status, " +
+            "COALESCE(SUM(d.harga_beli * d.jumlah_stok), 0) AS total_harga " +
+            "FROM stok_request r LEFT JOIN detail_stok_request d ON r.id_request = d.id_request " +
+            "WHERE r.id_supplier = :supplierId GROUP BY r.id_request ORDER BY r.tanggal_request DESC")
+    List<StokRequestSummary> getSummaryBySupplier(int supplierId);
 }

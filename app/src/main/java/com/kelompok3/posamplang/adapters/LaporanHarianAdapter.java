@@ -3,73 +3,57 @@ package com.kelompok3.posamplang.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.button.MaterialButton;
 import com.kelompok3.posamplang.R;
 import com.kelompok3.posamplang.models.LaporanHarian;
+import com.kelompok3.posamplang.utils.FormatUtils;
+
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class LaporanHarianAdapter extends RecyclerView.Adapter<LaporanHarianAdapter.ViewHolder> {
 
-    private List<LaporanHarian> laporanList;
-    private OnItemClickListener listener;
-
-    public interface OnItemClickListener {
-        void onLihatClick(int position);
-        void onPrintClick(int position);
-        void onEditClick(int position);
-        void onDeleteClick(int position);
+    public interface Listener {
+        void onLihatClick(LaporanHarian laporan);
+        void onPrintClick(LaporanHarian laporan);
+        void onDeleteClick(LaporanHarian laporan);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
+    private final List<LaporanHarian> laporanList;
+    private final Listener listener;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("id", "ID"));
 
-    public LaporanHarianAdapter(List<LaporanHarian> laporanList) {
+    public LaporanHarianAdapter(List<LaporanHarian> laporanList, Listener listener) {
         this.laporanList = laporanList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_laporan_harian, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_laporan_harian, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         LaporanHarian laporan = laporanList.get(position);
-        holder.tvTanggal.setText(laporan.getTanggal());
-        holder.tvPenjualanAwal.setText("Rp" + String.format("%,d", laporan.getPenjualanAwal()));
-        holder.tvPenjualanTunai.setText("Rp" + String.format("%,d", laporan.getPenjualanTunai()));
-        holder.tvUangTunai.setText("Rp" + String.format("%,d", laporan.getUangTunai()));
-        holder.tvTotalPenjualan.setText("Rp" + String.format("%,d", laporan.getTotalPenjualan()));
-        holder.tvCash.setText("Rp" + String.format("%,d", laporan.getCash()));
-        holder.tvPembayaranOnline.setText("Rp" + String.format("%,d", laporan.getPembayaranOnline()));
-        holder.tvBon.setText("Rp" + String.format("%,d", laporan.getBon()));
-
-        // Baris belang-beling
-        if (position % 2 == 0) {
-            holder.rowContainer.setBackgroundColor(0xFFFFFFFF);
-        } else {
-            holder.rowContainer.setBackgroundColor(0xFFF2F2F2);
-        }
-
-        // Set Click Listeners
-        holder.btnLihat.setOnClickListener(v -> {
-            if (listener != null) listener.onLihatClick(position);
-        });
-        holder.btnPrint.setOnClickListener(v -> {
-            if (listener != null) listener.onPrintClick(position);
-        });
-        holder.btnEdit.setOnClickListener(v -> {
-            if (listener != null) listener.onEditClick(position);
-        });
-        holder.btnDelete.setOnClickListener(v -> {
-            if (listener != null) listener.onDeleteClick(position);
-        });
+        holder.tvTanggal.setText(dateFormat.format(laporan.getTanggal_laporan()));
+        holder.tvPemasukan.setText(FormatUtils.formatRupiah(laporan.getPemasukan()));
+        holder.tvPengeluaran.setText(FormatUtils.formatRupiah(laporan.getPengeluaran()));
+        holder.tvSaldo.setText(FormatUtils.formatRupiah(laporan.getSaldo_bersih()));
+        holder.tvTransaksi.setText(String.valueOf(laporan.getJumlah_transaksi()));
+        holder.row.setBackgroundColor(position % 2 == 0 ? 0xFFFFFFFF : 0xFFF7F7F7);
+        holder.btnLihat.setOnClickListener(v -> listener.onLihatClick(laporan));
+        holder.btnPrint.setOnClickListener(v -> listener.onPrintClick(laporan));
+        holder.btnDelete.setOnClickListener(v -> listener.onDeleteClick(laporan));
     }
 
     @Override
@@ -77,27 +61,28 @@ public class LaporanHarianAdapter extends RecyclerView.Adapter<LaporanHarianAdap
         return laporanList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTanggal, tvPenjualanAwal, tvPenjualanTunai, tvUangTunai, 
-                 tvTotalPenjualan, tvCash, tvPembayaranOnline, tvBon;
-        View rowContainer, btnLihat, btnPrint, btnEdit, btnDelete;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        final View row;
+        final TextView tvTanggal;
+        final TextView tvPemasukan;
+        final TextView tvPengeluaran;
+        final TextView tvSaldo;
+        final TextView tvTransaksi;
+        final MaterialButton btnLihat;
+        final MaterialButton btnPrint;
+        final ImageButton btnDelete;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            rowContainer = itemView.findViewById(R.id.row_container);
-            tvTanggal = itemView.findViewById(R.id.tvTanggal);
-            tvPenjualanAwal = itemView.findViewById(R.id.tvPenjualanAwal);
-            tvPenjualanTunai = itemView.findViewById(R.id.tvPenjualanTunai);
-            tvUangTunai = itemView.findViewById(R.id.tvUangTunai);
-            tvTotalPenjualan = itemView.findViewById(R.id.tvTotalPenjualan);
-            tvCash = itemView.findViewById(R.id.tvCash);
-            tvPembayaranOnline = itemView.findViewById(R.id.tvPembayaranOnline);
-            tvBon = itemView.findViewById(R.id.tvBon);
-            
-            btnLihat = itemView.findViewById(R.id.btnLihat);
-            btnPrint = itemView.findViewById(R.id.btnPrint);
-            btnEdit = itemView.findViewById(R.id.btnEdit);
-            btnDelete = itemView.findViewById(R.id.btnDelete);
+        ViewHolder(@NonNull View view) {
+            super(view);
+            row = view.findViewById(R.id.row_container);
+            tvTanggal = view.findViewById(R.id.tvTanggal);
+            tvPemasukan = view.findViewById(R.id.tvPemasukan);
+            tvPengeluaran = view.findViewById(R.id.tvPengeluaran);
+            tvSaldo = view.findViewById(R.id.tvSaldoBersih);
+            tvTransaksi = view.findViewById(R.id.tvTransaksi);
+            btnLihat = view.findViewById(R.id.btnLihat);
+            btnPrint = view.findViewById(R.id.btnPrint);
+            btnDelete = view.findViewById(R.id.btnDelete);
         }
     }
 }

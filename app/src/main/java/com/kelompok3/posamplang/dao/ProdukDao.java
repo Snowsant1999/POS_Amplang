@@ -24,8 +24,14 @@ public interface ProdukDao {
     @Query("SELECT * FROM produk ORDER BY nama_produk ASC")
     List<Produk> getAll();
 
+    @Query("SELECT * FROM produk WHERE aktif = 1 ORDER BY nama_produk ASC")
+    List<Produk> getAktif();
+
     @Query("SELECT * FROM produk WHERE id_produk = :id LIMIT 1")
     Produk getById(int id);
+
+    @Query("SELECT * FROM produk WHERE id_supplier = :supplierId ORDER BY nama_produk ASC")
+    List<Produk> getBySupplier(int supplierId);
 
     @Query("SELECT * FROM produk WHERE nama_produk LIKE '%' || :keyword || '%'")
     List<Produk> search(String keyword);

@@ -57,8 +57,8 @@
                             android:layout_height="wrap_content"
                             android:text="DASHBOARD"
                             android:textColor="#1A1A2E"
-                            android:textSize="26sp"
-                            android:fontFamily="sans-serif-medium"
+                            android:textSize="24sp"
+                            android:fontFamily="serif"
                             android:textStyle="bold" />
 
                         <TextView
@@ -255,8 +255,8 @@
                         android:text="Pendapatan"
                         android:textSize="12sp"
                         android:textAllCaps="false"
-                        android:backgroundTint="#B22222"
-                        android:textColor="@android:color/white"
+                        android:backgroundTint="@android:color/transparent"
+                        android:textColor="#888"
                         android:layout_marginEnd="4dp"
                         style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
 

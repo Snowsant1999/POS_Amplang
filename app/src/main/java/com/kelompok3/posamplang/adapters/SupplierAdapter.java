@@ -1,8 +1,6 @@
 package com.kelompok3.posamplang.adapters;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,20 +10,26 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
 import com.kelompok3.posamplang.R;
-import com.kelompok3.posamplang.activities.supplier.SupplierDetailActivity;
 import com.kelompok3.posamplang.models.Supplier;
 
 import java.util.List;
 
 public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.ViewHolder> {
 
-    private List<Supplier> supplierList;
-    private Context context;
+    public interface OnSupplierActionListener {
+        void onDetailClick(Supplier supplier);
+        void onEditClick(Supplier supplier);
+        void onDeleteClick(Supplier supplier);
+    }
 
-    public SupplierAdapter(List<Supplier> supplierList, Context context) {
+    private final List<Supplier> supplierList;
+    private final OnSupplierActionListener listener;
+
+    public SupplierAdapter(List<Supplier> supplierList, OnSupplierActionListener listener) {
         this.supplierList = supplierList;
-        this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -41,30 +45,16 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.ViewHo
         holder.tvNama.setText(supplier.getNama_supplier());
         holder.tvKontak.setText(supplier.getNo_telepon());
         holder.tvAlamat.setText(supplier.getAlamat_supplier());
-        holder.tvEmail.setText("-"); // Email tidak ada di ERD
-        
-        if (supplier.isAktif()) {
-            holder.tvStatus.setText("Aktif");
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_status_aktif);
-        } else {
-            holder.tvStatus.setText("Nonaktif");
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_status_nonaktif);
-        }
+        holder.tvEmail.setText(TextUtils.isEmpty(supplier.getEmail()) ? "-" : supplier.getEmail());
 
-        holder.tvNama.setOnClickListener(v -> {
-            Intent intent = new Intent(context, SupplierDetailActivity.class);
-            intent.putExtra("SUPPLIER_ID", supplier.getId_supplier());
-            intent.putExtra("SUPPLIER_NAMA", supplier.getNama_supplier());
-            context.startActivity(intent);
-        });
+        holder.tvStatus.setText(supplier.isAktif() ? "Aktif" : "Nonaktif");
+        holder.tvStatus.setBackgroundResource(
+                supplier.isAktif() ? R.drawable.bg_status_aktif : R.drawable.bg_status_nonaktif);
 
-        holder.btnEdit.setOnClickListener(v -> {
-            // Logic Edit
-        });
-
-        holder.btnDelete.setOnClickListener(v -> {
-            // Logic Delete
-        });
+        holder.tvNama.setOnClickListener(v -> listener.onDetailClick(supplier));
+        holder.btnDetail.setOnClickListener(v -> listener.onDetailClick(supplier));
+        holder.btnEdit.setOnClickListener(v -> listener.onEditClick(supplier));
+        holder.btnDelete.setOnClickListener(v -> listener.onDeleteClick(supplier));
     }
 
     @Override
@@ -73,8 +63,14 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNama, tvKontak, tvAlamat, tvEmail, tvStatus;
-        ImageButton btnEdit, btnDelete;
+        private final TextView tvNama;
+        private final TextView tvKontak;
+        private final TextView tvAlamat;
+        private final TextView tvEmail;
+        private final TextView tvStatus;
+        private final MaterialButton btnDetail;
+        private final MaterialButton btnEdit;
+        private final ImageButton btnDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +79,7 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.ViewHo
             tvAlamat = itemView.findViewById(R.id.tv_alamat);
             tvEmail = itemView.findViewById(R.id.tv_email);
             tvStatus = itemView.findViewById(R.id.tv_status);
+            btnDetail = itemView.findViewById(R.id.btn_detail);
             btnEdit = itemView.findViewById(R.id.btn_edit);
             btnDelete = itemView.findViewById(R.id.btn_delete);
         }

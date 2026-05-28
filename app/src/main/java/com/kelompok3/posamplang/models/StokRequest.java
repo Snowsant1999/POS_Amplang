@@ -1,5 +1,6 @@
 package com.kelompok3.posamplang.models;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
@@ -25,6 +26,8 @@ public class StokRequest {
     private String nomor_request;
     private long tanggal_request; // timestamp
     private String status;
+    @ColumnInfo(defaultValue = "0")
+    private long tanggal_selesai;
 
     public StokRequest(int id_supplier, int id_users, String nomor_request, long tanggal_request, String status) {
         this.id_supplier = id_supplier;
@@ -32,6 +35,7 @@ public class StokRequest {
         this.nomor_request = nomor_request;
         this.tanggal_request = tanggal_request;
         this.status = status;
+        this.tanggal_selesai = 0;
     }
 
     public int getId_request() { return id_request; }
@@ -46,4 +50,6 @@ public class StokRequest {
     public void setTanggal_request(long tanggal_request) { this.tanggal_request = tanggal_request; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+    public long getTanggal_selesai() { return tanggal_selesai; }
+    public void setTanggal_selesai(long tanggal_selesai) { this.tanggal_selesai = tanggal_selesai; }
 }

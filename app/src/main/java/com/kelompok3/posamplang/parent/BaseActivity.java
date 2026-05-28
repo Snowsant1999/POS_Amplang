@@ -2,6 +2,7 @@ package com.kelompok3.posamplang.parent;
 
 import android.content.Intent;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,9 @@ import com.kelompok3.posamplang.activities.transaksi.KasirActivity;
 import com.kelompok3.posamplang.activities.produk.ProdukListActivity;
 import com.kelompok3.posamplang.activities.supplier.SupplierListActivity;
 import com.kelompok3.posamplang.activities.pengaturan.PengaturanActivity;
+import com.kelompok3.posamplang.utils.StoreSettings;
 
+import java.util.Locale;
 
 public abstract class BaseActivity extends AppCompatActivity {
     
@@ -24,7 +27,9 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param activeMenuId ID dari layout menu yang ingin diberi warna merah (misal: R.id.btn_nav_dashboard)
      */
     protected void setupSidebar(int activeMenuId) {
-        // 1. Inisialisasi semua button dari layout_sidebar.xml
+        applySidebarStoreName();
+
+        // Inisialisasi semua button dari layout_sidebar.xml
         LinearLayout btnDashboard = findViewById(R.id.btn_nav_dashboard);
         LinearLayout btnKasir      = findViewById(R.id.btn_nav_kasir);
         LinearLayout btnStok       = findViewById(R.id.btn_nav_stok);
@@ -33,7 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         LinearLayout btnSetting    = findViewById(R.id.btn_nav_pengaturan);
         LinearLayout btnLogout     = findViewById(R.id.btn_nav_logout);
 
-        // 2. Tandai menu yang aktif dengan warna merah
+        // Tandai menu yang aktif dengan warna merah
         if (activeMenuId != 0) {
             LinearLayout activeLayout = findViewById(activeMenuId);
             if (activeLayout != null) {
@@ -42,7 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
 
-        // 3. Logika Navigasi (Klik Menu)
+        // Logika Navigasi (Klik Menu)
         if (btnDashboard != null) {
             btnDashboard.setOnClickListener(v -> navigateTo(MainActivity.class));
         }
@@ -70,6 +75,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (btnLogout != null) {
             btnLogout.setOnClickListener(v -> handleLogout());
         }
+    }
+
+    protected void applySidebarStoreName() {
+        TextView tvPrimary = findViewById(R.id.tv_sidebar_store_primary);
+        TextView tvSecondary = findViewById(R.id.tv_sidebar_store_secondary);
+        if (tvPrimary == null || tvSecondary == null) {
+            return;
+        }
+
+        String storeName = StoreSettings.get(this).name.trim();
+        if (storeName.isEmpty()) {
+            storeName = StoreSettings.DEFAULT_NAME;
+        }
+        String[] parts = storeName.split("\\s+", 2);
+        tvPrimary.setText(parts[0].toUpperCase(Locale.ROOT));
+        tvSecondary.setText(parts.length > 1 ? parts[1].toUpperCase(Locale.ROOT) : "");
     }
 
     /**

@@ -6,51 +6,51 @@
     android:layout_height="match_parent"
     android:background="#E5E5E5">
 
-    <!-- Decorative Fish Patterns (Top Left) -->
+    <!-- Decorative Fish Pattern (Top Left) -->
     <ImageView
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginStart="-30dp"
         android:layout_marginTop="-30dp"
         android:alpha="0.4"
-        android:src="@drawable/ic_launcher_foreground"
+        android:src="@mipmap/amplang_foreground"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription"
-        tools:srcCompat="@mipmap/amplang_foreground" />
+        tools:ignore="ContentDescription" />
 
-    <!-- Decorative Fish Patterns (Bottom Left) -->
+    <!-- Decorative Fish Pattern (Bottom Left) -->
     <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginStart="-20dp"
         android:layout_marginBottom="-20dp"
         android:alpha="0.3"
-        android:src="@drawable/ic_launcher_foreground"
+        android:src="@mipmap/ikan_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="ContentDescription"
-        tools:srcCompat="@mipmap/ikan_foreground" />
+        tools:ignore="ContentDescription" />
 
-    <!-- Decorative Fish Patterns (Top Right) -->
+    <!-- Decorative Fish Pattern (Top Right) -->
     <ImageView
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="-120dp"
+        android:layout_marginBottom="495dp"
         android:alpha="0.3"
-        android:src="@drawable/ic_launcher_foreground"
+        android:src="@mipmap/amplang_foreground"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription"
-        tools:srcCompat="@mipmap/amplang_foreground" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="ContentDescription" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="683dp"
-        android:layout_height="596dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         app:cardCornerRadius="24dp"
-        app:cardElevation="10dp"
+        app:cardElevation="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,16 +70,15 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:contentDescription="Logo"
-                android:src="@drawable/ic_launcher_foreground"
-                tools:srcCompat="@mipmap/amplang_foreground" />
+                android:contentDescription="Logo Amplang Salsabila"
+                android:src="@mipmap/amplang_foreground" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:gravity="center"
                 android:text="AMPLANG\nSALSABILA"
-                android:textAlignment="center"
                 android:textColor="#8B1A1A"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -87,29 +86,53 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Atur Ulang Sandi"
+                android:layout_marginTop="12dp"
+                android:text="Lupa Sandi"
                 android:textColor="#8B1A1A"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
-            <!-- Password Baru Field -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:lineSpacingExtra="4dp"
-                android:text="Masukkan sandi baru Anda. Pastikan sandi minimal 8 karakter."
-                android:textAlignment="viewStart"
-                android:textColor="#333333"
-                android:textSize="13sp" />
+                android:layout_marginTop="2dp"
+                android:text="Masukkan email Anda beserta sandi baru."
+                android:textColor="#757575"
+                android:textSize="12sp" />
 
+            <!-- Email Input -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilEmailReset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
+                app:errorIconDrawable="@null"
+                app:hintEnabled="false"
+                app:startIconDrawable="@android:drawable/ic_dialog_email"
+                app:startIconTint="#757575">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmailReset"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="@drawable/bg_input"
+                    android:hint="Email Akun Anda"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="40dp"
+                    android:paddingEnd="12dp"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Password Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSandiBaru"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:errorIconDrawable="@null"
                 app:hintEnabled="false"
                 app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#757575"
                 app:startIconDrawable="@android:drawable/ic_lock_idle_lock"
                 app:startIconTint="#757575">
 
@@ -118,20 +141,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:background="@drawable/bg_input"
-                    android:hint="Masukkan sandi baru"
+                    android:hint="Sandi Baru (Min 8 Karakter)"
                     android:inputType="textPassword"
-                    android:paddingStart="48dp"
-                    android:paddingEnd="16dp"
+                    android:paddingStart="40dp"
+                    android:paddingEnd="12dp"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Konfirmasi Password Field -->
+            <!-- Password Confirm Input -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSandiKonfirmasi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                app:errorIconDrawable="@null"
                 app:hintEnabled="false"
                 app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#757575"
                 app:startIconDrawable="@android:drawable/ic_lock_idle_lock"
                 app:startIconTint="#757575">
 
@@ -140,36 +166,49 @@
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:background="@drawable/bg_input"
-                    android:hint="Konfirmasi sandi baru"
+                    android:hint="Konfirmasi Sandi Baru"
                     android:inputType="textPassword"
-                    android:paddingStart="48dp"
-                    android:paddingEnd="16dp"
+                    android:paddingStart="40dp"
+                    android:paddingEnd="12dp"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Atur Ulang Button -->
+            <!-- Reset Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAturUlang"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="24dp"
                 android:backgroundTint="#F0B429"
-                android:text="Atur Ulang Sandi"
+                android:text="Perbarui Sandi"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 app:cornerRadius="12dp" />
 
-            <!-- Kembali link -->
-            <TextView
-                android:id="@+id/tvKembaliLoginAtur"
+            <!-- Kembali Link -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Kembali ke Login"
-                android:textColor="#F0B429"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Teringat sandi Anda? "
+                    android:textColor="#757575"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvKembaliLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kembali ke Login"
+                    android:textColor="#8B1A1A"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
