@@ -27,7 +27,7 @@ import java.util.concurrent.Executors;
 
 public class TambahProdukActivity extends AppCompatActivity {
 
-    private EditText etNamaProduk, etKodeProduk, etMerek;
+    private EditText etNamaProduk, etMerek;
     private EditText etHargaPokok, etHargaJual, etStok, etSatuan, etDeskripsi;
     private Spinner spinnerKategori;
     private RadioGroup rgStatus;
@@ -56,7 +56,6 @@ public class TambahProdukActivity extends AppCompatActivity {
 
     private void initViews() {
         etNamaProduk     = findViewById(R.id.etNamaProduk);
-        etKodeProduk     = findViewById(R.id.etKodeProduk);
         etMerek          = findViewById(R.id.etMerek);
         etHargaPokok     = findViewById(R.id.etHargaPokok);
         etHargaJual      = findViewById(R.id.etHargaJual);

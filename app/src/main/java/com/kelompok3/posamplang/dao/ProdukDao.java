@@ -39,6 +39,9 @@ public interface ProdukDao {
     @Query("SELECT * FROM produk WHERE stok_tersedia <= :batas ORDER BY stok_tersedia ASC")
     List<Produk> getStokRendah(int batas);
 
+    @Query("SELECT COUNT(*) FROM produk WHERE id_kategori_produk = :kategoriId")
+    int countByKategori(int kategoriId);
+
     @Query("UPDATE produk SET stok_tersedia = stok_tersedia - :jumlah WHERE id_produk = :id")
     void kurangiStok(int id, int jumlah);
 
