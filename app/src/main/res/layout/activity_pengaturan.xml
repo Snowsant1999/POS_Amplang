@@ -53,7 +53,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnEdit"
-                android:layout_width="98dp"
+                android:layout_width="113dp"
                 android:layout_height="46dp"
                 android:layout_marginEnd="10dp"
                 android:backgroundTint="@color/action_blue"
@@ -96,7 +96,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
-                    android:background="@color/primary_red"
+                    android:background="@color/primary_yellow"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingHorizontal="20dp">
@@ -156,11 +156,14 @@
                             android:textSize="12sp"
                             android:textStyle="bold" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/valNamaToko"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="9dp"
+                            android:backgroundTint="@color/border_gray"
+                            android:enabled="false"
+                            android:inputType="textCapWords"
                             android:paddingBottom="16dp"
                             android:text="Amplang Salsabila"
                             android:textColor="@color/black"
@@ -181,11 +184,14 @@
                             android:textSize="12sp"
                             android:textStyle="bold" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/valAlamatToko"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="9dp"
+                            android:backgroundTint="@color/border_gray"
+                            android:enabled="false"
+                            android:inputType="textPostalAddress|textCapSentences"
                             android:text="Samarinda"
                             android:textColor="@color/black"
                             android:textSize="15sp" />
@@ -205,12 +211,14 @@
                             android:textSize="12sp"
                             android:textStyle="bold" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/valEmailToko"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="9dp"
-                            android:autoLink="email"
+                            android:backgroundTint="@color/border_gray"
+                            android:enabled="false"
+                            android:inputType="textEmailAddress"
                             android:paddingBottom="16dp"
                             android:text="amplangsalsabila@gmail.com"
                             android:textColor="@color/action_blue"
@@ -230,11 +238,14 @@
                             android:textSize="12sp"
                             android:textStyle="bold" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/valNoTelp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="9dp"
+                            android:backgroundTint="@color/border_gray"
+                            android:enabled="false"
+                            android:inputType="phone"
                             android:text="081273829217"
                             android:textColor="@color/black"
                             android:textSize="15sp" />

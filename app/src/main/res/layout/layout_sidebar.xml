@@ -15,6 +15,7 @@
         android:paddingBottom="24dp">
 
         <TextView
+            android:id="@+id/tv_sidebar_store_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="AMPLANG"
@@ -25,6 +26,7 @@
             android:gravity="center" />
 
         <TextView
+            android:id="@+id/tv_sidebar_store_secondary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="SALSABILA"

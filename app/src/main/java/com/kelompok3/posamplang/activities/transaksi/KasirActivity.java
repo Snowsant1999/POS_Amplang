@@ -30,6 +30,7 @@ import com.kelompok3.posamplang.models.Produk;
 import com.kelompok3.posamplang.models.StokAdjustment;
 import com.kelompok3.posamplang.parent.BaseActivity;
 import com.kelompok3.posamplang.utils.FormatUtils;
+import com.kelompok3.posamplang.utils.StoreSettings;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -409,10 +410,16 @@ public class KasirActivity extends BaseActivity {
     private void showDialogStrukFinal(double bayar, double kembalian) {
         Dialog dialog = createDialog(R.layout.dialog_struk_final);
         TextView tvDateTime = dialog.findViewById(R.id.tv_struk_datetime);
+        TextView tvStorePrimary = dialog.findViewById(R.id.tv_struk_store_primary);
+        TextView tvStoreSecondary = dialog.findViewById(R.id.tv_struk_store_secondary);
         TextView tvTotal    = dialog.findViewById(R.id.tv_struk_total);
         TextView tvPayment  = dialog.findViewById(R.id.tv_struk_payment);
         TextView tvChange   = dialog.findViewById(R.id.tv_struk_change);
         RecyclerView rvItems = dialog.findViewById(R.id.rv_struk_items);
+
+        String[] storeName = StoreSettings.get(this).name.trim().split("\\s+", 2);
+        tvStorePrimary.setText(storeName[0].toUpperCase(Locale.ROOT));
+        tvStoreSecondary.setText(storeName.length > 1 ? storeName[1].toUpperCase(Locale.ROOT) : "");
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
         tvDateTime.setText("Date time : " + sdf.format(new Date()));

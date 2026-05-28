@@ -23,13 +23,13 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLihat"
-            android:layout_width="70dp"
+            android:layout_width="94dp"
             android:layout_height="38dp"
             android:backgroundTint="@color/primary_yellow"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:minHeight="0dp"
             android:minWidth="0dp"
+            android:minHeight="0dp"
             android:text="Lihat"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -38,14 +38,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPrint"
-            android:layout_width="78dp"
+            android:layout_width="89dp"
             android:layout_height="38dp"
             android:layout_marginStart="7dp"
             android:backgroundTint="@color/action_blue"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:minHeight="0dp"
             android:minWidth="0dp"
+            android:minHeight="0dp"
             android:text="Excel"
             android:textAllCaps="false"
             android:textColor="@color/white"

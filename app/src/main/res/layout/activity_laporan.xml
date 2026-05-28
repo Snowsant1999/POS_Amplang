@@ -91,7 +91,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnSimpanLaporan"
-                            android:layout_width="150dp"
+                            android:layout_width="192dp"
                             android:layout_height="46dp"
                             android:backgroundTint="@color/success_green"
                             android:text="Simpan Laporan"

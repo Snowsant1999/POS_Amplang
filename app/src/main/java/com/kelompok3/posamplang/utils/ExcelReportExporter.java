@@ -46,11 +46,12 @@ public final class ExcelReportExporter {
                             "<Relationship Id=\"rId2\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles\" Target=\"styles.xml\"/>" +
                             "</Relationships>");
             add(zip, "xl/styles.xml", styles());
-            add(zip, "xl/worksheets/sheet1.xml", worksheet(laporan));
+            add(zip, "xl/worksheets/sheet1.xml",
+                    worksheet(laporan, StoreSettings.get(context)));
         }
     }
 
-    private static String worksheet(LaporanHarian laporan) {
+    private static String worksheet(LaporanHarian laporan, StoreSettings.StoreSettingsData store) {
         String tanggal = new SimpleDateFormat("dd/MM/yyyy", new Locale("id", "ID"))
                 .format(laporan.getTanggal_laporan());
         String disimpan = new SimpleDateFormat("dd/MM/yyyy HH:mm", new Locale("id", "ID"))
@@ -61,21 +62,24 @@ public final class ExcelReportExporter {
                 .append("<cols><col min=\"1\" max=\"1\" width=\"30\" customWidth=\"1\"/>")
                 .append("<col min=\"2\" max=\"2\" width=\"22\" customWidth=\"1\"/></cols><sheetData>")
                 .append(row(1, text("A1", "LAPORAN KEUANGAN HARIAN", 2)))
-                .append(row(2, text("A2", "Amplang Salsabila", 0)))
-                .append(row(4, text("A4", "Tanggal Laporan", 3), text("B4", tanggal, 0)))
-                .append(row(5, text("A5", "Disimpan Pada", 3), text("B5", disimpan, 0)))
-                .append(row(7, text("A7", "RINGKASAN KEUANGAN", 2)))
-                .append(row(8, text("A8", "Pemasukan", 3), number("B8", laporan.getPemasukan())))
-                .append(row(9, text("A9", "Pengeluaran", 3), number("B9", laporan.getPengeluaran())))
-                .append(row(10, text("A10", "Saldo Bersih", 3), number("B10", laporan.getSaldo_bersih())))
-                .append(row(12, text("A12", "METODE PEMBAYARAN", 2)))
-                .append(row(13, text("A13", "Tunai", 3), number("B13", laporan.getPembayaran_tunai())))
-                .append(row(14, text("A14", "Online / QRIS", 3), number("B14", laporan.getPembayaran_online())))
-                .append(row(15, text("A15", "Tertunda", 3), number("B15", laporan.getPembayaran_tertunda())))
-                .append(row(17, text("A17", "Jumlah Transaksi Selesai", 3),
-                        plainNumber("B17", laporan.getJumlah_transaksi())))
+                .append(row(2, text("A2", "Nama Toko", 3), text("B2", store.name, 0)))
+                .append(row(3, text("A3", "Alamat", 3), text("B3", store.address, 0)))
+                .append(row(4, text("A4", "Email", 3), text("B4", store.email, 0)))
+                .append(row(5, text("A5", "Telepon", 3), text("B5", store.phone, 0)))
+                .append(row(7, text("A7", "Tanggal Laporan", 3), text("B7", tanggal, 0)))
+                .append(row(8, text("A8", "Disimpan Pada", 3), text("B8", disimpan, 0)))
+                .append(row(10, text("A10", "RINGKASAN KEUANGAN", 2)))
+                .append(row(11, text("A11", "Pemasukan", 3), number("B11", laporan.getPemasukan())))
+                .append(row(12, text("A12", "Pengeluaran", 3), number("B12", laporan.getPengeluaran())))
+                .append(row(13, text("A13", "Saldo Bersih", 3), number("B13", laporan.getSaldo_bersih())))
+                .append(row(15, text("A15", "METODE PEMBAYARAN", 2)))
+                .append(row(16, text("A16", "Tunai", 3), number("B16", laporan.getPembayaran_tunai())))
+                .append(row(17, text("A17", "Online / QRIS", 3), number("B17", laporan.getPembayaran_online())))
+                .append(row(18, text("A18", "Tertunda", 3), number("B18", laporan.getPembayaran_tertunda())))
+                .append(row(20, text("A20", "Jumlah Transaksi Selesai", 3),
+                        plainNumber("B20", laporan.getJumlah_transaksi())))
                 .append("</sheetData><mergeCells count=\"3\"><mergeCell ref=\"A1:B1\"/>")
-                .append("<mergeCell ref=\"A7:B7\"/><mergeCell ref=\"A12:B12\"/></mergeCells></worksheet>");
+                .append("<mergeCell ref=\"A10:B10\"/><mergeCell ref=\"A15:B15\"/></mergeCells></worksheet>");
         return xml.toString();
     }
 
