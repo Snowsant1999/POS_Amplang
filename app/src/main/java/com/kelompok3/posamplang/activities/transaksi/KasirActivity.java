@@ -50,11 +50,13 @@ public class KasirActivity extends BaseActivity {
     private TextView tvSubtotal;
     private TextView tvTotalHarga;
     private Button btnBayar;
+    private EditText etSearch;
 
     // ─── Data & Adapter ────────────────────────────────────────────────────────
     private StrukAdapter adapter;
     private MenuKasirAdapter menuAdapter;
     private List<DetailPesanan> keranjangList = new ArrayList<>();
+    private List<Produk> allProdukList = new ArrayList<>();
     private List<Produk> menuProdukList = new ArrayList<>();
     private double currentTotal = 0;
 
@@ -76,6 +78,7 @@ public class KasirActivity extends BaseActivity {
         setupMenuRecyclerView();
         setupStrukRecyclerView();
         setupBayarButton();
+        setupSearch();
         loadProductsFromDb();
     }
 
@@ -87,6 +90,7 @@ public class KasirActivity extends BaseActivity {
         tvSubtotal   = findViewById(R.id.tv_subtotal);
         tvTotalHarga = findViewById(R.id.tv_total_harga);
         btnBayar     = findViewById(R.id.btn_bayar);
+        etSearch     = findViewById(R.id.et_search);
     }
 
     // ─── Load Produk dari Database ─────────────────────────────────────────────
@@ -95,11 +99,42 @@ public class KasirActivity extends BaseActivity {
         Executors.newSingleThreadExecutor().execute(() -> {
             List<Produk> produks = db.produkDao().getAktif();
             runOnUiThread(() -> {
-                menuProdukList.clear();
-                menuProdukList.addAll(produks);
-                if (menuAdapter != null) menuAdapter.notifyDataSetChanged();
+                allProdukList.clear();
+                allProdukList.addAll(produks);
+                applyProductFilter(etSearch.getText().toString());
             });
         });
+    }
+
+    private void setupSearch() {
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override public void afterTextChanged(Editable s) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                applyProductFilter(s.toString());
+            }
+        });
+    }
+
+    private void applyProductFilter(String keyword) {
+        String query = keyword == null ? "" : keyword.trim().toLowerCase(Locale.ROOT);
+        menuProdukList.clear();
+        if (query.isEmpty()) {
+            menuProdukList.addAll(allProdukList);
+        } else {
+            for (Produk produk : allProdukList) {
+                String name = produk.getNama_produk() == null ? "" : produk.getNama_produk().toLowerCase(Locale.ROOT);
+                String unit = produk.getUnit() == null ? "" : produk.getUnit().toLowerCase(Locale.ROOT);
+                if (name.contains(query) || unit.contains(query)) {
+                    menuProdukList.add(produk);
+                }
+            }
+        }
+        if (menuAdapter != null) {
+            menuAdapter.notifyDataSetChanged();
+        }
     }
 
     // ─── Setup RecyclerView Menu Produk (Grid 4 Kolom) ────────────────────────
@@ -364,9 +399,9 @@ public class KasirActivity extends BaseActivity {
             // Kembali ke UI thread
             runOnUiThread(() -> {
                 // Perbarui daftar produk di menu agar stok yang tampil ikut berkurang
-                menuProdukList.clear();
-                menuProdukList.addAll(produks);
-                menuAdapter.notifyDataSetChanged();
+                allProdukList.clear();
+                allProdukList.addAll(produks);
+                applyProductFilter(etSearch.getText().toString());
 
                 // Tampilkan dialog berhasil
                 showDialogBerhasil(bayar, kembalian);
