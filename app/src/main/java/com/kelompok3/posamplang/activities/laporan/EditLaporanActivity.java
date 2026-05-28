@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.kelompok3.posamplang.R;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 
 public class EditLaporanActivity extends AppCompatActivity {
 
@@ -20,6 +21,7 @@ public class EditLaporanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_data_laporan);
+        FixedViewportScaler.apply(this);
 
         // Inisialisasi View
         etCabang = findViewById(R.id.etCabang);

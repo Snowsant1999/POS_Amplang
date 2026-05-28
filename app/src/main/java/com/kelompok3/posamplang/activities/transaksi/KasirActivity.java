@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Window;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -29,6 +28,7 @@ import com.kelompok3.posamplang.models.Pesanan;
 import com.kelompok3.posamplang.models.Produk;
 import com.kelompok3.posamplang.models.StokAdjustment;
 import com.kelompok3.posamplang.parent.BaseActivity;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 import com.kelompok3.posamplang.utils.FormatUtils;
 import com.kelompok3.posamplang.utils.StoreSettings;
 
@@ -246,7 +246,7 @@ public class KasirActivity extends BaseActivity {
         });
 
         dialog.findViewById(R.id.btn_batal).setOnClickListener(v -> dialog.dismiss());
-        dialog.show();
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 480, 560);
     }
 
     // ─── Tambah Produk ke Keranjang ────────────────────────────────────────────
@@ -291,7 +291,7 @@ public class KasirActivity extends BaseActivity {
             dialog.dismiss();
             prosesTransaksi("QRIS", currentTotal, 0);
         });
-        dialog.show();
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 520, 560);
     }
 
     // ─── Dialog Bayar Tunai ────────────────────────────────────────────────────
@@ -330,7 +330,7 @@ public class KasirActivity extends BaseActivity {
             showDialogPilihMetode();
         });
 
-        dialog.show();
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 520, 560);
     }
 
     // ─── PROSES UTAMA TRANSAKSI (SIMPAN KE DATABASE) ──────────────────────────
@@ -423,11 +423,7 @@ public class KasirActivity extends BaseActivity {
             dialog.dismiss();
             resetKasir();
         });
-        dialog.show();
-        float density = getResources().getDisplayMetrics().density;
-        int preferredWidth = (int) (480 * density);
-        int availableWidth = getResources().getDisplayMetrics().widthPixels - (int) (48 * density);
-        dialog.getWindow().setLayout(Math.min(preferredWidth, availableWidth), ViewGroup.LayoutParams.WRAP_CONTENT);
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 480, 560);
     }
 
     // ─── Dialog Gagal ──────────────────────────────────────────────────────────
@@ -438,7 +434,7 @@ public class KasirActivity extends BaseActivity {
             showDialogPilihMetode();
         });
         dialog.findViewById(R.id.btn_kembali).setOnClickListener(v -> dialog.dismiss());
-        dialog.show();
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 480, 560);
     }
 
     // ─── Dialog Struk Final ────────────────────────────────────────────────────
@@ -474,7 +470,7 @@ public class KasirActivity extends BaseActivity {
             resetKasir();
             dialog.dismiss();
         });
-        dialog.show();
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 520, 720);
     }
 
     // ─── Helper ───────────────────────────────────────────────────────────────

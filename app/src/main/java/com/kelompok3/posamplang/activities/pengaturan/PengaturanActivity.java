@@ -16,6 +16,7 @@ import androidx.activity.EdgeToEdge;
 import com.google.android.material.button.MaterialButton;
 import com.kelompok3.posamplang.R;
 import com.kelompok3.posamplang.parent.BaseActivity;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 import com.kelompok3.posamplang.utils.StoreSettings;
 
 public class PengaturanActivity extends BaseActivity {
@@ -163,9 +164,6 @@ public class PengaturanActivity extends BaseActivity {
     }
 
     private int getResponsiveDialogWidth(int preferredWidthDp) {
-        float density = getResources().getDisplayMetrics().density;
-        int preferredWidth = (int) (preferredWidthDp * density);
-        int availableWidth = getResources().getDisplayMetrics().widthPixels - (int) (48 * density);
-        return Math.min(preferredWidth, availableWidth);
+        return FixedViewportScaler.responsiveDialogWidth(this, preferredWidthDp);
     }
 }

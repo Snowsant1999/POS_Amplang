@@ -20,6 +20,7 @@ import com.kelompok3.posamplang.R;
 import com.kelompok3.posamplang.activities.dashboard.MainActivity;
 import com.kelompok3.posamplang.database.AppDatabase;
 import com.kelompok3.posamplang.models.User;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 
 import java.util.concurrent.Executors;
 
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         EdgeToEdge.enable(this);
+        FixedViewportScaler.apply(this);
 
         initViews();
         setupClickListeners();
@@ -159,8 +161,8 @@ public class LoginActivity extends AppCompatActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_status_auth);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        int width = (int)(480 * getResources().getDisplayMetrics().density);
-        dialog.getWindow().setLayout(width, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(FixedViewportScaler.responsiveDialogWidth(this, 480),
+                android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(false);
 
         ImageView ivIcon    = dialog.findViewById(R.id.ivStatusIcon);

@@ -28,6 +28,7 @@ import com.kelompok3.posamplang.R;
 import com.kelompok3.posamplang.adapters.ProdukAdapter;
 import com.kelompok3.posamplang.models.Produk;
 import com.kelompok3.posamplang.parent.BaseActivity;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -248,9 +249,6 @@ public class ProdukListActivity extends BaseActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.activity_tambah_produk);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        int width = (int)(600 * getResources().getDisplayMetrics().density);
-        dialog.getWindow().setLayout(width, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-
         EditText etNama     = dialog.findViewById(R.id.etNamaProduk);
         EditText etMerek    = dialog.findViewById(R.id.etMerek);
         EditText etHargaJual= dialog.findViewById(R.id.etHargaJual);
@@ -312,7 +310,7 @@ public class ProdukListActivity extends BaseActivity {
                 });
             });
         });
-        dialog.show();
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 600, 720);
     }
 
     // ─── TAMPILKAN DIALOG EDIT PRODUK (SAMA SEPERTI SUPPLIER) ───
@@ -320,9 +318,6 @@ public class ProdukListActivity extends BaseActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.activity_edit_produk2);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        int width = (int)(600 * getResources().getDisplayMetrics().density);
-        dialog.getWindow().setLayout(width, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-
         EditText etNama     = dialog.findViewById(R.id.etNamaProdukEdit);
         EditText etMerek    = dialog.findViewById(R.id.etMerekEdit);
         EditText etHargaJual= dialog.findViewById(R.id.etHargaJualEdit);
@@ -404,7 +399,7 @@ public class ProdukListActivity extends BaseActivity {
                 });
             });
         });
-        dialog.show();
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 600, 720);
     }
 
     private void showTambahKategoriDialog(Spinner spinnerKategori, List<Kategori> kategoriList) {
@@ -433,10 +428,7 @@ public class ProdukListActivity extends BaseActivity {
             });
         });
 
-        dialog.show();
-        dialog.getWindow().setLayout(
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 640, 720);
     }
 
     private void loadKategoriForDialog(Spinner spinnerKategori, List<Kategori> kategoriList, int selectedId) {

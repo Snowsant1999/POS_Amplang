@@ -9,7 +9,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,6 +39,7 @@ import com.kelompok3.posamplang.models.StokRequest;
 import com.kelompok3.posamplang.models.StokRequestSummary;
 import com.kelompok3.posamplang.models.Supplier;
 import com.kelompok3.posamplang.parent.BaseActivity;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 import com.kelompok3.posamplang.utils.FormatUtils;
 
 import java.text.SimpleDateFormat;
@@ -352,8 +352,7 @@ public class SupplierDetailActivity extends BaseActivity implements SupplierRequ
                 v -> updateRequestStatus(dialog, summary.getId_request(), "Gagal"));
         dialog.findViewById(R.id.btn_request_complete).setOnClickListener(
                 v -> completeRequest(dialog, summary.getId_request()));
-        dialog.show();
-        dialog.getWindow().setLayout(getResponsiveDialogWidth(720), ViewGroup.LayoutParams.WRAP_CONTENT);
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 720, 720);
     }
 
     private void updateRequestStatus(Dialog dialog, int requestId, String status) {
@@ -436,12 +435,6 @@ public class SupplierDetailActivity extends BaseActivity implements SupplierRequ
         return dialog;
     }
 
-    private int getResponsiveDialogWidth(int preferredWidthDp) {
-        float density = getResources().getDisplayMetrics().density;
-        return Math.min((int) (preferredWidthDp * density),
-                getResources().getDisplayMetrics().widthPixels - (int) (48 * density));
-    }
-
     private void setStatusBackground(TextView view, String status) {
         if ("Selesai".equals(status)) {
             view.setBackgroundResource(R.drawable.bg_status_aktif);
@@ -507,8 +500,7 @@ public class SupplierDetailActivity extends BaseActivity implements SupplierRequ
             activeImagePreview = null;
             selectedImageUri = null;
         });
-        dialog.show();
-        dialog.getWindow().setLayout(getResponsiveDialogWidth(600), ViewGroup.LayoutParams.WRAP_CONTENT);
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 600, 720);
     }
 
     private void openImagePicker() {

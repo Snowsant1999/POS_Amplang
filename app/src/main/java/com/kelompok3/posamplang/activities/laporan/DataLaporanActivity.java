@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.kelompok3.posamplang.R;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 
 public class DataLaporanActivity extends AppCompatActivity {
 
@@ -14,6 +15,7 @@ public class DataLaporanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.data_laporan);
+        FixedViewportScaler.apply(this);
 
         MaterialButton btnPrint = findViewById(R.id.btnPrint);
         MaterialButton btnEdit = findViewById(R.id.btnEdit);

@@ -16,6 +16,7 @@ import com.kelompok3.posamplang.activities.transaksi.KasirActivity;
 import com.kelompok3.posamplang.activities.produk.ProdukListActivity;
 import com.kelompok3.posamplang.activities.supplier.SupplierListActivity;
 import com.kelompok3.posamplang.activities.pengaturan.PengaturanActivity;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 import com.kelompok3.posamplang.utils.StoreSettings;
 
 import java.util.Locale;
@@ -27,6 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param activeMenuId ID dari layout menu yang ingin diberi warna merah (misal: R.id.btn_nav_dashboard)
      */
     protected void setupSidebar(int activeMenuId) {
+        FixedViewportScaler.apply(this);
         applySidebarStoreName();
 
         // Inisialisasi semua button dari layout_sidebar.xml

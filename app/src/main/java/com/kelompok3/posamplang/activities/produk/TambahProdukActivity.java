@@ -19,6 +19,7 @@ import com.kelompok3.posamplang.database.AppDatabase;
 import com.kelompok3.posamplang.models.Kategori;
 import com.kelompok3.posamplang.models.Merek;
 import com.kelompok3.posamplang.models.Produk;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ public class TambahProdukActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tambah_produk);
+        FixedViewportScaler.apply(this);
 
         initViews();
         loadKategoriFromDb(-1);
@@ -204,10 +206,7 @@ public class TambahProdukActivity extends AppCompatActivity {
             });
         });
 
-        dialog.show();
-        dialog.getWindow().setLayout(
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 640, 720);
     }
 
     @Override

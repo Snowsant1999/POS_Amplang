@@ -16,6 +16,7 @@ import com.kelompok3.posamplang.models.User;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.kelompok3.posamplang.R;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -28,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        FixedViewportScaler.apply(this);
 
         etNama = findViewById(R.id.etNamaLengkap);
         etEmail = findViewById(R.id.etEmailDaftar);
@@ -106,8 +108,8 @@ public class RegisterActivity extends AppCompatActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_status_auth);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        int width = (int)(480 * getResources().getDisplayMetrics().density);
-        dialog.getWindow().setLayout(width, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(FixedViewportScaler.responsiveDialogWidth(this, 480),
+                android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(false);
 
         ImageView ivIcon   = dialog.findViewById(R.id.ivStatusIcon);
