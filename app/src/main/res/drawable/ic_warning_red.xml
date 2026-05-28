@@ -1,0 +1,15 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="80dp"
+    android:height="80dp"
+    android:viewportWidth="80"
+    android:viewportHeight="80">
+    <!-- Circle Border -->
+    <path
+        android:pathData="M40,40m-35,0a35,35 0,1 1,70 0a35,35 0,1 1,-70 0"
+        android:strokeColor="#FF0000"
+        android:strokeWidth="3" />
+    <!-- X Mark -->
+    <path
+        android:fillColor="#FF0000"
+        android:pathData="M52.5,30L50,27.5L40,37.5L30,27.5L27.5,30L37.5,40L27.5,50L30,52.5L40,42.5L50,52.5L52.5,50L42.5,40Z" />
+</vector>

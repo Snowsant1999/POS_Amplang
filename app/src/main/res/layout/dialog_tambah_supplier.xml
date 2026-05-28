@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="600dp"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F4C430"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_title_supplier_dialog"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tambah Supplier"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_close_dialog"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/close"
+                app:tint="@android:color/white" />
+        </LinearLayout>
+
+        <!-- Form Content -->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:stretchColumns="1">
+
+            <!-- Nama Supplier -->
+            <TableRow android:layout_marginBottom="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="16dp"
+                    android:text="Nama Supplier"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_nama_supplier"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/bg_input_border"
+                    android:hint="Masukkan Nama Supplier"
+                    android:paddingStart="12dp"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <!-- No Kontak -->
+            <TableRow android:layout_marginBottom="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="16dp"
+                    android:text="No Kontak"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_kontak_supplier"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/bg_input_border"
+                    android:hint="Masukkan No Kontak"
+                    android:inputType="phone"
+                    android:paddingStart="12dp"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <!-- Alamat -->
+            <TableRow android:layout_marginBottom="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="16dp"
+                    android:text="Alamat"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_alamat_supplier"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/bg_input_border"
+                    android:hint="Masukkan Alamat"
+                    android:paddingStart="12dp"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <!-- Email -->
+            <TableRow android:layout_marginBottom="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="16dp"
+                    android:text="Email"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_email_supplier"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/bg_input_border"
+                    android:hint="Masukkan Email"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="12dp"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <!-- Logo Supplier -->
+            <TableRow android:layout_marginBottom="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="16dp"
+                    android:text="Logo Supplier"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_supplier_image_preview"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:background="@drawable/bg_input_border"
+                        android:padding="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/amplang_background" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_pilih_gambar_supplier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="12dp"
+                        android:backgroundTint="@color/action_blue"
+                        android:text="Pilih Gambar"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        app:cornerRadius="6dp" />
+                </LinearLayout>
+            </TableRow>
+
+            <!-- Status -->
+            <TableRow android:layout_marginBottom="24dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="16dp"
+                    android:text="Status"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rg_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_aktif"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Aktif" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nonaktif"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Nonaktif" />
+                </RadioGroup>
+            </TableRow>
+        </TableLayout>
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_batal_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:backgroundTint="#B21F1F"
+                android:text="&lt; Batal"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btn_simpan_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#F4C430"
+                android:text="Simpan"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

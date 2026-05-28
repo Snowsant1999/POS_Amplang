@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_nama_supplier"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:text="Indah Abdi"
+        android:textColor="@color/action_blue" />
+
+    <TextView
+        android:id="@+id/tv_kontak"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="087698092547" />
+
+    <TextView
+        android:id="@+id/tv_alamat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Banjarmasin" />
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:text="indaahabdii77@gmail.com" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.8"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="64dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bg_status_aktif"
+            android:gravity="center"
+            android:text="Aktif"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.8"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_detail"
+            android:layout_width="54dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="4dp"
+            android:backgroundTint="@color/primary_yellow"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="4dp"
+            android:text="Detail"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="9sp"
+            app:cornerRadius="6dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit"
+            android:layout_width="48dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="4dp"
+            android:backgroundTint="@color/action_blue"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:text="Edit"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="9sp"
+            app:cornerRadius="6dp"
+            app:icon="@drawable/ic_edit"
+            app:iconPadding="1dp"
+            app:iconSize="9dp"
+            app:iconTint="@color/white" />
+
+        <ImageButton
+            android:id="@+id/btn_delete"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bg_delete"
+            android:contentDescription="Hapus Supplier"
+            android:padding="7dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_delete"
+            app:tint="@color/primary_red" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Layer 0: Background (Laporan Harian tetap terlihat di belakang) -->
+    <include
+        layout="@layout/activity_laporan_harian"
+        android:alpha="0.5" />
+
+    <!-- Layer 1: Dark Overlay -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80FFFFFF" />
+
+    <!-- Layer 2: Modal Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="450dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:strokeWidth="0dp"
+        app:cardBackgroundColor="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Close Button (Top Right) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/btnCloseDelete"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_close"
+                    app:tint="@color/black"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@string/tutup_dialog"/>
+            </RelativeLayout>
+
+            <!-- Red Circle Cross Icon -->
+            <RelativeLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/circle_outline_red">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_close"
+                    app:tint="#E50000"
+                    android:contentDescription="@string/app_name" />
+            </RelativeLayout>
+
+            <!-- Question Text -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/apakah_anda_yakin_ingin_menghapus_laporan_ini"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Warning Text -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/laporan_yang_sudah_dihapus_tidak_dapat_dikembalikan"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:layout_marginBottom="32dp"/>
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnBatalDelete"
+                    android:layout_width="120dp"
+                    android:layout_height="48dp"
+                    android:backgroundTint="#EDEDF1"
+                    android:text="@string/lt_batal"
+                    android:textColor="@color/black"
+                    android:textAllCaps="false"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    app:cornerRadius="4dp"
+                    android:layout_marginEnd="16dp"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnHapusConfirm"
+                    android:layout_width="120dp"
+                    android:layout_height="48dp"
+                    android:backgroundTint="#E50000"
+                    android:text="@string/lt_hapus"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    app:cornerRadius="4dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="14dp">
+
+        <!-- Nama Produk (weight 2) -->
+        <TextView
+            android:id="@+id/tvNama"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Nama Produk"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <!-- Merek (weight 1) -->
+        <TextView
+            android:id="@+id/tvMerek"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="-"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <!-- Kategori (weight 1) -->
+        <TextView
+            android:id="@+id/tvKategori"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="-"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <!-- Satuan (weight 0.7) -->
+        <TextView
+            android:id="@+id/tvSatuan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:text="Pcs"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <!-- Harga Jual (weight 1) -->
+        <TextView
+            android:id="@+id/tvHargaJual"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Rp0"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <!-- Stok (weight 0.7) -->
+        <TextView
+            android:id="@+id/tvStok"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <!-- Status Badge (weight 0.8) -->
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_weight="0.8"
+            android:background="@drawable/bg_status_aktif"
+            android:gravity="center"
+            android:text="Aktif"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <!-- Aksi: Edit + Delete (weight 1.2) -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEdit"
+                android:layout_width="61dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="4dp"
+                android:backgroundTint="@color/action_blue"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="0dp"
+                android:paddingHorizontal="8dp"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:cornerRadius="6dp"
+                app:icon="@drawable/ic_edit"
+                app:iconPadding="2dp"
+                app:iconSize="11dp"
+                app:iconTint="@color/white" />
+
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="52dp"
+                android:layout_height="30dp"
+                android:background="@drawable/bg_delete"
+                android:contentDescription="Hapus Produk"
+                android:padding="6dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_delete"
+                app:tint="@color/primary_red" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEEEEE" />
+</LinearLayout>
