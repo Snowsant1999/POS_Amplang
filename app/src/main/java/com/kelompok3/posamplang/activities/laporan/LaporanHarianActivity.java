@@ -57,8 +57,10 @@ public class LaporanHarianActivity extends BaseActivity implements LaporanHarian
         rvLaporan.setLayoutManager(new LinearLayoutManager(this));
         adapter = new LaporanHarianAdapter(laporanList, this);
         rvLaporan.setAdapter(adapter);
-        findViewById(R.id.btnKembaliLaporanAktif).setOnClickListener(v ->
-                startActivity(new Intent(this, LaporanHarianDetailActivity.class)));
+        findViewById(R.id.btnKembaliLaporanAktif).setOnClickListener(v -> {
+            startActivity(new Intent(this, LaporanHarianDetailActivity.class));
+            overridePendingTransition(0, 0);
+        });
         loadReports();
     }
 
@@ -90,6 +92,7 @@ public class LaporanHarianActivity extends BaseActivity implements LaporanHarian
         Intent intent = new Intent(this, LaporanHarianDetailActivity.class);
         intent.putExtra(LaporanHarianDetailActivity.EXTRA_LAPORAN_ID, laporan.getId_laporan());
         startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
     @Override

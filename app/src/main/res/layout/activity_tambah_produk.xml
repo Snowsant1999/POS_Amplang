@@ -98,31 +98,16 @@
                         app:cornerRadius="4dp" />
                 </LinearLayout>
 
-                <!-- Row 1: Kode & Merek -->
+                <!-- Row 1: Merek -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false"
-                    android:weightSum="2"
+                    android:orientation="vertical"
                     android:layout_marginBottom="12dp">
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="10dp"
-                        android:orientation="vertical">
-                        <TextView style="@style/LabelTabel" android:text="@string/kode_produk" />
-                        <EditText android:id="@+id/etKodeProduk" style="@style/InputTabel" android:hint="@string/hint_kode_produk" android:inputType="text" android:importantForAutofill="no" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-                        <TextView style="@style/LabelTabel" android:text="@string/merek" />
-                        <EditText android:id="@+id/etMerek" style="@style/InputTabel" android:hint="@string/hint_merek" android:inputType="text" android:importantForAutofill="no" />
-                    </LinearLayout>
+
+                    <TextView style="@style/LabelTabel" android:text="@string/merek" />
+
+                    <EditText android:id="@+id/etMerek" style="@style/InputTabel" android:hint="@string/hint_merek" android:inputType="text" android:importantForAutofill="no" />
                 </LinearLayout>
 
                 <!-- Row 2: Harga Pokok & Harga Jual -->

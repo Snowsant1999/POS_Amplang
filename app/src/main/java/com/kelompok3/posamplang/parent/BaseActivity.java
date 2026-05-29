@@ -1,10 +1,12 @@
 package com.kelompok3.posamplang.parent;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.kelompok3.posamplang.R;
@@ -16,17 +18,25 @@ import com.kelompok3.posamplang.activities.transaksi.KasirActivity;
 import com.kelompok3.posamplang.activities.produk.ProdukListActivity;
 import com.kelompok3.posamplang.activities.supplier.SupplierListActivity;
 import com.kelompok3.posamplang.activities.pengaturan.PengaturanActivity;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 import com.kelompok3.posamplang.utils.StoreSettings;
 
 import java.util.Locale;
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+    }
     
     /**
      * Inisialisasi Sidebar dan tandai menu yang aktif.
      * @param activeMenuId ID dari layout menu yang ingin diberi warna merah (misal: R.id.btn_nav_dashboard)
      */
     protected void setupSidebar(int activeMenuId) {
+        FixedViewportScaler.apply(this);
         applySidebarStoreName();
 
         // Inisialisasi semua button dari layout_sidebar.xml
@@ -118,6 +128,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
         // Menghilangkan animasi
+        overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
         overridePendingTransition(0, 0);
     }
 }

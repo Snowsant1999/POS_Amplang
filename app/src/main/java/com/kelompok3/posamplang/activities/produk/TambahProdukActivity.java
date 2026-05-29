@@ -19,6 +19,7 @@ import com.kelompok3.posamplang.database.AppDatabase;
 import com.kelompok3.posamplang.models.Kategori;
 import com.kelompok3.posamplang.models.Merek;
 import com.kelompok3.posamplang.models.Produk;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ import java.util.concurrent.Executors;
 
 public class TambahProdukActivity extends AppCompatActivity {
 
-    private EditText etNamaProduk, etKodeProduk, etMerek;
+    private EditText etNamaProduk, etMerek;
     private EditText etHargaPokok, etHargaJual, etStok, etSatuan, etDeskripsi;
     private Spinner spinnerKategori;
     private RadioGroup rgStatus;
@@ -42,6 +43,7 @@ public class TambahProdukActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tambah_produk);
+        FixedViewportScaler.apply(this);
 
         initViews();
         loadKategoriFromDb(-1);
@@ -54,7 +56,6 @@ public class TambahProdukActivity extends AppCompatActivity {
 
     private void initViews() {
         etNamaProduk     = findViewById(R.id.etNamaProduk);
-        etKodeProduk     = findViewById(R.id.etKodeProduk);
         etMerek          = findViewById(R.id.etMerek);
         etHargaPokok     = findViewById(R.id.etHargaPokok);
         etHargaJual      = findViewById(R.id.etHargaJual);
@@ -204,10 +205,7 @@ public class TambahProdukActivity extends AppCompatActivity {
             });
         });
 
-        dialog.show();
-        dialog.getWindow().setLayout(
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 640, 720);
     }
 
     @Override

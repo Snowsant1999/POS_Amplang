@@ -83,6 +83,14 @@ public class SupplierPurchaseActivity extends BaseActivity {
         loadData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (database != null && supplierId != -1 && draftAdapter != null) {
+            loadData();
+        }
+    }
+
     private void initViews() {
         ImageButton btnBack = findViewById(R.id.btn_back_purchase);
         RadioGroup typeGroup = findViewById(R.id.rg_purchase_item_type);

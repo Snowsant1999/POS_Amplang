@@ -32,6 +32,7 @@ import com.kelompok3.posamplang.adapters.SupplierAdapter;
 import com.kelompok3.posamplang.database.AppDatabase;
 import com.kelompok3.posamplang.models.Supplier;
 import com.kelompok3.posamplang.parent.BaseActivity;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -344,9 +345,7 @@ public class SupplierListActivity extends BaseActivity
             selectedImageUri = null;
         });
 
-        dialog.show();
-        int width = (int) (600 * getResources().getDisplayMetrics().density);
-        dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 600, 720);
     }
 
     private void openImagePicker() {
@@ -384,11 +383,7 @@ public class SupplierListActivity extends BaseActivity
     }
 
     private int getResponsiveDialogWidth(int preferredWidthDp) {
-        float density = getResources().getDisplayMetrics().density;
-        int preferredWidth = (int) (preferredWidthDp * density);
-        int horizontalMargin = (int) (24 * density);
-        int availableWidth = getResources().getDisplayMetrics().widthPixels - (horizontalMargin * 2);
-        return Math.min(preferredWidth, availableWidth);
+        return FixedViewportScaler.responsiveDialogWidth(this, preferredWidthDp);
     }
 
     private void showNotification(String message) {
