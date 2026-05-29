@@ -32,6 +32,7 @@ public class LaporanHarianDetailActivity extends BaseActivity {
     private AppDatabase database;
     private LaporanHarian displayedReport;
     private MaterialButton btnSimpan;
+    private int reportId = -1;
 
     private final ActivityResultLauncher<String> excelLauncher =
             registerForActivityResult(new ActivityResultContracts.CreateDocument(
@@ -57,7 +58,15 @@ public class LaporanHarianDetailActivity extends BaseActivity {
         findViewById(R.id.btnPrint).setOnClickListener(v -> exportDisplayedReport());
         btnSimpan.setOnClickListener(v -> saveCurrentReport());
 
-        int reportId = getIntent().getIntExtra(EXTRA_LAPORAN_ID, -1);
+        reportId = getIntent().getIntExtra(EXTRA_LAPORAN_ID, -1);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (database == null) {
+            return;
+        }
         if (reportId == -1) {
             loadTodayReport();
         } else {

@@ -525,8 +525,8 @@ public class SupplierDetailActivity extends BaseActivity implements SupplierRequ
     @Override
     protected void onResume() {
         super.onResume();
-        if (database != null && supplierId != -1 && supplier != null) {
-            loadRequests();
+        if (database != null && supplierId != -1) {
+            loadSupplier();
         }
     }
 }

@@ -88,6 +88,15 @@ public class ProdukListActivity extends BaseActivity {
         setupClickListeners();
         setupSearch();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter != null) {
+            loadDummyData();
+        }
+    }
+
     private void initViews() {
         etSearch              = findViewById(R.id.etSearch);
         btnTambahProduk       = findViewById(R.id.btnTambahProduk);
@@ -131,9 +140,14 @@ public class ProdukListActivity extends BaseActivity {
             runOnUiThread(() -> {
                 produkList.clear();
                 produkList.addAll(produks);
-                filteredList.clear();
-                filteredList.addAll(produks);
-                updatePagination();
+                String keyword = etSearch == null ? "" : etSearch.getText().toString();
+                if (keyword.trim().isEmpty()) {
+                    filteredList.clear();
+                    filteredList.addAll(produks);
+                    updatePagination();
+                } else {
+                    filterProduk(keyword);
+                }
             });
         });
     }

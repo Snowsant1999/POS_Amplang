@@ -53,6 +53,14 @@ public class PengaturanActivity extends BaseActivity {
         btnSimpan.setOnClickListener(v -> saveSettings());
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (etNamaToko != null && !editMode) {
+            loadSettings();
+        }
+    }
+
     private void bindViews() {
         etNamaToko = findViewById(R.id.valNamaToko);
         etAlamatToko = findViewById(R.id.valAlamatToko);

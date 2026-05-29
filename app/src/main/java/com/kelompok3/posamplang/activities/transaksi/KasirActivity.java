@@ -83,6 +83,14 @@ public class KasirActivity extends BaseActivity {
     }
 
     // ─── Inisialisasi View ─────────────────────────────────────────────────────
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (menuAdapter != null) {
+            loadProductsFromDb();
+        }
+    }
+
     private void initViews() {
         rvStruk      = findViewById(R.id.rv_struk);
         rvMenuProduk = findViewById(R.id.rv_menu_produk);
