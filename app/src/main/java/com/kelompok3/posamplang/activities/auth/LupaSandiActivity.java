@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.kelompok3.posamplang.R;
 import com.kelompok3.posamplang.database.AppDatabase;
 import com.kelompok3.posamplang.models.User;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 
 import java.util.concurrent.Executors;
 
@@ -33,6 +34,7 @@ public class LupaSandiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lupa_sandi);
         EdgeToEdge.enable(this);
+        FixedViewportScaler.apply(this);
 
         etEmailReset = findViewById(R.id.etEmailReset);
         etSandiBaru = findViewById(R.id.etSandiBaru);
@@ -127,8 +129,8 @@ public class LupaSandiActivity extends AppCompatActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_status_auth);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        int width = (int)(480 * getResources().getDisplayMetrics().density);
-        dialog.getWindow().setLayout(width, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(FixedViewportScaler.responsiveDialogWidth(this, 480),
+                android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(false);
 
         ImageView ivIcon   = dialog.findViewById(R.id.ivStatusIcon);
@@ -148,8 +150,15 @@ public class LupaSandiActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            overridePendingTransition(0, 0);
         });
 
         dialog.show();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, 0);
     }
 }

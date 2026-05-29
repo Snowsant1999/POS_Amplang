@@ -19,6 +19,7 @@ import com.kelompok3.posamplang.database.AppDatabase;
 import com.kelompok3.posamplang.models.Kategori;
 import com.kelompok3.posamplang.models.Merek;
 import com.kelompok3.posamplang.models.Produk;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,7 @@ public class EditProdukActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_edit_produk2);
+        FixedViewportScaler.apply(this);
 
         initViews();
         loadKategoriLaluIsiForm();

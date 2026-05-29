@@ -59,14 +59,6 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activities.laporan.DataLaporanActivity"
-            android:exported="false"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".activities.laporan.EditLaporanActivity"
-            android:exported="false"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".activities.pengaturan.PengaturanActivity"
             android:exported="false"
             android:screenOrientation="landscape" />

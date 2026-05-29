@@ -2,11 +2,13 @@ package com.kelompok3.posamplang.activities.produk;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Spinner;
@@ -17,6 +19,7 @@ import android.text.TextUtils;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -28,6 +31,7 @@ import com.kelompok3.posamplang.R;
 import com.kelompok3.posamplang.adapters.ProdukAdapter;
 import com.kelompok3.posamplang.models.Produk;
 import com.kelompok3.posamplang.parent.BaseActivity;
+import com.kelompok3.posamplang.utils.FixedViewportScaler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +47,7 @@ public class ProdukListActivity extends BaseActivity {
     private RecyclerView    rvProduk;
     private EditText        etSearch;
     private MaterialButton  btnTambahProduk;
+    private MaterialButton  btnTambahKategoriStok;
     private TextView        tvSuccessNotification;
     private TextView        tvPaginationInfo;
     private TextView        tvCurrentPage;
@@ -83,9 +88,19 @@ public class ProdukListActivity extends BaseActivity {
         setupClickListeners();
         setupSearch();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter != null) {
+            loadDummyData();
+        }
+    }
+
     private void initViews() {
         etSearch              = findViewById(R.id.etSearch);
         btnTambahProduk       = findViewById(R.id.btnTambahProduk);
+        btnTambahKategoriStok = findViewById(R.id.btnTambahKategoriStok);
         rvProduk              = findViewById(R.id.rvProduk);
         tvSuccessNotification = findViewById(R.id.tvSuccessNotification);
         tvPaginationInfo      = findViewById(R.id.tvPaginationInfo);
@@ -125,9 +140,14 @@ public class ProdukListActivity extends BaseActivity {
             runOnUiThread(() -> {
                 produkList.clear();
                 produkList.addAll(produks);
-                filteredList.clear();
-                filteredList.addAll(produks);
-                updatePagination();
+                String keyword = etSearch == null ? "" : etSearch.getText().toString();
+                if (keyword.trim().isEmpty()) {
+                    filteredList.clear();
+                    filteredList.addAll(produks);
+                    updatePagination();
+                } else {
+                    filterProduk(keyword);
+                }
             });
         });
     }
@@ -144,6 +164,7 @@ public class ProdukListActivity extends BaseActivity {
     /** Mendaftarkan listener untuk tombol-tombol interaktif. */
     private void setupClickListeners() {
         btnTambahProduk.setOnClickListener(v -> showTambahProdukDialog());
+        btnTambahKategoriStok.setOnClickListener(v -> showKategoriManagerDialog());
 
         btnPagePrev.setOnClickListener(v -> {
             if (currentPage > 1) {
@@ -248,9 +269,6 @@ public class ProdukListActivity extends BaseActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.activity_tambah_produk);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        int width = (int)(600 * getResources().getDisplayMetrics().density);
-        dialog.getWindow().setLayout(width, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-
         EditText etNama     = dialog.findViewById(R.id.etNamaProduk);
         EditText etMerek    = dialog.findViewById(R.id.etMerek);
         EditText etHargaJual= dialog.findViewById(R.id.etHargaJual);
@@ -312,7 +330,7 @@ public class ProdukListActivity extends BaseActivity {
                 });
             });
         });
-        dialog.show();
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 600, 720);
     }
 
     // ─── TAMPILKAN DIALOG EDIT PRODUK (SAMA SEPERTI SUPPLIER) ───
@@ -320,9 +338,6 @@ public class ProdukListActivity extends BaseActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.activity_edit_produk2);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        int width = (int)(600 * getResources().getDisplayMetrics().density);
-        dialog.getWindow().setLayout(width, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-
         EditText etNama     = dialog.findViewById(R.id.etNamaProdukEdit);
         EditText etMerek    = dialog.findViewById(R.id.etMerekEdit);
         EditText etHargaJual= dialog.findViewById(R.id.etHargaJualEdit);
@@ -404,7 +419,7 @@ public class ProdukListActivity extends BaseActivity {
                 });
             });
         });
-        dialog.show();
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 600, 720);
     }
 
     private void showTambahKategoriDialog(Spinner spinnerKategori, List<Kategori> kategoriList) {
@@ -433,10 +448,121 @@ public class ProdukListActivity extends BaseActivity {
             });
         });
 
-        dialog.show();
-        dialog.getWindow().setLayout(
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 640, 720);
+    }
+
+    private void showKategoriManagerDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_kelola_kategori);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        LinearLayout container = dialog.findViewById(R.id.containerKategoriList);
+        TextView tvEmpty = dialog.findViewById(R.id.tvKategoriKosong);
+        EditText etNamaKategori = dialog.findViewById(R.id.etNamaKategoriManager);
+
+        dialog.findViewById(R.id.btnCloseKategoriManager).setOnClickListener(v -> dialog.dismiss());
+        dialog.findViewById(R.id.btnBatalKategoriManager).setOnClickListener(v -> dialog.dismiss());
+        dialog.findViewById(R.id.btnSimpanKategoriManager).setOnClickListener(v -> {
+            String namaKategori = etNamaKategori.getText().toString().trim();
+            if (TextUtils.isEmpty(namaKategori)) {
+                etNamaKategori.setError("Nama kategori wajib diisi");
+                etNamaKategori.requestFocus();
+                return;
+            }
+
+            AppDatabase db = AppDatabase.getInstance(this);
+            Executors.newSingleThreadExecutor().execute(() -> {
+                List<Kategori> existing = db.kategoriDao().getAll();
+                for (Kategori kategori : existing) {
+                    if (kategori.getNama_kategori().equalsIgnoreCase(namaKategori)) {
+                        runOnUiThread(() -> etNamaKategori.setError("Kategori sudah ada"));
+                        return;
+                    }
+                }
+
+                db.kategoriDao().insert(new Kategori(namaKategori, ""));
+                runOnUiThread(() -> {
+                    etNamaKategori.setText("");
+                    showSuccessNotification("Kategori ditambahkan");
+                    loadKategoriManager(container, tvEmpty);
+                });
+            });
+        });
+
+        loadKategoriManager(container, tvEmpty);
+        FixedViewportScaler.showResponsiveDialog(this, dialog, 640, 720);
+    }
+
+    private void loadKategoriManager(LinearLayout container, TextView tvEmpty) {
+        AppDatabase db = AppDatabase.getInstance(this);
+        Executors.newSingleThreadExecutor().execute(() -> {
+            List<Kategori> kategori = db.kategoriDao().getAll();
+            runOnUiThread(() -> bindKategoriRows(kategori, container, tvEmpty));
+        });
+    }
+
+    private void bindKategoriRows(List<Kategori> kategoriList, LinearLayout container, TextView tvEmpty) {
+        container.removeAllViews();
+        boolean empty = kategoriList.isEmpty();
+        tvEmpty.setVisibility(empty ? View.VISIBLE : View.GONE);
+
+        for (Kategori kategori : kategoriList) {
+            LinearLayout row = new LinearLayout(this);
+            row.setOrientation(LinearLayout.HORIZONTAL);
+            row.setGravity(android.view.Gravity.CENTER_VERTICAL);
+            row.setPadding(14, 12, 18, 12);
+            row.setBackgroundResource(R.drawable.bg_input_border);
+
+            LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            rowParams.setMargins(0, 0, 0, 10);
+            container.addView(row, rowParams);
+
+            TextView tvName = new TextView(this);
+            tvName.setText(kategori.getNama_kategori());
+            tvName.setTextColor(ContextCompat.getColor(this, R.color.black));
+            tvName.setTextSize(14);
+            tvName.setTypeface(null, android.graphics.Typeface.BOLD);
+            row.addView(tvName, new LinearLayout.LayoutParams(
+                    0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+
+            MaterialButton btnDelete = new MaterialButton(this);
+            btnDelete.setText("Hapus");
+            btnDelete.setAllCaps(false);
+            btnDelete.setTextSize(14);
+            btnDelete.setMinHeight(0);
+            btnDelete.setMinimumHeight(0);
+            btnDelete.setMinWidth(0);
+            btnDelete.setMinimumWidth(0);
+            btnDelete.setInsetTop(0);
+            btnDelete.setInsetBottom(0);
+            btnDelete.setPadding(36, 0, 36, 0);
+            btnDelete.setBackgroundTintList(ColorStateList.valueOf(
+                    ContextCompat.getColor(this, R.color.primary_red)));
+            btnDelete.setOnClickListener(v -> deleteKategori(kategori, container, tvEmpty));
+            row.addView(btnDelete, new LinearLayout.LayoutParams(
+                    176, 48));
+        }
+    }
+
+    private void deleteKategori(Kategori kategori, LinearLayout container, TextView tvEmpty) {
+        AppDatabase db = AppDatabase.getInstance(this);
+        Executors.newSingleThreadExecutor().execute(() -> {
+            int usedCount = db.produkDao().countByKategori(kategori.getId_kategori());
+            if (usedCount > 0) {
+                runOnUiThread(() -> Toast.makeText(this,
+                        "Kategori tidak bisa dihapus karena masih dipakai produk.",
+                        Toast.LENGTH_SHORT).show());
+                return;
+            }
+
+            db.kategoriDao().delete(kategori);
+            runOnUiThread(() -> {
+                Toast.makeText(this, "Kategori dihapus.", Toast.LENGTH_SHORT).show();
+                loadKategoriManager(container, tvEmpty);
+            });
+        });
     }
 
     private void loadKategoriForDialog(Spinner spinnerKategori, List<Kategori> kategoriList, int selectedId) {
